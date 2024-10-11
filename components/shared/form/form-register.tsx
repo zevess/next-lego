@@ -1,16 +1,20 @@
-import { registerUser } from '@/app/actions'
+// import { registerUser } from '@/app/actions'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { formRegisterSchema, FormRegisterValues } from '@/lib/form-schema'
+import { formRegisterSchema, FormRegisterValues } from '@/utils/form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+// import { SignIn } from '../sign-in'
+
 
 interface Props {
     className?: string,
-    setIsRegister: Dispatch<SetStateAction<boolean>> 
+    setIsRegister: Dispatch<SetStateAction<boolean>>
 }
 
 export const FormRegister: React.FC<Props> = ({ className, setIsRegister }) => {
@@ -23,34 +27,45 @@ export const FormRegister: React.FC<Props> = ({ className, setIsRegister }) => {
 
     const onSubmit: SubmitHandler<FormRegisterValues> = async (data) => {
         try {
-            await registerUser({
-                email: data.email,
-                name: data.name,
-                nick: data.nick,
-                password: data.password
-            }).then(
-                () => router.push('/')
+            await signIn("credentials", data
+                // {
+                //     redirectTo: '/',
+                //     email: data.email,
+                //     password: data.password,
+                //     nick: data.nick,
+                //     name: data.name
+                // }
             )
-
-        } catch (err) {
-            if (err) {
-                setError("email", {
-                    message: 'Пользователь уже существует!'
-                })
-            } else {
-                setError("root", {
-                    message: 'Ошибка при регистрации'
-                })
-            }
+        } catch (error) {
+            console.log(error);
         }
-    }
+        // try {
+        //     await registerUser({
+        //         email: data.email,
+        //         name: data.name,
+        //         nick: data.nick,
+        //         password: data.password
+        //     }).then(
+        //         () => router.push('/')
+        //     )
 
+        // } catch (err) {
+        //     if (err) {
+        //         setError("email", {
+        //             message: 'Пользователь уже существует!'
+        //         })
+        //     } else {
+        //         setError("root", {
+        //             message: 'Ошибка при регистрации'
+        //         })
+        //     }
+        // }
+    }
 
 
     return (
         <form action="" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid w-full items-center gap-4">
-
                 <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="name">Имя</Label>
                     <Input {...register('name')} id="name" placeholder="Введите имя" />
@@ -100,6 +115,9 @@ export const FormRegister: React.FC<Props> = ({ className, setIsRegister }) => {
                 {errors.root && (
                     <div className='text-red-500'>{errors.root.message}</div>
                 )}
+
+                {/* <SignIn/> */}
+
             </div>
         </form>
     )

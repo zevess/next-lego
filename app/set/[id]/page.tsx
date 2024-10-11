@@ -1,6 +1,7 @@
 'use client'
 import { Typography } from '@/components/shared/typography'
 import { Button } from '@/components/ui/button'
+import UserAvatar from '@/components/user-avatar'
 import { Circle, Heart } from 'lucide-react'
 import React from 'react'
 import StarRatings from 'react-star-ratings';
