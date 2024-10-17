@@ -22,12 +22,15 @@ interface Props {
 export const Header: React.FC<Props> = async ({ className }) => {
 
   const session = await auth();
+  
+
+
   return (
     <header className={cn('flex items-center justify-between mb-5', className)}>
       <Link href={'/'}>
         <Logo />
       </Link>
-      <Link href={'/profile/user'}>
+      <Link href={ !session ? '/sign-in' : `/profile/${session?.user?.id}`}>
         <User className='text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400' />
 
       </Link>

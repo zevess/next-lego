@@ -1,5 +1,5 @@
 'use client'
-import { login } from '@/actions/auth'
+
 import { Logo } from '@/components/shared/logo'
 import { DialogCloseButton } from '@/components/shared/modal'
 import { ProviderAuth } from '@/components/shared/provider-auth'

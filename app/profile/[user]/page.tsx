@@ -1,48 +1,37 @@
+
+import { getUser } from '@/app/actions'
 import { auth } from '@/auth'
+import { ProfilePage } from '@/components/shared/profile-page'
 import { SetsTable } from '@/components/shared/sets-table'
 import { Typography } from '@/components/shared/typography'
+import { UserNotFound } from '@/components/shared/user-not-found'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import prisma from '@/prisma/prisma-client'
 import { Heart } from 'lucide-react'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
+
 import React from 'react'
 
-interface Props {
-  className?: string,
-  id: string
-}
 
-export default async function Page({ params: { id, className } }: { params: Props }) {
-  
+
+export default async function Page({ params }: { params: { user: string } }) {
+
+  const { user } = params;
+
   const session = await auth()
 
-  if (!session) {
-    redirect('/sign-in');
+  const userData = await prisma.user.findFirst({
+    where: {
+      id: user
+    }
+  })
+
+  const isSameUser = session?.user?.id == userData?.id
+
+  if (!userData) {
+    return <UserNotFound />
+  } else {
+    return <ProfilePage data={userData} isSameUser={isSameUser} />
   }
 
-  return (
-    <div className={className}>
-      <div className='w-full flex flex-col items-center'>
-        <Avatar className='max-w-56 w-1/3 h-1/3 mb-3'>
-          {session?.user?.image && <AvatarImage src={session?.user?.image} alt="@shadcn" />}
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        {session?.user?.name && <Typography variant={'h2'} text={session?.user?.name} />}
-        
-      </div>
-
-      <div className='flex flex-col items-center mt-5'>
-        <Typography variant='h4' text='В коллекции:' className='mr-auto ml-2' />
-        <SetsTable />
-      </div>
-
-      <div className='flex flex-col items-center mt-5'>
-        <div className='flex items-center mr-auto ml-2'>
-          <Heart />
-
-          <Typography variant='h4' text='В желаемом:' className='' />
-        </div>
-        <SetsTable />
-      </div>
-    </div>
-  )
 }
