@@ -1,10 +1,70 @@
+import prisma from "@/prisma/prisma-client"
+import { Set, UserCollection } from "@prisma/client"
+import { NextResponse } from "next/server"
+
 export const getUser = async (userId: string) => {
-    const res = await fetch(`http://localhost:3000/api/user?userId=${userId}`)
-
-    if (!res.ok){
-        throw new Error('Ошибка при выполнении запроса');
-    }
-
-    return res.json()
-
+    return await prisma.user.findFirst({
+        where: {
+            id: userId
+        }
+    })
 }
+
+export const addSetToCollection = async (set: Set, userId: string) => {
+    try {
+        const newSet = await prisma.set.create({
+            data: {
+                name: set.name,
+                setNum: set.setNum,
+                year: set.year,
+                themeId: set.themeId,
+                numParts: set.numParts,
+                setImageUrl: set.setImageUrl,
+                setUrl: set.setUrl,
+                collection: {
+                    connectOrCreate: {
+                        where: {
+                            userId: userId
+                        },
+                        create: {
+                            userId: userId
+                        }
+                    }
+                }
+            },
+        });
+
+        return NextResponse.json(newSet); // Вернуть новый набор
+    } catch (error) {
+        return NextResponse.json(error); // Вернуть ошибку
+    }
+}
+
+
+// try {
+//     const newSet = await prisma.set.create({
+//         data: {
+//             name: set.name,
+//             setNum: set.setNum,
+//             year: set.year,
+//             themeId: set.themeId,
+//             numParts: set.numParts,
+//             setImageUrl: set.setImageUrl,
+//             setUrl: set.setUrl,
+//             collection: {
+//                 connectOrCreate: {
+//                     where: {
+//                         userId: userId
+//                     },
+//                     create: {
+//                         userId: userId
+//                     }
+//                 }
+//             }
+//         },
+//     });
+
+//     return NextResponse.json(newSet); // Вернуть новый набор
+// } catch (error) {
+//     return NextResponse.json(error); // Вернуть ошибку
+// }

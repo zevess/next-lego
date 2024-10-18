@@ -105,6 +105,10 @@ model Set {
     numParts    Int
     setImageUrl String
     setUrl      String
+
+    collection UserCollection @relation(fields: [collectionId], references: [id])
+    collectionId Int
+
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }
@@ -114,6 +118,8 @@ model UserCollection {
 
     user   User?   @relation(fields: [userId], references: [id])
     userId String? @unique
+
+    sets Set[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
