@@ -1,24 +1,54 @@
 import { Container } from "@/components/shared/container";
 import { Header } from "@/components/shared/header";
-import { InputWithButton } from "@/components/shared/input";
+
 import { Logo } from "@/components/shared/logo";
+import { SetSearch } from "@/components/shared/set-search";
 import { SetsTable } from "@/components/shared/sets-table";
 import { Typography } from "@/components/shared/typography";
+import React, { useEffect, useState } from "react";
+import { addSetToCollection, getDataTest, getSets, getUserCollection } from "./actions";
+import { testData } from "@/utils/types";
+import { auth } from "@/auth";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    search?: string;
+  };
+}) {
+
+
+
+  const query = searchParams?.search || '';
+
+
+  const data = query ? await getSets(query) : null;
+
+  console.log(data)
+
+  // addSetToCollection(testData.results[0], "cm24hc1wa00008azwx90bev6b")
+
   return (
-    <Container>
-      <div className="flex flex-col items-center mt-10">
-        <Typography variant="h1" text="Найдите набор" />
-        <InputWithButton placeholder="Введите артикул или название набора на английском" />
-        <div className="w-full text-2xl flex items-center text-gray-400 mt-10">
-          <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
-            <span>Результаты</span>
-          <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
-        </div>
-        <SetsTable/>
-      </div>
-
-    </Container>
-  );
+    <>
+      <SetSearch />
+      {query.length !== 0 && <SetsTable setsData={data.results} />}
+    </>
+  )
 }
+
+//   async function getSetsTest(searchQuery: string) {
+//     try {
+//       setLoading(true);
+//       const sets = await getDataTest(searchQuery);
+//       setData(sets);
+//     } catch (error) {
+//       console.log(error)
+//     } finally{
+//       setLoading(false)
+//     }
+//   }
+//   getSetsTest(query)
+// }, [])
+
+// console.log(query);

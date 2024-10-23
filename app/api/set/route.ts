@@ -1,23 +1,26 @@
 import prisma from "@/prisma/prisma-client";
-import { SetData } from "@/utils/types";
+import { SetDataJSON } from "@/utils/types";
+// import { SetData } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 
 
 export async function POST(request: Request) {
     
-    const body: SetData = await request.json();
+    const body = await request.json();
+
+    const set:SetDataJSON = body.set
 
     try {
         const newSet = await prisma.set.create({
             data: {
-                name: body.name,
-                setNum: body.setNum,
-                year: body.year,
-                themeId: body.themeId,
-                numParts: body.numParts,
-                setImageUrl: body.setImgUrl,
-                setUrl: body.setUrl,
+                name: set.name,
+                set_num: set.set_num,
+                year: set.year,
+                theme_id: set.theme_id,
+                num_parts: set.num_parts,
+                set_img_url: set.set_img_url,
+                set_url: set.set_url,
                 collection: {
                     connectOrCreate: {
                         where: {

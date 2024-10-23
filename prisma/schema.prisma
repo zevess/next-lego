@@ -98,13 +98,13 @@ model Authenticator {
 
 model Set {
     id          Int      @id @default(autoincrement())
-    setNum      String
+    set_num      String
     name        String
     year        Int
-    themeId     Int
-    numParts    Int
-    setImageUrl String
-    setUrl      String
+    theme_id     Int
+    num_parts    Int
+    set_img_url String
+    set_url      String
 
     collection UserCollection @relation(fields: [collectionId], references: [id])
     collectionId Int

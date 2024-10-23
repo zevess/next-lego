@@ -7,7 +7,7 @@ type TypographyTypes = 'h1' | 'h2' | 'h3' | 'h4'
 interface Props {
     className?: string,
     variant: TypographyTypes,
-    text: string
+    text: string | number
 }
 
 

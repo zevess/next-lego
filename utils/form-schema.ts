@@ -26,5 +26,9 @@ export const formRegisterSchema = formLoginSchema.merge(
     path: ['confirmPassword']
 })
 
+export const searchSchema = z.string().min(3, {message: "Как минимум 3 символа"})
+
+
 export type FormLoginValues = z.infer<typeof formLoginSchema>;
 export type FormRegisterValues = z.infer<typeof formRegisterSchema>
+export type FormSearchValues = z.infer<typeof searchSchema>;
