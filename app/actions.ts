@@ -14,43 +14,50 @@ export const getUser = async (userId: string) => {
 export const addSetToCollection = async(set: SetDataJSON, userId: string) => {
     const newSet = await fetch('http://localhost:3000/api/set',{
         method: "POST",
-        body: JSON.stringify({set: set, userId: userId})
+        body: JSON.stringify({set: set, userId: userId, type: "collection"})
     })
     return newSet.json()
 }
 
+export const removeSetFromCollection = async(set: SetDataJSON, userId: string) => {
+    await fetch('http://localhost:3000/api/set',{
+        method: "DELETE",
+        body: JSON.stringify({set: set, userId: userId, type: "collection"})
+    })
+    
+}
 
-// export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
-//     try {
-//         console.log(set);
+export const addSetToWishes = async(set: SetDataJSON, userId: string) => {
+    const newSet = await fetch('http://localhost:3000/api/set',{
+        method: "POST",
+        body: JSON.stringify({set: set, userId: userId, type: "wishes"})
+    })
+    return newSet.json()
+}
 
-//         await prisma.set.create({
-//             data: {
-//                 name: set.name,
-//                 setNum: set.set_num,
-//                 year: set.year,
-//                 themeId: set.theme_id,
-//                 numParts: set.num_parts,
-//                 setImageUrl: set.set_img_url,
-//                 setUrl: set.set_url,
-//                 collection: {
-//                     connectOrCreate: {
-//                         where: {
-//                             userId: userId
-//                         },
-//                         create: {
-//                             userId: userId
-//                         }
-//                     }
-//                 }
-//             },
-//         });
+export const removeSetFromWishes = async(set: SetDataJSON, userId: string) => {
+    await fetch('http://localhost:3000/api/set',{
+        method: "DELETE",
+        body: JSON.stringify({set: set, userId: userId, type: "wishes"})
+    })
+    
+}
 
-//         // return NextResponse.json(newSet);
-//     } catch (error) {
-//         console.error(error)
-//         return NextResponse.json(error);
-//     }
+
+// export const removeSetFromCollection = async(set: SetDataJSON, userId: string) =>{
+    
+//     const userCollection =  await prisma.userCollection.findFirst({
+//         where: {
+//             userId: userId
+//         }
+//     })
+    
+//     await prisma.set.deleteMany({
+//         where: {
+//             set_num: set.set_num,
+//             collectionId: userCollection?.id 
+//         }
+//     })       
 // }
 
 export const getUserCollection = async (userId: string) => {
@@ -69,6 +76,21 @@ export const getUserCollection = async (userId: string) => {
 
 }
 
+export const getUserWishes = async (userId: string) => {
+
+    const userWishes =  await prisma.userWishes.findFirst({
+        where: {
+            userId: userId
+        }
+    })
+
+    return await prisma.set.findMany({
+        where: {
+            wishesId: userWishes?.id
+        }
+    })
+
+}
 
 export const getSingleSet = async (setNum: string) => {
     const set = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {

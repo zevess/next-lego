@@ -1,4 +1,4 @@
-import { addSetToCollection, getUser, getUserCollection } from '@/app/actions'
+import { addSetToCollection, getUser, getUserCollection, getUserWishes } from '@/app/actions'
 import { auth } from '@/auth'
 import { ProfilePage } from '@/components/shared/profile-page'
 import { SetsTable } from '@/components/shared/sets-table'
@@ -23,8 +23,9 @@ export default async function Page({ params }: { params: { user: string } }) {
   // console.log(userData);
   
   const userCollections =  userData?.id ? await getUserCollection(userData?.id) : "";
-  
-  console.log(userCollections);
+  const userWishes = userData?.id ? await getUserWishes(userData?.id) : "";
+
+  // console.log(userWishes);
   
 
   const isSameUser = session?.user?.id == userData?.id
@@ -32,7 +33,7 @@ export default async function Page({ params }: { params: { user: string } }) {
   if (!userData) {
     return <UserNotFound />
   } else {
-    return <ProfilePage userCollection={userCollections} data={userData} isSameUser={isSameUser} />
+    return <ProfilePage userWishes={userWishes} userCollection={userCollections} data={userData} isSameUser={isSameUser} />
   }
 
 }

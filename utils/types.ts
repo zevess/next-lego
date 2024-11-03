@@ -20,7 +20,8 @@ export interface SetDataJSON {
     num_parts: number;
     set_img_url: string;
     set_url: string;
-    collectionId: number;
+    collectionId?: number | null;
+    wishesId?: number | null
     // user_id: string;
 }
 
@@ -871,4 +872,68 @@ export const testData = {
     ]
 }
 
-const setNumArr = testData.results.map((item) => item.set_num);
+const testUserDataArr = [
+    {
+      id: 1,
+      set_num: 'SDCC2019-1',
+      name: 'PS4 Spider-Man',
+      year: 2019,
+      theme_id: 706,
+      num_parts: 3,
+      set_img_url: 'https://cdn.rebrickable.com/media/sets/sdcc2019-1/15494.jpg',
+      set_url: 'https://rebrickable.com/sets/SDCC2019-1/ps4-spider-man/',
+      collectionId: 9,
+      createdAt: "2024-10-23T16:35:27.060Z",
+      updatedAt: "2024-10-23T16:35:27.060Z"
+    },
+    {
+      id: 2,
+      set_num: 'SDCC2019-1',
+      name: 'PS4 Spider-Man',
+      year: 2019,
+      theme_id: 706,
+      num_parts: 3,
+      set_img_url: 'https://cdn.rebrickable.com/media/sets/sdcc2019-1/15494.jpg',
+      set_url: 'https://rebrickable.com/sets/SDCC2019-1/ps4-spider-man/',
+      collectionId: 9,
+      createdAt: "2024-10-23T16:39:44.705Z",
+      updatedAt: "2024-10-23T16:39:44.705Z"
+    },
+    {
+      id: 3,
+      set_num: '40407-1',
+      name: 'Death Star II Battle',
+      year: 2020,
+      theme_id: 158,
+      num_parts: 235,
+      set_img_url: 'https://cdn.rebrickable.com/media/sets/40407-1/71904.jpg',
+      set_url: 'https://rebrickable.com/sets/40407-1/death-star-ii-battle/',
+      collectionId: 9,
+      createdAt: "2024-10-23T16:42:43.364Z",
+      updatedAt: "2024-10-23T16:42:43.364Z"
+    },
+    {
+      id: 4,
+      set_num: '75018-1',
+      name: "JEK-14's Stealth Starfighter",
+      year: 2013,
+      theme_id: 158,
+      num_parts: 550,
+      set_img_url: 'https://cdn.rebrickable.com/media/sets/75018-1/3497.jpg',
+      set_url: 'https://rebrickable.com/sets/75018-1/jek-14s-stealth-starfighter/',
+      collectionId: 9,
+      createdAt: "2024-10-23T17:00:13.281Z",
+      updatedAt: "2024-10-23T17:00:13.281Z"
+    }
+]
+
+// const setNumArr = testData.results.map((item) => item.set_num);
+
+// const testUserDataArrId = testUserDataArr.map((item) => item.set_num);
+
+// console.log(testUserDataArrId)
+
+// testData.results.map((item) => {
+//     console.log(item, testUserDataArrId.includes(item.set_num))
+    
+// })

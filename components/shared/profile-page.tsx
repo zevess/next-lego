@@ -11,14 +11,15 @@ interface Props {
     className?: string,
     data: User
     isSameUser: boolean,
-    userCollection: SetDataJSON[] | ""
+    userCollection: SetDataJSON[] | "",
+    userWishes: SetDataJSON[] | ""
 }
 
-export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection }) => {
+export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection, userWishes }) => {
   
-    const userCollections = getUserCollection(data.id);
+    // const userCollections = getUserCollection(data.id);
     
-    console.log(userCollections);
+    // console.log(userWishes);
 
     return (
         <div className={className}>
@@ -33,16 +34,15 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
 
             <div className='flex flex-col items-center mt-5'>
                 <Typography variant='h4' text='В коллекции:' className='mr-auto ml-2' />
-                {userCollection && <SetsTable setsData={userCollection}/>}
+                {userCollection && <SetsTable userWishes={userWishes} userCollection={userCollection} setsData={userCollection}/>}
             </div>
 
             <div className='flex flex-col items-center mt-5'>
                 <div className='flex items-center mr-auto ml-2'>
                     <Heart />
-
-                    <Typography variant='h4' text='В желаемом:' className='' />
+                    <Typography variant='h4' text='В желаемом:' className='mr-auto ml-2' />
                 </div>
-                {/* <SetsTable /> */}
+                {userWishes && <SetsTable userWishes={userWishes} userCollection={userCollection} setsData={userWishes}/>}
             </div>
         </div>
     )

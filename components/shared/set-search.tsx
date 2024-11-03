@@ -62,11 +62,7 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
                         <Search />
                     </Button>
                 </div>
-                <div className="w-full text-2xl flex items-center text-gray-400 mt-10">
-                    <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
-                    <span>Результаты</span>
-                    <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
-                </div>
+                
             </div>
         </div>
     )
