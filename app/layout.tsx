@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Header } from "@/components/shared/header";
 import { Container } from "@/components/shared/container";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import Link from "next/link";
-import { StyledLink } from "@/components/shared/link";
-import { cn } from "@/lib/utils";
-import { Logo } from "@/components/shared/logo";
-import { User } from "lucide-react";
-import { ThemeToggle } from "@/components/shared/theme-toggler";
-import { DialogCloseButton } from "@/components/shared/modal";
 
 const ubuntu = Ubuntu({
   subsets: ['cyrillic'],

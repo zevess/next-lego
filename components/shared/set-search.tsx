@@ -1,16 +1,12 @@
 "use client"
 import React from 'react'
-import { Typography } from './typography'
 
-import { SetsTable } from './sets-table'
-import { SearchInput } from './search-input'
-import { getSets, getSingleSet } from '@/app/actions'
-import { cn } from '@/lib/utils'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Search } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useDebouncedCallback } from 'use-debounce'
+import { Typography } from './typography'
+import { cn } from '@/lib/utils'
+import { Button, Input } from '../ui'
+import { Search } from 'lucide-react'
+
 
 interface Props {
     className?: string,
@@ -30,16 +26,6 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value)
     }
-
-    // const onChange = useDebouncedCallback((term: string) => {
-    //     const params = new URLSearchParams(searchParams);
-    //     if (term){
-    //         params.set('search', term)
-    //     } else{
-    //         params.delete('search')
-    //     }
-    //     replace(`${pathname}?${params.toString()}`)
-    // }, 2000)
 
     const onClick = (term: string) => {
         const params = new URLSearchParams(searchParams);

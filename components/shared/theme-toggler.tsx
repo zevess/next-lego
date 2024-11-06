@@ -4,8 +4,9 @@ import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button"
+
 import { cn } from "@/lib/utils"
+import { Button } from "../ui"
 
 interface Props {
     className?: string,

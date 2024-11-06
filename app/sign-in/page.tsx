@@ -1,11 +1,9 @@
 'use client'
 
-import { Logo } from '@/components/shared/logo'
-import { DialogCloseButton } from '@/components/shared/modal'
-import { ProviderAuth } from '@/components/shared/provider-auth'
-import { Typography } from '@/components/shared/typography'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+
+import { Logo, ProviderAuth, Typography } from '@/components/shared'
+import { Card } from '@/components/ui'
+import { CardContent, CardHeader } from '@/components/ui/card'
 import React from 'react'
 
 interface Props {

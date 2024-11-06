@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+
 import { cn } from "@/lib/utils"
 import { Search } from "lucide-react"
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react"
+import { Button, Input } from "../ui"
 
 interface SearchInputProps {
   className?: string,

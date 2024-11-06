@@ -1,14 +1,8 @@
-import { addSetToCollection, getUser, getUserCollection, getUserWishes } from '@/app/actions'
-import { auth } from '@/auth'
-import { ProfilePage } from '@/components/shared/profile-page'
-import { SetsTable } from '@/components/shared/sets-table'
-import { Typography } from '@/components/shared/typography'
-import { UserNotFound } from '@/components/shared/user-not-found'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import prisma from '@/prisma/prisma-client'
-import { Heart } from 'lucide-react'
-import { redirect, useRouter } from 'next/navigation'
 
+
+import { getUser, getUserCollection, getUserWishes } from '@/app/actions';
+import { auth } from '@/auth';
+import { ProfilePage, UserNotFound } from '@/components/shared';
 import React from 'react'
 
 

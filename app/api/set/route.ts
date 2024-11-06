@@ -162,6 +162,8 @@ export async function DELETE(request: Request) {
                     })
                 }
             }
+            return NextResponse.json({message: "Набор удален"});
+
         }
 
         if (type == "wishes") {
@@ -184,34 +186,11 @@ export async function DELETE(request: Request) {
                     })
                 }
             }
+            return NextResponse.json({message: "Набор удален"});
+
         }
 
     } catch (error) {
         return NextResponse.json({ error });
     }
 }
-
-
-// const newSet = await prisma.set.create({
-//     data: {
-//         name: set.name,
-//         set_num: set.set_num,
-//         year: set.year,
-//         theme_id: set.theme_id,
-//         num_parts: set.num_parts,
-//         set_img_url: set.set_img_url,
-//         set_url: set.set_url,
-//         collection: {
-//             connectOrCreate: {
-//                 where: {
-//                     userId: body.userId
-//                 },
-//                 create: {
-//                     userId: body.userId
-//                 }
-//             }
-//         }
-//     },
-// });
-
-// return NextResponse.json({ newSet });

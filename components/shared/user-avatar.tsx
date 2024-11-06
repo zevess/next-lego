@@ -1,6 +1,7 @@
-import { auth } from "../auth"
+import { auth } from "@/auth"
+
  
-export default async function UserAvatar() {
+export const UserAvatar = async() => {
   const session = await auth()
  
   if (!session?.user?.image) return null

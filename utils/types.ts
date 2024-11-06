@@ -42,6 +42,19 @@ export const headers = {
     "Authorization": `key ${process.env.REBRICKABLE_KEY}`
 }
 
+export interface setDataPage {
+    set: SetDataJSON;
+    isOwn: boolean;
+    isWish: boolean;
+    userId: string
+}
+
+export interface setThemesProps{
+    id: number,
+    parent_id: number | null,
+    name: string 
+}
+
 
 
 export const testData = {

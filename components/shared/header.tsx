@@ -1,17 +1,12 @@
+import { auth } from "@/auth";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { Logo } from "./logo";
+import { User } from "lucide-react";
+import { StyledLink } from "./link";
+import { AlertExit } from "./alert-exit";
+import { ThemeToggle } from "./theme-toggler";
 
-
-import { cn } from '@/lib/utils'
-import React from 'react'
-import { Logo } from './logo'
-import { ThemeToggle } from './theme-toggler'
-import Link from 'next/link'
-import { LogOut, User } from 'lucide-react'
-import { auth } from '@/auth'
-import Image from 'next/image'
-import { StyledLink } from './link'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
-import { Button } from '../ui/button'
-import { AlertExit } from './alert-exit'
 
 
 interface Props {

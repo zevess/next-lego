@@ -1,20 +1,12 @@
 'use client'
-import { Logo } from '@/components/shared/logo'
-import { Typography } from '@/components/shared/typography'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { formRegisterSchema, FormRegisterValues } from '@/utils/form-schema'
-import { useRouter } from 'next/navigation'
-import React from 'react'
-import { z } from 'zod'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-// import { registerUser } from '@/app/actions'
-import { FormRegister } from './form/form-register'
-import { FormLogin } from './form/form-login'
-import { ProviderAuth } from './provider-auth'
+
+import React from "react"
+import { Card } from "../ui"
+import { CardContent, CardHeader } from "../ui/card"
+import { Logo } from "./logo"
+import { Typography } from "./typography"
+import { ProviderAuth } from "./provider-auth"
+
 
 interface Props {
     className?: string
@@ -39,11 +31,8 @@ export const Auth: React.FC<Props> = ({ className }) => {
                         :
                         <FormLogin setIsRegister={setIsRegister} />
                     } */}
-                    <ProviderAuth/>
-
-                    
+                    <ProviderAuth/>                    
                 </CardContent>
-
             </Card>
         </div>
     )

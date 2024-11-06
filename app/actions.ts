@@ -11,47 +11,47 @@ export const getUser = async (userId: string) => {
     })
 }
 
-export const addSetToCollection = async(set: SetDataJSON, userId: string) => {
-    const newSet = await fetch('http://localhost:3000/api/set',{
+export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
+    const newSet = await fetch('http://localhost:3000/api/set', {
         method: "POST",
-        body: JSON.stringify({set: set, userId: userId, type: "collection"})
+        body: JSON.stringify({ set: set, userId: userId, type: "collection" })
     })
     return newSet.json()
 }
 
-export const removeSetFromCollection = async(set: SetDataJSON, userId: string) => {
-    await fetch('http://localhost:3000/api/set',{
+export const removeSetFromCollection = async (set: SetDataJSON, userId: string) => {
+    await fetch('http://localhost:3000/api/set', {
         method: "DELETE",
-        body: JSON.stringify({set: set, userId: userId, type: "collection"})
+        body: JSON.stringify({ set: set, userId: userId, type: "collection" })
     })
-    
+
 }
 
-export const addSetToWishes = async(set: SetDataJSON, userId: string) => {
-    const newSet = await fetch('http://localhost:3000/api/set',{
+export const addSetToWishes = async (set: SetDataJSON, userId: string) => {
+    const newSet = await fetch('http://localhost:3000/api/set', {
         method: "POST",
-        body: JSON.stringify({set: set, userId: userId, type: "wishes"})
+        body: JSON.stringify({ set: set, userId: userId, type: "wishes" })
     })
     return newSet.json()
 }
 
-export const removeSetFromWishes = async(set: SetDataJSON, userId: string) => {
-    await fetch('http://localhost:3000/api/set',{
+export const removeSetFromWishes = async (set: SetDataJSON, userId: string) => {
+    await fetch('http://localhost:3000/api/set', {
         method: "DELETE",
-        body: JSON.stringify({set: set, userId: userId, type: "wishes"})
+        body: JSON.stringify({ set: set, userId: userId, type: "wishes" })
     })
-    
+
 }
 
 
 // export const removeSetFromCollection = async(set: SetDataJSON, userId: string) =>{
-    
+
 //     const userCollection =  await prisma.userCollection.findFirst({
 //         where: {
 //             userId: userId
 //         }
 //     })
-    
+
 //     await prisma.set.deleteMany({
 //         where: {
 //             set_num: set.set_num,
@@ -62,7 +62,7 @@ export const removeSetFromWishes = async(set: SetDataJSON, userId: string) => {
 
 export const getUserCollection = async (userId: string) => {
 
-    const userCollection =  await prisma.userCollection.findFirst({
+    const userCollection = await prisma.userCollection.findFirst({
         where: {
             userId: userId
         }
@@ -78,7 +78,7 @@ export const getUserCollection = async (userId: string) => {
 
 export const getUserWishes = async (userId: string) => {
 
-    const userWishes =  await prisma.userWishes.findFirst({
+    const userWishes = await prisma.userWishes.findFirst({
         where: {
             userId: userId
         }
@@ -92,13 +92,30 @@ export const getUserWishes = async (userId: string) => {
 
 }
 
-export const getSingleSet = async (setNum: string) => {
+export const getSingleSet = async (setNum: string, userId: string) => {
+    
+    const userWishes = await getUserWishes(userId);
+    const userCollection = await getUserCollection(userId);
+
+    const userWishesIds = userWishes.map((item) => item.set_num);
+    const userCollectionIds = userCollection.map((item) => item.set_num);
+
+    const isWish = userWishesIds.includes(setNum);
+    const isOwn = userCollectionIds.includes(setNum);
+    
     const set = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {
         method: "GET",
         headers: headers
     })
 
-    return set.json()
+    const setData = {
+        set: await set.json(),
+        isOwn: isOwn,
+        isWish: isWish,
+        userId: userId
+    }
+
+    return setData
 
 }
 

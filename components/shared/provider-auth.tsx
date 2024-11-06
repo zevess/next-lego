@@ -1,9 +1,10 @@
 "use client"
 import React from 'react'
-import { Button } from '../ui/button'
+
 import { GithubIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { login } from '@/actions'
+import { Button } from '../ui'
 
 interface Props {
   className?: string

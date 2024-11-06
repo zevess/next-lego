@@ -1,20 +1,7 @@
-import { BellRing, Check, Heart } from "lucide-react"
-
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import Link from "next/link"
-import { Checkbox } from "../ui/checkbox"
-import React, { Suspense } from "react"
-import { SetDataJSON } from "@/utils/types"
-import { Skeleton } from "../ui/skeleton"
+import { Card, Skeleton } from "../ui"
+import { CardContent, CardFooter, CardHeader } from "../ui/card"
+
 
 
 

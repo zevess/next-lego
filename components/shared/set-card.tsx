@@ -1,24 +1,16 @@
 'use client'
 
-import { BellRing, Check, Heart, Plus, X } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import Link from "next/link"
-import { Checkbox } from "../ui/checkbox"
-import React, { Suspense } from "react"
-import { SetDataJSON } from "@/utils/types"
-import { SetCardSkeleton } from "./set-card-skeleton"
 import { addSetToCollection, addSetToWishes, removeSetFromCollection, removeSetFromWishes } from "@/app/actions"
-import { useSession } from "next-auth/react"
+import { SetDataJSON } from "@/utils/types"
+import React, { SetStateAction } from "react"
+import { Button, Card } from "../ui"
+import { cn } from "@/lib/utils"
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { Heart, Plus, X } from "lucide-react"
+import Link from "next/link"
+import { setAction } from "@/utils/functions"
+
+
 
 
 interface SetCardProps {
@@ -36,47 +28,12 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
     const [isWish, setIsWish] = React.useState(isUserWishSet)
 
 
-    const handleAddSetToCollection = () => {
-        try {
-            if (userId) {
-                addSetToCollection(data, userId).then(()=> setIsOwn(true));
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleRemoveSetFromCollection = () =>{
-        try {
-            if (userId){
-                removeSetFromCollection(data, userId).then(() => setIsOwn(false))
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    
-    }
-
-
-    const handleAddSetToWishes = () => {
-        try {
-            if (userId) {
-                addSetToWishes(data, userId).then(()=> setIsWish(true));
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleRemoveSetFromWishes = () =>{
-        try {
-            if (userId){
-                removeSetFromWishes(data, userId).then(() => setIsWish(false))
-            }
-        } catch (error) {
-            console.error(error)
+    const handleSetAction = (setDispatch: React.Dispatch<SetStateAction<boolean>>, dispatchValue: boolean, handleAction:(data: SetDataJSON, userId: string) => Promise<void>) =>{
+        if (userId) {
+            setAction(userId, data, setDispatch, dispatchValue, handleAction)
         }
     }
+
 
     return (
 
@@ -93,18 +50,17 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
                 <img src={data.set_img_url} alt="" />
             </CardContent>
             <CardFooter className="flex flex-col justify-between sm:flex-row ">
-                {userId && <Button disabled={isOwn} onClick={ isWish ? handleRemoveSetFromWishes : handleAddSetToWishes} variant={'ghost'} className="">
+                {userId && <Button disabled={isOwn} onClick={ ()=> isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} variant={'ghost'} className="">
                     
                     {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart /> }
                     
                 </Button>}
 
                 <Link className="bg-black py-1 mb-2 text-white text-center rounded-lg dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-3/5 sm:mb-0" href={`/set/${data.set_num}`}>Перейти к набору</Link>
-                
-                {/* {userId && <Checkbox onClick={handleClick} className="h-6 w-6 mx-4" />} */}
-                
-                {userId && <Button disabled={isWish} onClick={ isOwn ? handleRemoveSetFromCollection : handleAddSetToCollection} variant={'ghost'} className="">
-                    {isOwn ? <X/> : <Plus/> }    
+
+
+                {userId && <Button disabled={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn,false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} variant={'ghost'} className="">
+                    {isOwn ? <X /> : <Plus />}
                 </Button>}
 
             </CardFooter>

@@ -1,14 +1,10 @@
 'use client'
 import React from 'react'
-import { SetCard } from './set-card'
-import { constants } from '@/constants'
-import { Button } from '../ui/button'
-import { getDataTest, getSets } from '@/app/actions'
-import { MultipleSetsDataJSON, SetData, SetDataJSON } from '@/utils/types'
-import { SetCardSkeleton } from './set-card-skeleton'
-import { useSets } from '@/hooks/use-sets'
-import { auth } from '@/auth'
+
 import { useSession } from 'next-auth/react'
+import { SetDataJSON } from '@/utils/types'
+import { SetCardSkeleton } from './set-card-skeleton'
+import { SetCard } from './set-card'
 
 
 interface Props {
@@ -43,7 +39,7 @@ export const SetsTable: React.FC<Props> = ({ className, searchQuery, setsData, i
         <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
       </div> */}
 
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-col items-center mb-4'>
         <div className='flex flex-wrap justify-evenly mt-8 gap-2 sm:gap-8'>
 
           {isLoading && <>
