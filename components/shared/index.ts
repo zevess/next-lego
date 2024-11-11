@@ -1,5 +1,6 @@
+export { PaginationDemo } from "./pagination";
+export {SetSearchResults} from './set-search-results'
 export {UserAvatar} from "./user-avatar";
-
 export { DialogCloseButton } from "./modal";
 export { ProfilePage } from "./profile-page";
 export { ProviderAuth } from "./provider-auth";

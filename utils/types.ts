@@ -26,7 +26,7 @@ export interface SetDataJSON {
 }
 
 export interface MultipleSetsDataJSON {
-    count: number,
+    count: number, //101 максимум на одной странице
     next: string | null,
     previous: string | null,
     results: SetDataJSON[],

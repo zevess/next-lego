@@ -3,12 +3,13 @@
 import { addSetToCollection, addSetToWishes, removeSetFromCollection, removeSetFromWishes } from "@/app/actions"
 import { SetDataJSON } from "@/utils/types"
 import React, { SetStateAction } from "react"
-import { Button, Card } from "../ui"
+import { Button, Card, HoverCard } from "../ui"
 import { cn } from "@/lib/utils"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Heart, Plus, X } from "lucide-react"
 import Link from "next/link"
 import { setAction } from "@/utils/functions"
+import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 
 
 
@@ -27,8 +28,10 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
     const [isOwn, setIsOwn] = React.useState(isUserOwnSet)
     const [isWish, setIsWish] = React.useState(isUserWishSet)
 
+    const isOwnText = isOwn ? "Удалить из коллекции" : "Добавить в коллекцию"
+    const isWishText = isWish ? "Удалить из желаний" : "Добавить в желания"
 
-    const handleSetAction = (setDispatch: React.Dispatch<SetStateAction<boolean>>, dispatchValue: boolean, handleAction:(data: SetDataJSON, userId: string) => Promise<void>) =>{
+    const handleSetAction = (setDispatch: React.Dispatch<SetStateAction<boolean>>, dispatchValue: boolean, handleAction: (data: SetDataJSON, userId: string) => Promise<void>) => {
         if (userId) {
             setAction(userId, data, setDispatch, dispatchValue, handleAction)
         }
@@ -37,7 +40,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
     return (
 
-        <Card className={cn("flex flex-col justify-between w-[45%] sm:w-[280px] md:w-[300px] lg:w-[340px] xl:w-[380px] 2xl:w-[400px]", className)}>
+        <Card className={cn("flex flex-col justify-between w-[45%] sm:w-[280px] md:w-[300px] lg:w-[340px] xl:w-[380px] 2xl:w-[400px] transition-transform hover:scale-105 hover:border-orange-400 ", className)}>
             <CardHeader className="flex-row justify-between p-2 space-y-0 sm:p-6">
                 <div>
                     <CardTitle>{data.name}</CardTitle>
@@ -47,21 +50,42 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
             </CardHeader>
             <CardContent className="grid p-1 sm:p-6">
-                <img src={data.set_img_url} alt="" />
+                <Link href={`/set/${data.set_num}`}>
+                    <img src={data.set_img_url} alt="" />
+                </Link>
+
             </CardContent>
             <CardFooter className="flex flex-col justify-between sm:flex-row ">
-                {userId && <Button disabled={isOwn} onClick={ ()=> isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} variant={'ghost'} className="">
-                    
-                    {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart /> }
-                    
-                </Button>}
+                {userId && <HoverCard>
+                    <HoverCardTrigger>
+                        <Button disabled={isOwn} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} variant={'ghost'} className="">
+                            {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart />}
+                        </Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="flex items-center justify-between">
+                        {isWishText}
+                        <Button disabled={isOwn} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} variant={'ghost'} className="">
+                            {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart />}
+                        </Button>
+                    </HoverCardContent>
+                </HoverCard>}
 
                 <Link className="bg-black py-1 mb-2 text-white text-center rounded-lg dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-3/5 sm:mb-0" href={`/set/${data.set_num}`}>Перейти к набору</Link>
 
 
-                {userId && <Button disabled={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn,false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} variant={'ghost'} className="">
-                    {isOwn ? <X /> : <Plus />}
-                </Button>}
+                {userId && <HoverCard>
+                    <HoverCardTrigger>
+                        <Button disabled={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} variant={'ghost'} className="">
+                            {isOwn ? <X /> : <Plus />}
+                        </Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="flex items-center justify-between">
+                        {isOwnText}
+                        <Button disabled={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} variant={'ghost'} className="">
+                            {isOwn ? <X /> : <Plus />}
+                        </Button>
+                    </HoverCardContent>
+                </HoverCard>}
 
             </CardFooter>
         </Card>

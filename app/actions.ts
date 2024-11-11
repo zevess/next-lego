@@ -44,21 +44,6 @@ export const removeSetFromWishes = async (set: SetDataJSON, userId: string) => {
 }
 
 
-// export const removeSetFromCollection = async(set: SetDataJSON, userId: string) =>{
-
-//     const userCollection =  await prisma.userCollection.findFirst({
-//         where: {
-//             userId: userId
-//         }
-//     })
-
-//     await prisma.set.deleteMany({
-//         where: {
-//             set_num: set.set_num,
-//             collectionId: userCollection?.id 
-//         }
-//     })       
-// }
 
 export const getUserCollection = async (userId: string) => {
 
@@ -119,8 +104,8 @@ export const getSingleSet = async (setNum: string, userId: string) => {
 
 }
 
-export const getSets = async (searchQuery: string) => {
-    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?search=${searchQuery}`, {
+export const getSets = async (searchQuery: string, page: number) => {
+    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?page=${page}&page_size=50&search=${searchQuery}`, {
         method: "GET",
         headers: headers
     })
@@ -129,8 +114,8 @@ export const getSets = async (searchQuery: string) => {
 }
 
 
-export const getDataTest = async (searchQuery: string) => {
-    return { testData, searchQuery }
+export const getDataTest = async (searchQuery: string, page: number) => {
+    return { page, testData, searchQuery }
     // const data = await fetch(`https://api.agify.io?name=${searchQuery}`);
     // return data.json();
 }

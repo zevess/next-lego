@@ -7,4 +7,6 @@ export { Dialog } from "./dialog";
 export { Input } from "./input";
 export { Label } from "./label";
 export { Skeleton } from "./skeleton";
+export {Pagination} from './pagination';
+export {HoverCard} from './hover-card'
 

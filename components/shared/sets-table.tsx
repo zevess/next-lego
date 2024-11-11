@@ -18,29 +18,17 @@ interface Props {
 
 export const SetsTable: React.FC<Props> = ({ className, searchQuery, setsData, isLoading, userCollection, userWishes }) => {
 
-  // const [expanded, setExpanded] = React.useState(false)
-  // const cardsArr = expanded ? constants : constants.slice(0, 3);
-
   const { data: session } = useSession()
-
-  // console.log(session)
 
   const userCollectionItemsIds = userCollection && userCollection?.map((item) => item.set_num);
   const userWishesItemsIds = userWishes && userWishes?.map((item) => item.set_num);
 
-  // console.log(setsData)
-
   return (
     <>
 
-      {/* <div className="w-full text-2xl flex items-center text-gray-400 mt-10">
-        <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
-        <span>Результаты</span>
-        <div className='flex-1 p-0.5 bg-gray-200 m-1 dark:bg-gray-500'></div>
-      </div> */}
 
       <div className='flex flex-col items-center mb-4'>
-        <div className='flex flex-wrap justify-evenly mt-8 gap-2 sm:gap-8'>
+        <div className='flex flex-wrap flex-grow-0 items-start justify-evenly mt-8 gap-2 sm:gap-8'>
 
           {isLoading && <>
             <SetCardSkeleton />
@@ -51,11 +39,13 @@ export const SetsTable: React.FC<Props> = ({ className, searchQuery, setsData, i
           </>
           }
 
+          {setsData.length == 0 && <p>Ничего не найдено</p>}
+
           {setsData && setsData.map((item) => (
             <SetCard isUserWishSet={userWishesItemsIds.includes(item.set_num)} isUserOwnSet={userCollectionItemsIds?.includes(item.set_num)} userId={session?.user?.id ? session?.user?.id : null} key={item.set_num} data={item} />
           ))}
         </div>
-        {/* <Button className='mt-10' onClick={() => setExpanded(!expanded)}>{expanded ? 'Скрыть ' : 'Показать все '}</Button> */}
+        
       </div>
     </>
 

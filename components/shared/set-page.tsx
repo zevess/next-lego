@@ -22,7 +22,7 @@ export const SetPage: React.FC<Props> = ({ className, setData }) => {
   const [isWish, setIsWish] = React.useState(setData.isWish)
 
   const isOwnText = isOwn ? "Удалить из коллекции" : "Добавить в коллекцию"
-  const isWishText = isOwn ? "Удалить из желаний" : "Добавить в желания"
+  const isWishText = isWish ? "Удалить из желаний" : "Добавить в желания"
 
   const themeName = setThemes.find((item) => item.id == setData.set.theme_id);
   console.log(themeName?.name);
@@ -53,25 +53,22 @@ export const SetPage: React.FC<Props> = ({ className, setData }) => {
               <p className='text-lg dark:text-black'>Серия:</p>
               <p className='text-lg dark:text-black'>{themeName?.name}</p>
             </div>
-            <div className='flex justify-between'>
+            {setData.set.num_parts !== 0 && <div className='flex justify-between'>
               <p className='text-lg dark:text-black'>Количество деталей:</p>
               <p className='text-lg dark:text-black'>{setData.set.num_parts}</p>
-            </div>
+            </div>}
+
           </div>
           <div className='flex flex-col'>
 
-            {setData.userId && <Button disabled={isOwn} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} className="mt-5">
+            {setData.userId && <Button disabled={isOwn} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} className="mt-5 transition-transform hover:scale-105">
               {isWishText}
               {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart />}
 
             </Button>}
 
-
-            {/* <Button className='mt-5'>Добавить в коллекцию <Circle className='pl-1' /></Button>
-            <Button className='mt-5'>Добавить в желаемое <Heart className='pl-1' /> </Button> */}
-
-            {setData.userId && <Button disabled={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} className="mt-5"> {isOwnText}
-              {isOwn ? <X /> :  <Plus />}
+            {setData.userId && <Button disabled={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} className="mt-5 transition-transform hover:scale-105"> {isOwnText}
+              {isOwn ? <X /> : <Plus />}
             </Button>}
 
           </div>
