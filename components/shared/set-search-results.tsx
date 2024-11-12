@@ -16,27 +16,27 @@ interface Props {
 
 export const SetSearchResults: React.FC<Props> = ({ className, query, page, userCollection, userWishes }) => {
 
-    const [data, setData] = React.useState<any>()
+    // const [data, setData] = React.useState<any>()
 
-    React.useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Вызываем API напрямую с использованием await
-                const res = await getSets(query, Number(page));
-                setData(res);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+    // React.useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // Вызываем API напрямую с использованием await
+    //             const res = await getSets(query, Number(page));
+    //             setData(res);
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     };
 
-        if (query) {
-            fetchData();
-        }
+    //     if (query) {
+    //         fetchData();
+    //     }
 
-        // console.log(data)
-    }, [query, page])
+    //     // console.log(data)
+    // }, [query, page])
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <div className={className}>

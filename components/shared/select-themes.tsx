@@ -1,0 +1,75 @@
+"use client"
+import React from 'react'
+import { Button, Command, Popover, Select } from '../ui'
+import { SelectContent, SelectGroup, SelectTrigger, SelectValue } from '../ui/select'
+import { PopoverContent, PopoverTrigger } from '../ui/popover'
+import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command'
+import { setThemes } from '@/utils/themes'
+import { Check } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+interface Props {
+    className?: string,
+    selectedThemeId: number,
+    setSelectedThemeId: React.Dispatch<React.SetStateAction<number>> 
+}
+
+export const SelectThemes: React.FC<Props> = ({ className, selectedThemeId, setSelectedThemeId }) => {
+
+    const [open, setOpen] = React.useState(false)
+    // const [selectedId, setSelectedId] = React.useState<number | null>(null)
+    const [value, setValue] = React.useState("");
+
+    
+
+    const filteredThemes = value
+        ? setThemes.filter((theme) => theme.name.toLowerCase().includes(value.toLowerCase()))
+        : setThemes
+
+    return (
+
+        <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+                <Button variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className={cn("w-[200px] justify-between", className)}>
+                    {selectedThemeId !== 0
+                        ? `${setThemes.find((theme) => theme.id === selectedThemeId)?.name} / id: ${selectedThemeId}`
+                        : "Выберите серию..."}
+                </Button>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-[200px] p-0">
+                <Command>
+                    <CommandInput onValueChange={(value) => setValue(value)} placeholder="Выберите серию..." />
+                    <CommandList>
+                        <CommandEmpty>Серия не найдена</CommandEmpty>
+                        <CommandGroup>
+                            {filteredThemes.map((theme) => (
+                                <CommandItem
+                                    key={theme.id}
+                                    value={`${theme.name} / id: ${theme.id}`}
+                                    onSelect={() => {
+                                        setSelectedThemeId(theme.id)
+                                        setOpen(false)
+                                    }}
+                                >
+                                    {theme.name} / id: {theme.id}
+                                    <Check
+                                        className={cn(
+                                            "ml-auto",
+                                            selectedThemeId === theme.id ? "opacity-100" : "opacity-0"
+                                        )}
+                                    />
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
+            </PopoverContent>
+
+        </Popover>
+
+    )
+}

@@ -7,6 +7,10 @@ export { Dialog } from "./dialog";
 export { Input } from "./input";
 export { Label } from "./label";
 export { Skeleton } from "./skeleton";
-export {Pagination} from './pagination';
-export {HoverCard} from './hover-card'
-
+export { Pagination } from './pagination';
+export { HoverCard } from './hover-card'
+export { Select } from './select'
+export { Command } from './command'
+export { Popover } from './popover'
+export { Slider } from './slider'
+export { DualRangeSlider } from './range-slider'

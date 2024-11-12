@@ -20,5 +20,8 @@ export { DialogDemo } from "./dialog-form";
 export { Auth } from "./auth";
 export { Container } from "./container";
 export { AlertExit } from "./alert-exit";
-
+export {WishButton} from './wish-button'
+export {OwnButton} from './own-button'
+export {SelectThemes} from './select-themes'
+export {DualRangeYearSlider} from './year-slider'
  

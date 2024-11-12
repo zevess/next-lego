@@ -104,8 +104,8 @@ export const getSingleSet = async (setNum: string, userId: string) => {
 
 }
 
-export const getSets = async (searchQuery: string, page: number) => {
-    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?page=${page}&page_size=50&search=${searchQuery}`, {
+export const getSets = async (page: number, searchQuery?: string, themeId?: number, minYear?: number, maxYear?: number) => {
+    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?page=${page}&page_size=50${themeId ? `&theme_id=${themeId}` : ""}&min_year=${minYear}&max_year=${maxYear}&search=${searchQuery}`, {
         method: "GET",
         headers: headers
     })

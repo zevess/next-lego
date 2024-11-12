@@ -9,15 +9,21 @@ export default async function Home({
   searchParams?: {
     search?: string;
     page?: string
+    themeId?: string,
+    minYear?: string,
+    maxYear?: string
   };
 }) {
 
 
   const query = searchParams?.search || '';
   const page = searchParams?.page || '';
+  const themeId = searchParams?.themeId || '';
+  const minYear = searchParams?.minYear || '';
+  const maxYear = searchParams?.maxYear || '';
   // console.log(query, page);
 
-  const data = query ? await getSets(query, Number(page)) : null;
+  const data = page ? await getSets(Number(page), query, Number(themeId), Number(minYear), Number(maxYear)) : "";
   // const data = query ? await getDataTest(query, Number(page)) : null;
   console.log(data)
 
@@ -32,12 +38,11 @@ export default async function Home({
   return (
     <>
       <SetSearch />
-      {query.length !== 0 &&
-        <>
+      {data &&
+        <div className="mb-4">
           <SetsTable userWishes={userWishes} userCollection={userCollections} setsData={data.results} />
           {data.count !=0 && <PaginationDemo totalCount={data.count} />}
-          
-        </>
+        </div>
       }
     </>
   )

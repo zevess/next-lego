@@ -39,7 +39,7 @@ export const SetsTable: React.FC<Props> = ({ className, searchQuery, setsData, i
           </>
           }
 
-          {setsData.length == 0 && <p>Ничего не найдено</p>}
+          {!setsData && <p>Ничего не найдено</p>}
 
           {setsData && setsData.map((item) => (
             <SetCard isUserWishSet={userWishesItemsIds.includes(item.set_num)} isUserOwnSet={userCollectionItemsIds?.includes(item.set_num)} userId={session?.user?.id ? session?.user?.id : null} key={item.set_num} data={item} />
