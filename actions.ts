@@ -16,7 +16,3 @@ export const logout = async() => {
     });
     revalidatePath("/")
 }
-
-// export const loginWithCredentials = async(data: any) =>{
-
-// }

@@ -17,11 +17,12 @@ interface SetCardProps {
     data: SetDataJSON,
     userId: string | null,
     isUserOwnSet: boolean,
-    isUserWishSet: boolean
+    isUserWishSet: boolean,
+    isSameUser: boolean,
 }
 
 
-export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUserOwnSet, isUserWishSet }) => {
+export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUserOwnSet, isUserWishSet, isSameUser }) => {
 
     const [isOwn, setIsOwn] = React.useState(isUserOwnSet)
     const [isWish, setIsWish] = React.useState(isUserWishSet)
@@ -54,7 +55,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
             </CardContent>
 
             <CardFooter className="flex flex-col justify-between sm:flex-row ">
-                {userId && <HoverCard>
+                {isSameUser && <HoverCard>
                     <HoverCardTrigger>
                         <WishButton isOwn={isOwn} isWish={isWish} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} />
                     </HoverCardTrigger>
@@ -64,9 +65,9 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
                     </HoverCardContent>
                 </HoverCard>}
 
-                <Link className="bg-black py-1 mb-2 text-white text-center rounded-lg dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-3/5 sm:mb-0" href={`/set/${data.set_num}`}>Перейти к набору</Link>
+                <Link className="bg-black py-1 mb-2 mx-auto text-white text-center rounded-lg dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-3/5 sm:mb-0" href={`/set/${data.set_num}`}>Перейти к набору</Link>
 
-                {userId && <HoverCard>
+                {isSameUser && <HoverCard>
                     <HoverCardTrigger>
                         <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} />
                     </HoverCardTrigger>

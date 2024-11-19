@@ -34,8 +34,6 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
         setSearchQuery(e.target.value)
     }
 
-
-
     const onClick = (term: string) => {
         const params = new URLSearchParams(searchParams);
 
@@ -44,8 +42,6 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
         params.set('minYear', String(yearValues[0]))
         params.set('maxYear', String(yearValues[1]))
         params.set('search', term)
-
-
 
         replace(`${pathname}?${params.toString()}`)
     }

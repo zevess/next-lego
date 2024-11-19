@@ -6,6 +6,8 @@ import { Header } from "@/components/shared/header";
 import { Container } from "@/components/shared/container";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { getUser } from "./actions";
+// import { useUserSession } from "@/hooks/use-session";
 
 const ubuntu = Ubuntu({
   subsets: ['cyrillic'],
@@ -25,6 +27,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth()
+  const user = session?.user?.id ? await getUser(String(session?.user?.id)) : null;
+
   return (
     <SessionProvider session={session}>
       <html lang="en">
@@ -36,8 +40,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <Container>
-              <Header />
-      
+              <Header user={user}/>
               {children}
             </Container>
           </ThemeProvider>

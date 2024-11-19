@@ -24,4 +24,5 @@ export {WishButton} from './wish-button'
 export {OwnButton} from './own-button'
 export {SelectThemes} from './select-themes'
 export {DualRangeYearSlider} from './year-slider'
+export {AlertEdit} from './alert-edit'
  

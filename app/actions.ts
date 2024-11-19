@@ -4,11 +4,38 @@ import { Set, UserCollection } from "@prisma/client"
 import { NextResponse } from "next/server"
 
 export const getUser = async (userId: string) => {
-    return await prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
         where: {
             id: userId
         }
     })
+    return user
+}
+
+export const getUserByNick = async (userNick: string) => {
+    return await prisma.user.findFirst({
+        where: {
+            userNick: userNick
+        }
+    })
+}
+
+export const updateUserNick = async (userId: string, newUserNick: string, newName: string | null) => {
+    const response = await fetch('http://localhost:3000/api/user', {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, newUserNick, newName })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || 'Ошибка при обновлении ника');
+    }
+
+    return data;
 }
 
 export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
@@ -53,11 +80,17 @@ export const getUserCollection = async (userId: string) => {
         }
     })
 
-    return await prisma.set.findMany({
-        where: {
-            collectionId: userCollection?.id
-        }
-    })
+    if (userCollection == null) {
+        return ""
+    } else {
+        return await prisma.set.findMany({
+            where: {
+                collectionId: userCollection?.id
+            }
+        })
+    }
+
+
 
 }
 
@@ -69,25 +102,29 @@ export const getUserWishes = async (userId: string) => {
         }
     })
 
-    return await prisma.set.findMany({
-        where: {
-            wishesId: userWishes?.id
-        }
-    })
+    if (userWishes == null) {
+        return ""
+    } else {
+        return await prisma.set.findMany({
+            where: {
+                wishesId: userWishes?.id
+            }
+        })
+    }
 
 }
 
 export const getSingleSet = async (setNum: string, userId: string) => {
-    
+
     const userWishes = await getUserWishes(userId);
     const userCollection = await getUserCollection(userId);
 
-    const userWishesIds = userWishes.map((item) => item.set_num);
-    const userCollectionIds = userCollection.map((item) => item.set_num);
+    const userWishesIds = userWishes ? userWishes.map((item) => item.set_num) : "";
+    const userCollectionIds = userCollection ? userCollection.map((item) => item.set_num) : "";
 
     const isWish = userWishesIds.includes(setNum);
     const isOwn = userCollectionIds.includes(setNum);
-    
+
     const set = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {
         method: "GET",
         headers: headers

@@ -5,13 +5,13 @@ import { SelectContent, SelectGroup, SelectTrigger, SelectValue } from '../ui/se
 import { PopoverContent, PopoverTrigger } from '../ui/popover'
 import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command'
 import { setThemes } from '@/utils/themes'
-import { Check } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Props {
     className?: string,
     selectedThemeId: number,
-    setSelectedThemeId: React.Dispatch<React.SetStateAction<number>> 
+    setSelectedThemeId: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const SelectThemes: React.FC<Props> = ({ className, selectedThemeId, setSelectedThemeId }) => {
@@ -20,7 +20,7 @@ export const SelectThemes: React.FC<Props> = ({ className, selectedThemeId, setS
     // const [selectedId, setSelectedId] = React.useState<number | null>(null)
     const [value, setValue] = React.useState("");
 
-    
+
 
     const filteredThemes = value
         ? setThemes.filter((theme) => theme.name.toLowerCase().includes(value.toLowerCase()))
@@ -45,12 +45,13 @@ export const SelectThemes: React.FC<Props> = ({ className, selectedThemeId, setS
                     <CommandInput onValueChange={(value) => setValue(value)} placeholder="Выберите серию..." />
                     <CommandList>
                         <CommandEmpty>Серия не найдена</CommandEmpty>
+                        <CommandItem className='flex justify-between font-bold' onSelect={()=> setSelectedThemeId(0)}> Очистить <X strokeWidth={3}/></CommandItem>
                         <CommandGroup>
                             {filteredThemes.map((theme) => (
                                 <CommandItem
                                     key={theme.id}
                                     value={`${theme.name} / id: ${theme.id}`}
-                                    onSelect={() => {
+                                    onSelect={theme.id == selectedThemeId ? () => setSelectedThemeId(0) : () => {
                                         setSelectedThemeId(theme.id)
                                         setOpen(false)
                                     }}

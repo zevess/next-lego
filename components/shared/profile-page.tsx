@@ -1,10 +1,16 @@
+"use client"
+
 import { SetDataJSON } from "@/utils/types"
 import { User } from "@prisma/client"
-import { Avatar } from "../ui"
+import { AlertDialog, Avatar } from "../ui"
 import { AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Typography } from "./typography"
 import { SetsTable } from "./sets-table"
-import { Check, Heart } from "lucide-react"
+import { Check, Heart, PencilLine } from "lucide-react"
+import { useHover } from "@uidotdev/usehooks";
+import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
+import { AlertEdit } from "./alert-edit"
+import { updateUserNick } from "@/app/actions"
 
 
 interface Props {
@@ -17,9 +23,10 @@ interface Props {
 
 export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection, userWishes }) => {
 
-    // const userCollections = getUserCollection(data.id);
+    const [ref, hovering] = useHover();
 
-    // console.log(userWishes);
+    // const updatedUserNick = updateUserNick(data.id, "zevess");
+    // console.log(updateUserNick);
 
     return (
         <div className={className}>
@@ -28,18 +35,27 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
                     {data.image && <AvatarImage src={data.image} alt="@shadcn" />}
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                {data.name && <Typography variant={'h2'} text={data.name} />}
-                {isSameUser && <p>Это вы!</p>}
+                <div ref={ref} className="flex items-center">
+                    <div className="flex flex-col items-center">
+                        <Typography className="" variant={'h2'} text={data.name ? data.name : ""} />
+                        <Typography variant="h4" className="text-gray-600" text={"@" + data.userNick} />
+                    </div>
+
+                    {isSameUser && <AlertEdit hovering={hovering} userData={data} />}
+
+                </div>
+                {isSameUser && <p>{"Это вы!"}</p>}
+
             </div>
 
             <div className='flex flex-col items-center mt-5'>
                 <div className='flex items-center mr-auto ml-2'>
-                    <Check/>
+                    <Check />
                     <Typography variant='h4' text='В коллекции:' className='mr-auto ml-2' />
                 </div>
 
 
-                {userCollection && <SetsTable userWishes={userWishes} userCollection={userCollection} setsData={userCollection} />}
+                {userCollection && <SetsTable isSameUser={isSameUser} userWishes={userWishes} userCollection={userCollection} setsData={userCollection} />}
             </div>
 
             <div className='flex flex-col items-center mt-5'>
@@ -47,7 +63,7 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
                     <Heart />
                     <Typography variant='h4' text='В желаемом:' className='mr-auto ml-2' />
                 </div>
-                {userWishes && <SetsTable userWishes={userWishes} userCollection={userCollection} setsData={userWishes} />}
+                {userWishes && <SetsTable isSameUser={isSameUser} userWishes={userWishes} userCollection={userCollection} setsData={userWishes} />}
             </div>
         </div>
     )

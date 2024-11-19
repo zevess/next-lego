@@ -6,7 +6,6 @@ import { Copy } from "lucide-react";
 
 
 export function DialogCloseButton (){
-  
 
     return (
     <Dialog>

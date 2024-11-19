@@ -19,6 +19,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   const setData = await getSingleSet(id, session?.user?.id ? session?.user?.id : "")
   console.log(setData);
 
+  
+
   return (
     <SetPage setData={setData}/>
   )

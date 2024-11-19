@@ -55,7 +55,15 @@ export interface setThemesProps{
     name: string 
 }
 
-
+export interface sessionProps{
+    user:{
+        name: string,
+        email: string,
+        image: string,
+        id: string
+    },
+    expires: string
+}
 
 export const testData = {
     count: 82,

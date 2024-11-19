@@ -35,13 +35,20 @@ export const PaginationDemo: React.FC<Props> = ({ className, totalCount }) => {
                 <PaginationItem>
                     <PaginationLink isActive={currentPage == 1} href={createPageURL(1)}>1</PaginationLink>
                 </PaginationItem>
+
                 {currentPage >= 3 && <PaginationItem>
                     <PaginationEllipsis />
                 </PaginationItem>}
 
+                {(currentPage !== 2 && currentPage !== 1 ) && <PaginationItem>
+                    <PaginationLink href={(currentPage == 1) ? createPageURL(currentPage + 1) : createPageURL(currentPage - 1)}>
+                        {currentPage == 1 ? currentPage + 1 : currentPage - 1}
+                    </PaginationLink>
+                </PaginationItem>}
+
 
                 {pageCount !== 1 && <PaginationItem>
-                    <PaginationLink isActive={currentPage != 1} href={(currentPage !== pageCount) ? createPageURL(currentPage + 1) : createPageURL(currentPage)}>
+                    <PaginationLink isActive={currentPage != 1} href={(currentPage == 1) ? createPageURL(currentPage + 1) : createPageURL(currentPage)}>
                         {currentPage == 1 ? currentPage + 1 : currentPage}
                     </PaginationLink>
                 </PaginationItem>}
