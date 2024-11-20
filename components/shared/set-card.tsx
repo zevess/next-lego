@@ -36,6 +36,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
         }
     }
 
+    console.log(isSameUser)
     return (
 
         <Card className={cn("flex flex-col justify-between w-[45%] sm:w-[280px] md:w-[300px] lg:w-[340px] xl:w-[380px] 2xl:w-[400px] transition-transform hover:scale-105 hover:border-orange-400 ", className)}>
@@ -47,7 +48,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
                 <span>{data.year}</span>
 
             </CardHeader>
-            
+
             <CardContent className="grid p-1 sm:p-6">
                 <Link href={`/set/${data.set_num}`}>
                     <img src={data.set_img_url} alt="" />
@@ -55,7 +56,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
             </CardContent>
 
             <CardFooter className="flex flex-col justify-between sm:flex-row ">
-                {isSameUser && <HoverCard>
+                {(isSameUser) && <HoverCard>
                     <HoverCardTrigger>
                         <WishButton isOwn={isOwn} isWish={isWish} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} />
                     </HoverCardTrigger>

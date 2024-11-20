@@ -1,6 +1,6 @@
 
 
-import { getUser, getUserByNick, getUserCollection, getUserWishes, updateUserNick } from '@/app/actions';
+import { getUser, getUserByNick, getUserCollection, getUsersByOwnSet, getUserWishes, updateUserNick } from '@/app/actions';
 import { auth } from '@/auth';
 import { ProfilePage, UserNotFound } from '@/components/shared';
 import { updateNick } from '@/utils/functions';
@@ -21,6 +21,9 @@ export default async function Page({ params }: { params: { user: string } }) {
 
   const isSameUser = session?.user?.id == userData?.id
   
+  
+  // console.log(usersSets);
+
   if (!userData) {
     return <UserNotFound />
   } else {

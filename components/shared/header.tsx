@@ -20,14 +20,14 @@ export const Header: React.FC<Props> = async ({ className, user }) => {
   const session = await auth();
 
   return (
-    <header className={cn('flex items-center justify-between mb-5', className)}>
+    <header className={cn('flex items-center justify-between my-3 sticky top-0 z-50 bg-white dark:bg-black', className)}>
       <Link href={'/'}>
         <Logo />
       </Link>
       <Link href={!user ? '/sign-in' : `/profile/${user.userNick}`}>
         <UserIcon className='text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400' />
       </Link>
-      
+
       {!session?.user ? (
         <StyledLink href={'/sign-in'}>Войти</StyledLink>
       ) :

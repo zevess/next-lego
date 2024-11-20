@@ -25,8 +25,7 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
 
     const [ref, hovering] = useHover();
 
-    // const updatedUserNick = updateUserNick(data.id, "zevess");
-    // console.log(updateUserNick);
+
 
     return (
         <div className={className}>
@@ -53,8 +52,6 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
                     <Check />
                     <Typography variant='h4' text='В коллекции:' className='mr-auto ml-2' />
                 </div>
-
-
                 {userCollection && <SetsTable isSameUser={isSameUser} userWishes={userWishes} userCollection={userCollection} setsData={userCollection} />}
             </div>
 

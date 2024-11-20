@@ -1,4 +1,4 @@
-import { getSingleSet } from '@/app/actions'
+import { getSingleSet, getUsersByOwnSet, getUsersByWishSet } from '@/app/actions'
 import { auth } from '@/auth'
 import { SetPage } from '@/components/shared'
 
@@ -17,12 +17,14 @@ export default async function Page({ params }: { params: { id: string } }) {
 
 
   const setData = await getSingleSet(id, session?.user?.id ? session?.user?.id : "")
-  console.log(setData);
+  // console.log(setData);
 
-  
+  const usersOwn = await getUsersByOwnSet(id)
+  const userWish = await getUsersByWishSet(id);
+  // console.log(usersOwn);
 
   return (
-    <SetPage setData={setData}/>
+    <SetPage setData={setData} usersOwn={usersOwn} userWish={userWish}/>
   )
 }
 

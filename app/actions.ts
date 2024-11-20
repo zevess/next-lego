@@ -90,8 +90,6 @@ export const getUserCollection = async (userId: string) => {
         })
     }
 
-
-
 }
 
 export const getUserWishes = async (userId: string) => {
@@ -148,6 +146,58 @@ export const getSets = async (page: number, searchQuery?: string, themeId?: numb
     })
 
     return sets.json();
+}
+
+export const getUsersByOwnSet = async (setNum: string) => {
+    const usersWithSet = await prisma.user.findMany({
+        where: {
+            collection: {
+                some: {
+                    sets: {
+                        some: {
+                            set_num: setNum,
+                        },
+                    },
+                },
+            },
+        },
+        include: {
+            collection: {
+                include: {
+                    sets: true,
+                },
+            },
+        },
+    });
+
+    return usersWithSet;
+
+}
+
+export const getUsersByWishSet = async (setNum: string) => {
+    const usersWishesSet = await prisma.user.findMany({
+        where: {
+            wishes: {
+                some: {
+                    sets: {
+                        some: {
+                            set_num: setNum,
+                        },
+                    },
+                },
+            },
+        },
+        include: {
+            wishes: {
+                include: {
+                    sets: true,
+                },
+            },
+        },
+    });
+
+    return usersWishesSet;
+
 }
 
 

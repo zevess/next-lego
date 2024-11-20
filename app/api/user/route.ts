@@ -39,20 +39,30 @@ export async function PATCH(req: NextRequest) {
             }
         })
 
-        if (isNickTaken) {
-            return NextResponse.json({ message: "Имя уже занято. Попробуйте другое" }, {status: 400})
-        } else {
-            const updatedUserNick = await prisma.user.update({
-                where: {
-                    id: userId
-                },
-                data: {
-                    userNick: newUserNick,
-                    name: newName
-                }
-            })
-            return NextResponse.json(updatedUserNick, {status: 200});
+        if (newUserNick.length == 0 || newUserNick.length < 4) {
+            return NextResponse.json({ message: "Ник слишком короткий. Минимум 4 символа" }, { status: 400 })
         }
+
+        if (newName.length == 0 || newName.length < 4) {
+            return NextResponse.json({ message: "Имя слишком короткое. Минимум 4 символа" }, { status: 400 })
+        }
+
+        if (isNickTaken && (isNickTaken.id !== userId)) {
+            return NextResponse.json({ message: "Имя уже занято. Попробуйте другое" }, { status: 400 })
+        }
+
+        const updatedUserNick = await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                userNick: newUserNick,
+                name: newName
+            }
+        })
+        return NextResponse.json(updatedUserNick, { status: 200 });
+
+
     } catch (error) {
         return NextResponse.json({ error });
 

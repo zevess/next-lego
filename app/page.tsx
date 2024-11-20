@@ -23,20 +23,15 @@ export default async function Home({
   const maxYear = searchParams?.maxYear || '';
 
   const data = page ? await getSets(Number(page), query, Number(themeId), Number(minYear), Number(maxYear)) : "";
-  // const data = query ? await getDataTest(query, Number(page)) : null;
-  // console.log(data)
 
   const session = await auth()
-  // const session = useSessionStore((state) => state.session)
-
+  
   const userData = session?.user?.id ? await getUser(session.user.id) : null;
-  console.log(userData)
-
   const userCollections = userData?.id ? await getUserCollection(userData?.id) : "";
   const userWishes = userData?.id ? await getUserWishes(userData?.id) : "";
 
-  const isSameUser = session?.user?.id == userData?.id
-  console.log(isSameUser)
+  const isSameUser = (session?.user?.id == userData?.id) && (session !== null)
+  
   return (
     <>
       <SetSearch />
