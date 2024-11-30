@@ -13,7 +13,7 @@ import { User } from '@prisma/client'
 import { AvatarFallback, AvatarImage } from '../ui/avatar'
 import Link from 'next/link'
 import { UsersDialog } from './users-dialog'
-import Image from 'next/image'
+
 
 
 interface Props {

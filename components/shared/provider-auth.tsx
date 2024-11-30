@@ -5,7 +5,6 @@ import { GithubIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { login } from '@/actions'
 import { Button } from '../ui'
-import Image from 'next/image'
 
 interface Props {
   className?: string
