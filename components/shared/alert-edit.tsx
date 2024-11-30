@@ -1,13 +1,13 @@
 "use client"
 
-import { LogOut, PencilLine } from "lucide-react"
-import { AlertDialog, Avatar, Button, Input } from "../ui"
-import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
+import {  PencilLine } from "lucide-react"
+import { AlertDialog, Button, Input } from "../ui"
+import {  AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
 import React from "react"
 import { User } from "@prisma/client"
-import { updateUserNick } from "@/app/actions"
-import { redirect, useRouter } from "next/navigation"
-import { AvatarFallback, AvatarImage } from "../ui/avatar"
+import { updateUserNickAndName } from "@/app/actions"
+import { useRouter } from "next/navigation"
+
 
 
 interface Props {
@@ -36,7 +36,7 @@ export const AlertEdit: React.FC<Props> = ({ userData, hovering }) => {
     const updateNick = async () => {
         setErrorMessage(null);
         try {
-            await updateUserNick(userData.id, nick, name).then(() => {
+            await updateUserNickAndName(userData.id, nick, name).then(() => {
                 setName(name)
                 setNick(nick)
                 router.push(`/profile/${nick}`)

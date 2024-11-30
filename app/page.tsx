@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
-import { getDataTest, getSets, getUser, getUserByNick, getUserCollection, getUserWishes } from "./actions";
-import { PaginationDemo, SetSearch, SetSearchResults, SetsTable } from "@/components/shared";
-import useSessionStore from "@/store/user";
+import { getSets, getUser,  getUserCollection, getUserWishes } from "./actions";
+import { PaginationDemo, SetSearch,  SetsTable } from "@/components/shared";
+
 
 
 export default async function Home({

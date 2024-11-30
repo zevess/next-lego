@@ -2,15 +2,15 @@
 
 import { SetDataJSON } from "@/utils/types"
 import { User } from "@prisma/client"
-import { AlertDialog, Avatar } from "../ui"
+import { Avatar } from "../ui"
 import { AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Typography } from "./typography"
 import { SetsTable } from "./sets-table"
-import { Check, Heart, PencilLine } from "lucide-react"
+import { Check, Heart } from "lucide-react"
 import { useHover } from "@uidotdev/usehooks";
-import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
 import { AlertEdit } from "./alert-edit"
-import { updateUserNick } from "@/app/actions"
+import { AlertExit } from "./alert-exit"
+
 
 
 interface Props {
@@ -25,11 +25,11 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
 
     const [ref, hovering] = useHover();
 
-
-
     return (
         <div className={className}>
             <div className='w-full flex flex-col items-center'>
+                {isSameUser && <AlertExit className="ml-auto"/>}
+
                 <Avatar className='max-w-56 w-1/3 h-1/3 mb-3'>
                     {data.image && <AvatarImage src={data.image} alt="@shadcn" />}
                     <AvatarFallback>CN</AvatarFallback>

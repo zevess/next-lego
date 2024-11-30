@@ -1,9 +1,9 @@
 
 
-import { getUser, getUserByNick, getUserCollection, getUsersByOwnSet, getUserWishes, updateUserNick } from '@/app/actions';
+import { getUserByNick, getUserCollection, getUserWishes } from '@/app/actions';
 import { auth } from '@/auth';
-import { ProfilePage, UserNotFound } from '@/components/shared';
-import { updateNick } from '@/utils/functions';
+import { ProfilePage, NotFound } from '@/components/shared';
+
 import React from 'react'
 
 
@@ -20,12 +20,9 @@ export default async function Page({ params }: { params: { user: string } }) {
   const userWishes = userData?.id ? await getUserWishes(userData?.id) : "";
 
   const isSameUser = session?.user?.id == userData?.id
-  
-  
-  // console.log(usersSets);
 
   if (!userData) {
-    return <UserNotFound />
+    return <NotFound type='user' />
   } else {
     return <ProfilePage userWishes={userWishes} userCollection={userCollections} data={userData} isSameUser={isSameUser} />
   }

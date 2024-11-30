@@ -119,6 +119,8 @@ export async function POST(request: Request) {
     }
 }
 
+
+
 export async function DELETE(request: Request) {
     const body = await request.json();
 
@@ -187,9 +189,7 @@ export async function DELETE(request: Request) {
                 }
             }
             return NextResponse.json({message: "Набор удален"});
-
         }
-
     } catch (error) {
         return NextResponse.json({ error });
     }

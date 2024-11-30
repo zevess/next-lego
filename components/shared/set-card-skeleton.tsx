@@ -2,15 +2,10 @@ import { cn } from "@/lib/utils"
 import { Card, Skeleton } from "../ui"
 import { CardContent, CardFooter, CardHeader } from "../ui/card"
 
-
-
-
-
 interface SetCardProps {
     className?: string
 
 }
-
 
 export const SetCardSkeleton: React.FC<SetCardProps> = ({ className }) => {
     return (

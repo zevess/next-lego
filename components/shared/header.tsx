@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Logo } from "./logo";
-import { UserIcon } from "lucide-react";
+import { Search, UserIcon } from "lucide-react";
 import { StyledLink } from "./link";
 import { AlertExit } from "./alert-exit";
 import { ThemeToggle } from "./theme-toggler";
@@ -24,14 +24,17 @@ export const Header: React.FC<Props> = async ({ className, user }) => {
       <Link href={'/'}>
         <Logo />
       </Link>
+
+      <Link href={'/'}>
+        <Search className='text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400' />
+      </Link>
+
       <Link href={!user ? '/sign-in' : `/profile/${user.userNick}`}>
         <UserIcon className='text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400' />
       </Link>
 
-      {!session?.user ? (
+      {!session?.user &&
         <StyledLink href={'/sign-in'}>Войти</StyledLink>
-      ) :
-        <AlertExit />
       }
       <ThemeToggle />
     </header>

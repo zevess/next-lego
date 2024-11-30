@@ -15,7 +15,6 @@ import Link from 'next/link'
 import { UsersDialog } from './users-dialog'
 
 
-
 interface Props {
   className?: string,
   setData: setDataPage,
@@ -106,19 +105,13 @@ export const SetPage: React.FC<Props> = ({ className, setData, usersOwn, userWis
                       </Avatar>
                     </Link>
                   ))}
-
                   {usersOwn.length > 6 &&
                     <UsersDialog title='В коллекции у пользователей: ' users={usersOwn} />
                   }
-
                 </div>
               </div>
             )}
-
-
           </div>
-
-
         </div>
       </div>
     </div>

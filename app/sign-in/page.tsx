@@ -1,6 +1,5 @@
 'use client'
 
-
 import { Logo, ProviderAuth, Typography } from '@/components/shared'
 import { Card } from '@/components/ui'
 import { CardContent, CardHeader } from '@/components/ui/card'

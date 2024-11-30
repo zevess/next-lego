@@ -1,7 +1,6 @@
 "use client"
 import React from 'react'
-import { Button, Command, Popover, Select } from '../ui'
-import { SelectContent, SelectGroup, SelectTrigger, SelectValue } from '../ui/select'
+import { Button, Command, Popover } from '../ui'
 import { PopoverContent, PopoverTrigger } from '../ui/popover'
 import { CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command'
 import { setThemes } from '@/utils/themes'
@@ -33,7 +32,7 @@ export const SelectThemes: React.FC<Props> = ({ className, selectedThemeId, setS
                 <Button variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className={cn("w-[200px] justify-between", className)}>
+                    className={cn("justify-between max-w-[300px] overflow-hidden", className)}>
                     {selectedThemeId !== 0
                         ? `${setThemes.find((theme) => theme.id === selectedThemeId)?.name} / id: ${selectedThemeId}`
                         : "Выберите серию..."}

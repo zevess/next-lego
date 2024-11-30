@@ -5,12 +5,17 @@ import { logout } from "@/actions"
 import { LogOut } from "lucide-react"
 import { AlertDialog, Button } from "../ui"
 import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
+import { FC } from "react"
 
-export function AlertExit() {
+interface Props {
+  className?: string
+}
+
+export const AlertExit: FC<Props> = ({className}) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost"><LogOut /></Button>
+        <Button variant="ghost" className={className}><LogOut /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

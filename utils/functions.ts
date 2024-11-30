@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 import { SetDataJSON } from "./types";
-import { updateUserNick } from "@/app/actions";
+import { updateUserNickAndName } from "@/app/actions";
 
 
 export const setAction = (userId: string, data: SetDataJSON, setDispatch: React.Dispatch<SetStateAction<boolean>>, dispatchValue: boolean, handleAction:(data: SetDataJSON, userId: string) => Promise<void>) => {
@@ -14,7 +14,7 @@ export const setAction = (userId: string, data: SetDataJSON, setDispatch: React.
 };
 
 
-export const updateNick = async(id: string, nick: string) =>{
-    const updatedUserNick = await updateUserNick(id, nick)
+export const updateNickAndName = async(userId: string, newUserNick: string, newName: string | null) =>{
+    const updatedUserNick = await updateUserNickAndName(userId, newUserNick, newName)
     return updatedUserNick
 }

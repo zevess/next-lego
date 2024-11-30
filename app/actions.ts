@@ -1,7 +1,6 @@
 import prisma from "@/prisma/prisma-client"
-import { headers, SetData, SetDataJSON, testData } from "@/utils/types"
-import { Set, UserCollection } from "@prisma/client"
-import { NextResponse } from "next/server"
+import { headers, SetDataJSON, testData } from "@/utils/types"
+
 
 export const getUser = async (userId: string) => {
     const user = await prisma.user.findFirst({
@@ -20,7 +19,7 @@ export const getUserByNick = async (userNick: string) => {
     })
 }
 
-export const updateUserNick = async (userId: string, newUserNick: string, newName: string | null) => {
+export const updateUserNickAndName = async (userId: string, newUserNick: string, newName: string | null) => {
     const response = await fetch('http://localhost:3000/api/user', {
         method: "PATCH",
         headers: {
@@ -69,8 +68,6 @@ export const removeSetFromWishes = async (set: SetDataJSON, userId: string) => {
     })
 
 }
-
-
 
 export const getUserCollection = async (userId: string) => {
 
