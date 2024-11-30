@@ -43,8 +43,11 @@ export const AlertEdit: React.FC<Props> = ({ userData, hovering }) => {
                 router.refresh()
                 setOpen(false);
             });
-        } catch (error: any) {
-            setErrorMessage(error.message);
+        } catch (error) {
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            }
+            
         }
 
     };
