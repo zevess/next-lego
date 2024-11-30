@@ -25,7 +25,7 @@ export const SetsTable: React.FC<Props> = ({ className, searchQuery, setsData, i
   const userCollectionItemsIds = userCollection && userCollection?.map((item) => item.set_num);
   const userWishesItemsIds = userWishes && userWishes?.map((item) => item.set_num);
 
-  if(setsData.length == 0 || userCollection.length == 0 || userWishes.length == 0){
+  if(setsData.length == 0){
     return(
       <NotFound type='sets'/>
     )

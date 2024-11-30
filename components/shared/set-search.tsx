@@ -42,12 +42,18 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
         replace(`${pathname}?${params.toString()}`)
     }
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            onClick(searchQuery);
+        }
+    };
+
     return (
         <div className={className}>
             <div className="flex flex-col items-center mt-10">
                 <Typography variant="h1" text="Найдите набор" />
                 <div className={cn("flex w-full max-w-screen-md items-center space-x-2 p-4 dark:bg-black", className)}>
-                    <Input defaultValue={searchParams.get('search')?.toString()} onChange={onChange} className="text-2xl dark:text-white" type="text" placeholder={"Введите артикул или название набора на английском"} />
+                    <Input defaultValue={searchParams.get('search')?.toString()} onChange={onChange} className="text-2xl dark:text-white" type="text" placeholder={"Введите артикул или название набора на английском"} onKeyDown={handleKeyDown} />
                     <Button onClick={() => onClick(searchQuery)}>
                         <Search />
                     </Button>
