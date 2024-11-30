@@ -9,7 +9,7 @@ export const UserAvatar = async() => {
  
   return (
     <div>
-      <Image src={session?.user?.image} alt="User Avatar" />
+      <img src={session?.user?.image} alt="User Avatar" />
     </div>
   )
 }

@@ -52,7 +52,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
             <CardContent className="grid p-1 sm:p-6">
                 <Link href={`/set/${data.set_num}`}>
-                    <Image src={data.set_img_url} alt="" />
+                    <img src={data.set_img_url} alt="" />
                 </Link>
             </CardContent>
 
