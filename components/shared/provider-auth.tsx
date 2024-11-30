@@ -5,6 +5,7 @@ import { GithubIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { login } from '@/actions'
 import { Button } from '../ui'
+import Image from 'next/image'
 
 interface Props {
   className?: string
@@ -14,7 +15,7 @@ export const ProviderAuth: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn("flex flex-col",className) }>
         <Button className='w-full mt-4' onClick={()=> login("github")}><GithubIcon className='mr-2'/>Войти через GitHub </Button>
-        <Button className='w-full mt-4' onClick={()=> login("google")}><img src='./google-logo.png' width={'20px'} height={'20px'} className='mr-2'/>Войти через Google </Button>
+        <Button className='w-full mt-4' onClick={()=> login("google")}><Image src='./google-logo.png' width={20} height={20} alt='Google' className='mr-2'/>Войти через Google </Button>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+import Image from "next/image"
 
  
 export const UserAvatar = async() => {
@@ -8,7 +9,7 @@ export const UserAvatar = async() => {
  
   return (
     <div>
-      <img src={session?.user?.image} alt="User Avatar" />
+      <Image src={session?.user?.image} alt="User Avatar" />
     </div>
   )
 }

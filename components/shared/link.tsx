@@ -10,7 +10,7 @@ interface Props {
 
 export const StyledLink: React.FC<Props> = ({ className, href, children }) => {
   return (
-   <Link href={href} className={cn("text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400")}>
+   <Link href={href} className={cn("text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400", className)}>
         {children}
    </Link>
   )

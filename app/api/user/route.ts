@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
         }
 
     } catch (error) {
-        return NextResponse.json({ error: "ошибка" }, { status: 500 })
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
 
@@ -65,6 +65,5 @@ export async function PATCH(req: NextRequest) {
 
     } catch (error) {
         return NextResponse.json({ error });
-
     }
 }

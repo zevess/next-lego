@@ -11,6 +11,7 @@ import { setAction } from "@/utils/functions"
 import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { WishButton } from "./wish-button"
 import { OwnButton } from "./own-button"
+import Image from "next/image"
 
 interface SetCardProps {
     className?: string
@@ -51,7 +52,7 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
             <CardContent className="grid p-1 sm:p-6">
                 <Link href={`/set/${data.set_num}`}>
-                    <img src={data.set_img_url} alt="" />
+                    <Image src={data.set_img_url} alt="" />
                 </Link>
             </CardContent>
 

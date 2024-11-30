@@ -11,7 +11,7 @@ interface Props {
 
 export const WishButton: React.FC<Props> = ({ className, isOwn, isWish, onClick }) => {
     return (
-        <Button disabled={isOwn} onClick={onClick} variant={'ghost'} className="">
+        <Button disabled={isOwn} onClick={onClick} variant={'ghost'} className={className}>
             {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart />}
         </Button>
     )

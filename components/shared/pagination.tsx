@@ -5,11 +5,10 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { usePathname, useSearchParams } from 'next/navigation';
 
 interface Props {
-    className?: string,
     totalCount: number
 }
 
-export const PaginationDemo: React.FC<Props> = ({ className, totalCount }) => {
+export const PaginationDemo: React.FC<Props> = ({ totalCount }) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get("page")) || 1;

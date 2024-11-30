@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 import React from 'react'
-import { AlertDialog, Avatar, Button, Popover } from '../ui'
+import { AlertDialog, Avatar, Button } from '../ui'
 import { AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../ui/alert-dialog'
 import Link from 'next/link'
 import { AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -12,7 +12,7 @@ interface Props {
     title: string,
 }
 
-export const UsersDialog: React.FC<Props> = ({ className, users, title }) => {
+export const UsersDialog: React.FC<Props> = ({ users, title }) => {
 
     return (
         <AlertDialog>

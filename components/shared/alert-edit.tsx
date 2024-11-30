@@ -30,7 +30,7 @@ export const AlertEdit: React.FC<Props> = ({ userData, hovering }) => {
             setNick(userData.userNick)
             setErrorMessage(null);
         }
-    }, [open])
+    }, [open, userData.name, userData.userNick])
 
     
     const updateNick = async () => {

@@ -18,7 +18,7 @@ interface Props {
   isSameUser: boolean
 }
 
-export const SetsTable: React.FC<Props> = ({ className, searchQuery, setsData, isLoading, userCollection, userWishes, isSameUser }) => {
+export const SetsTable: React.FC<Props> = ({ setsData, isLoading, userCollection, userWishes, isSameUser }) => {
 
   const { data: session } = useSession()
 

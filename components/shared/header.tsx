@@ -4,9 +4,7 @@ import Link from "next/link";
 import { Logo } from "./logo";
 import { Search, UserIcon } from "lucide-react";
 import { StyledLink } from "./link";
-import { AlertExit } from "./alert-exit";
 import { ThemeToggle } from "./theme-toggler";
-import { getUser } from "@/app/actions";
 import { User } from "@prisma/client";
 
 

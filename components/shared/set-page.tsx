@@ -13,16 +13,16 @@ import { User } from '@prisma/client'
 import { AvatarFallback, AvatarImage } from '../ui/avatar'
 import Link from 'next/link'
 import { UsersDialog } from './users-dialog'
+import Image from 'next/image'
 
 
 interface Props {
-  className?: string,
   setData: setDataPage,
   usersOwn: User[],
   userWish: User[]
 }
 
-export const SetPage: React.FC<Props> = ({ className, setData, usersOwn, userWish }) => {
+export const SetPage: React.FC<Props> = ({ setData, usersOwn, userWish }) => {
 
   const [isOwn, setIsOwn] = React.useState(setData.isOwn)
   const [isWish, setIsWish] = React.useState(setData.isWish)
@@ -42,7 +42,7 @@ export const SetPage: React.FC<Props> = ({ className, setData, usersOwn, userWis
     <div className={'flex flex-col items-center'}>
       <div className='flex flex-wrap justify-center w-full rounded-xl border bg-card text-card-foreground shadow'>
 
-        <img src={setData.set.set_img_url} className='p-3 w-full object-cover max-w-3xl' alt="" />
+        <Image src={setData.set.set_img_url} className='p-3 w-full object-cover max-w-3xl' alt="" />
         <div className='p-8 flex flex-col  flex-1'>
           <div className='flex justify-between'>
             <div>

@@ -3,11 +3,11 @@ import React from 'react'
 import { Typography } from './typography'
 
 interface Props {
-  className?: string,
+
   type: "user" | "sets",
 }
 
-export const NotFound: React.FC<Props> = ({ className, type }) => {
+export const NotFound: React.FC<Props> = ({ type }) => {
   return (
     <div className={'w-full flex flex-col items-center'}>
         <Frown width={'25%'} height={'25%'} color='gray' strokeWidth={'1'}/>

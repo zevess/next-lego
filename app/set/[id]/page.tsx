@@ -4,10 +4,6 @@ import { SetPage } from '@/components/shared'
 
 import React from 'react'
 
-interface Props {
-  className?: string,
-  id: string
-}
 
 export default async function Page({ params }: { params: { id: string } }) {
   
