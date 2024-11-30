@@ -20,7 +20,7 @@ export const getUserByNick = async (userNick: string) => {
 }
 
 export const updateUserNickAndName = async (userId: string, newUserNick: string, newName: string | null) => {
-    const response = await fetch('http://localhost:3000/api/user', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ export const updateUserNickAndName = async (userId: string, newUserNick: string,
 }
 
 export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
-    const newSet = await fetch('http://localhost:3000/api/set', {
+    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
         method: "POST",
         body: JSON.stringify({ set: set, userId: userId, type: "collection" })
     })
@@ -46,7 +46,7 @@ export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
 }
 
 export const removeSetFromCollection = async (set: SetDataJSON, userId: string) => {
-    await fetch('http://localhost:3000/api/set', {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/set`, {
         method: "DELETE",
         body: JSON.stringify({ set: set, userId: userId, type: "collection" })
     })
@@ -54,7 +54,7 @@ export const removeSetFromCollection = async (set: SetDataJSON, userId: string) 
 }
 
 export const addSetToWishes = async (set: SetDataJSON, userId: string) => {
-    const newSet = await fetch('http://localhost:3000/api/set', {
+    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
         method: "POST",
         body: JSON.stringify({ set: set, userId: userId, type: "wishes" })
     })
@@ -62,7 +62,7 @@ export const addSetToWishes = async (set: SetDataJSON, userId: string) => {
 }
 
 export const removeSetFromWishes = async (set: SetDataJSON, userId: string) => {
-    await fetch('http://localhost:3000/api/set', {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
         method: "DELETE",
         body: JSON.stringify({ set: set, userId: userId, type: "wishes" })
     })
@@ -200,6 +200,4 @@ export const getUsersByWishSet = async (setNum: string) => {
 
 export const getDataTest = async (searchQuery: string, page: number) => {
     return { page, testData, searchQuery }
-    // const data = await fetch(`https://api.agify.io?name=${searchQuery}`);
-    // return data.json();
 }
