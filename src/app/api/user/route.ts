@@ -26,11 +26,11 @@ export async function GET(req: NextRequest) {
 
 
 export async function PATCH(req: NextRequest) {
-    const formData = await req.formData();
-    const newUserNick = formData.get('newUserNick')?.toString();
-    const newName = formData.get('newName')?.toString();
-    const userId = formData.get('userId')?.toString();
-    const newAvatarUrl = formData.get('imageUrl')?.toString();
+    const body = await req.json();
+    const newUserNick = body.newUserNick;
+    const newName = body.newName
+    const userId = body.userId
+    const newAvatarUrl = body.imageUrl
 
     try {
 

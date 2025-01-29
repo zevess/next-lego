@@ -128,13 +128,16 @@ export const updateProfile = async (userId: string, newUserNick: string, newName
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
         method: 'PATCH',
-        body: formData,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, newUserNick, newName, imageUrl })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'Ошибка при обновлении ника');
+        throw new Error(data.message || 'Ошибка при обновлении профиля');
     }
 
     return data;
