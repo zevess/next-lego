@@ -10,7 +10,7 @@ interface Props {
 
 export const SignInForm: React.FC<Props> = ({ className }) => {
 
-    const [error, setError] = useState<any>()
+    const [error, setError] = useState<string>()
 
     const pathname = usePathname()
     const router = useRouter()
@@ -26,6 +26,7 @@ export const SignInForm: React.FC<Props> = ({ className }) => {
                 router.push('/')
             }
         } catch (error) {
+            console.log(error)
             setError("Ошибка при авторизации")
         }
     }

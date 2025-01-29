@@ -1,4 +1,3 @@
-import { auth } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 
 interface Props {

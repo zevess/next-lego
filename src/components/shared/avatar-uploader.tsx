@@ -14,7 +14,7 @@ interface Props {
     setImage: React.Dispatch<React.SetStateAction<File | null>>
 }
 
-export const AvatarUploader: React.FC<Props> = ({ className, avatarUrl,  setImage }) => {
+export const AvatarUploader: React.FC<Props> = ({ avatarUrl,  setImage }) => {
 
     const [file, setFile] = useState<string | null>(avatarUrl ? avatarUrl : null);
  

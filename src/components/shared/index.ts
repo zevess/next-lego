@@ -18,7 +18,7 @@ export { Container } from "./container";
 export { AlertExit } from "./alert-exit";
 export {WishButton} from './wish-button'
 export {OwnButton} from './own-button'
-export {SelectThemes} from './select-themes'
+// export {SelectThemes} from './select-themes'
 export {DualRangeYearSlider} from './year-slider'
 export {ProfileEdit} from './profile-edit'
 export {UsersDialog} from './users-dialog'

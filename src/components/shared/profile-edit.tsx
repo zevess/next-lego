@@ -7,7 +7,6 @@ import React from "react"
 import { User } from "@prisma/client"
 import { updateProfile, uploadImageToImgbb } from "@/lib/actions"
 import { useRouter } from "next/navigation"
-import axios from "axios"
 import { AvatarUploader } from "./avatar-uploader"
 
 

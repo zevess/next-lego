@@ -36,6 +36,7 @@ export const credentialsSignIn = async (formData: FormData) => {
 
         return res;
     } catch (error) {
+        console.log(error)
         return { error: true, message: "Неверный email или пароль" };
     }
 
@@ -84,6 +85,7 @@ export const credentialsSignUp = async (formData: FormData) => {
 
         return res;
     } catch (error) {
+        console.log(error)
         return { error: true, message: "Произошла непредвиденная ошибка при регистрации" };
     }
 };
