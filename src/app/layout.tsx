@@ -17,15 +17,6 @@ const ubuntu = Ubuntu({
 export const metadata: Metadata = {
   title: "MY LEGO LIST",
   description: "Сервис для отслеживания LEGO",
-  icons: {
-    icon: [
-      {
-
-        url: '/public/logo_ico.ico',
-        href: '/public/logo_ico.ico'
-      }
-    ]
-  }
 };
 
 export default async function RootLayout({

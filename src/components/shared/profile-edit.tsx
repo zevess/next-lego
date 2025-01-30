@@ -25,6 +25,8 @@ export const ProfileEdit: React.FC<Props> = ({ userData, hovering }) => {
     const [isUpload, setIsUpload] = React.useState(false)
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
+    console.log(image)
+
     const router = useRouter()
 
     React.useEffect(() => {
@@ -40,7 +42,7 @@ export const ProfileEdit: React.FC<Props> = ({ userData, hovering }) => {
         setErrorMessage(null);
         try {
             setIsUpload(true)
-            let uploadedImage = '';
+            let uploadedImage = userData.image;
             if (image) {
                 uploadedImage = await uploadImageToImgbb(image)
             }

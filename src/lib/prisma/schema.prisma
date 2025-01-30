@@ -13,7 +13,7 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   password      String?
-  image         String?         @default("https://cdn.dribbble.com/users/2406416/screenshots/6881486/lego5_4x.jpg?resize=1000x750&vertical=center")
+  image         String         @default("https://cdn.dribbble.com/users/2406416/screenshots/6881486/lego5_4x.jpg?resize=1000x750&vertical=center")
   userNick      String          @unique @default(cuid())
   avatarUrl     String?
   accounts      Account[]
