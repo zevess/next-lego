@@ -21,7 +21,8 @@ export interface SetDataJSON {
     set_img_url: string;
     set_url: string;
     collectionId?: number | null;
-    wishesId?: number | null
+    wishesId?: number | null,
+    productId?: string | null
     // user_id: string;
 }
 
@@ -44,8 +45,8 @@ export const headers = {
 
 export interface setDataPage {
     set: SetDataJSON;
-    isOwn: boolean;
-    isWish: boolean;
+    // isOwn: boolean;
+    // isWish: boolean;
     userId: string
 }
 
@@ -53,6 +54,16 @@ export interface setThemesProps{
     id: number,
     parent_id: number | null,
     name: string 
+}
+
+export interface productProps{
+    title: string,
+    description: string,
+    location: string,
+    price: number,
+    userId: string,
+    images: string[]
+    sets: SetDataJSON[],
 }
 
 export interface sessionProps{
@@ -70,27 +81,46 @@ export const testData = {
     next: null,
     previous: null,
     results: [
-        // {
-        //     set_num: '10075-1',
-        //     name: 'Spider-Man Action Pack',
-        //     year: 2002,
-        //     theme_id: 706,
-        //     num_parts: 25,
-        //     set_img_url: 'https://cdn.rebrickable.com/media/sets/10075-1/110451.jpg',
-        //     set_url: 'https://rebrickable.com/sets/10075-1/spider-man-action-pack/',
-        //     last_modified_dt: '2022-10-02T23:48:03.782040Z'
-        // },
-        // {
-        //     set_num: '10607-1',
-        //     name: 'Spider-Man Web-Bike Workshop',
-        //     year: 2015,
-        //     theme_id: 630,
-        //     num_parts: 13,
-        //     set_img_url: 'https://cdn.rebrickable.com/media/sets/10607-1/4977.jpg',
-        //     set_url: 'https://rebrickable.com/sets/10607-1/spider-man-web-bike-workshop/',
-        //     last_modified_dt: '2018-05-15T13:16:37.945528Z'
-        // },
-        
+        {
+            set_num: '10075-1',
+            name: 'Spider-Man Action Pack',
+            year: 2002,
+            theme_id: 706,
+            num_parts: 25,
+            set_img_url: 'https://cdn.rebrickable.com/media/sets/10075-1/110451.jpg',
+            set_url: 'https://rebrickable.com/sets/10075-1/spider-man-action-pack/',
+            last_modified_dt: '2022-10-02T23:48:03.782040Z'
+        },
+        {
+            set_num: '10607-1',
+            name: 'Spider-Man Web-Bike Workshop',
+            year: 2015,
+            theme_id: 630,
+            num_parts: 13,
+            set_img_url: 'https://cdn.rebrickable.com/media/sets/10607-1/4977.jpg',
+            set_url: 'https://rebrickable.com/sets/10607-1/spider-man-web-bike-workshop/',
+            last_modified_dt: '2018-05-15T13:16:37.945528Z'
+        },
+        {
+            set_num: '10075-1',
+            name: 'Spider-Man Action Pack',
+            year: 2002,
+            theme_id: 706,
+            num_parts: 25,
+            set_img_url: 'https://cdn.rebrickable.com/media/sets/10075-1/110451.jpg',
+            set_url: 'https://rebrickable.com/sets/10075-1/spider-man-action-pack/',
+            last_modified_dt: '2022-10-02T23:48:03.782040Z'
+        },
+        {
+            set_num: '10607-1',
+            name: 'Spider-Man Web-Bike Workshop',
+            year: 2015,
+            theme_id: 630,
+            num_parts: 13,
+            set_img_url: 'https://cdn.rebrickable.com/media/sets/10607-1/4977.jpg',
+            set_url: 'https://rebrickable.com/sets/10607-1/spider-man-web-bike-workshop/',
+            last_modified_dt: '2018-05-15T13:16:37.945528Z'
+        },
     ]
 }
 

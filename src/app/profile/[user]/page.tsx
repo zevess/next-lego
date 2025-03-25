@@ -1,12 +1,15 @@
-
-
 import { getUserByNick, getUserCollection, getUserWishes } from '@/lib/actions';
 import { auth } from '@/lib/auth';
 import { ProfilePage, NotFound } from '@/components/shared';
-
 import React from 'react'
+import { Metadata } from 'next';
 
-
+export async function generateMetadata({ params }: { params: Promise<{ user: string }> }): Promise<Metadata> {
+  const user = (await params).user;
+  return {
+    title: user
+  };
+}
 
 export default async function Page({ params }: { params: Promise<{ user: string }>}) {
 

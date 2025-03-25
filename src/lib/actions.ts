@@ -1,7 +1,7 @@
 "use server"
 import { schema } from "@/lib/schema";
 import { prisma } from "./prisma/prisma";
-import { headers, SetDataJSON, testData } from "./types";
+import { headers, productProps, SetDataJSON, testData } from "./types";
 import { signIn, signOut } from "./auth";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcrypt"
@@ -144,97 +144,67 @@ export const updateProfile = async (userId: string, newUserNick: string, newName
 };
 
 export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
-    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
+    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set/addSetToCollection`, {
         method: "POST",
-        body: JSON.stringify({ set: set, userId: userId, type: "collection" })
+        body: JSON.stringify({ set: set, userId: userId })
     })
     return newSet.json()
-}
-
-export const removeSetFromCollection = async (set: SetDataJSON, userId: string) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
-        method: "DELETE",
-        body: JSON.stringify({ set: set, userId: userId, type: "collection" })
-    })
-
 }
 
 export const addSetToWishes = async (set: SetDataJSON, userId: string) => {
-    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
+    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set/addSetToWishes`, {
         method: "POST",
-        body: JSON.stringify({ set: set, userId: userId, type: "wishes" })
+        body: JSON.stringify({ set: set, userId: userId })
     })
     return newSet.json()
-}
-
-export const removeSetFromWishes = async (set: SetDataJSON, userId: string) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set`, {
-        method: "DELETE",
-        body: JSON.stringify({ set: set, userId: userId, type: "wishes" })
-    })
-
 }
 
 export const getUserCollection = async (userId: string) => {
 
-    const userCollection = await prisma.userCollection.findFirst({
+    const userCollection = await prisma.set.findMany({
         where: {
-            userId: userId
+            inCollectionId: userId
         }
     })
 
-    if (userCollection == null) {
-        return ""
-    } else {
-        return await prisma.set.findMany({
-            where: {
-                collectionId: userCollection?.id
-            }
-        })
-    }
+    return userCollection
 
 }
 
 export const getUserWishes = async (userId: string) => {
 
-    const userWishes = await prisma.userWishes.findFirst({
+    const userWishes = await prisma.set.findMany({
         where: {
-            userId: userId
+            inWishesId: userId
         }
     })
 
-    if (userWishes == null) {
-        return ""
-    } else {
-        return await prisma.set.findMany({
-            where: {
-                wishesId: userWishes?.id
-            }
-        })
-    }
+    return userWishes
 
 }
 
 export const getSingleSet = async (setNum: string, userId: string) => {
 
-    const userWishes = await getUserWishes(userId);
-    const userCollection = await getUserCollection(userId);
+    // const userWishes = await getUserWishes(userId);
+    // const userCollection = await getUserCollection(userId);
 
-    const userWishesIds = userWishes ? userWishes.map((item) => item.set_num) : "";
-    const userCollectionIds = userCollection ? userCollection.map((item) => item.set_num) : "";
+    // const userWishesIds = userWishes ? userWishes.map((item) => item.set_num) : "";
+    // const userCollectionIds = userCollection ? userCollection.map((item) => item.set_num) : "";
 
-    const isWish = userWishesIds.includes(setNum);
-    const isOwn = userCollectionIds.includes(setNum);
+    // const isWish = userWishesIds.includes(setNum);
+    // const isOwn = userCollectionIds.includes(setNum);
 
     const set = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {
         method: "GET",
         headers: headers
     })
 
+    const setResult = await set.json()
+
     const setData = {
-        set: await set.json(),
-        isOwn: isOwn,
-        isWish: isWish,
+        set: setResult,
+        // isOwn: isOwn,
+        // isWish: isWish,
         userId: userId
     }
 
@@ -243,7 +213,7 @@ export const getSingleSet = async (setNum: string, userId: string) => {
 }
 
 export const getSets = async (page: number, searchQuery?: string, themeId?: number, minYear?: number, maxYear?: number) => {
-    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?page=${page}&page_size=50${themeId ? `&theme_id=${themeId}` : ""}&min_year=${minYear}&max_year=${maxYear}&search=${searchQuery}`, {
+    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?page=${page}&page_size=50${themeId ? `&theme_id=${themeId}` : ""}&min_year=${minYear ? minYear : 1949}&max_year=${maxYear ? maxYear: 2025}&search=${searchQuery}`, {
         method: "GET",
         headers: headers
     })
@@ -252,57 +222,66 @@ export const getSets = async (page: number, searchQuery?: string, themeId?: numb
 }
 
 export const getUsersByOwnSet = async (setNum: string) => {
-    const usersWithSet = await prisma.user.findMany({
-        where: {
-            collection: {
-                some: {
-                    sets: {
-                        some: {
-                            set_num: setNum,
-                        },
-                    },
-                },
-            },
-        },
-        include: {
-            collection: {
-                include: {
-                    sets: true,
-                },
-            },
-        },
-    });
+    // const usersWithSet = await prisma.user.findMany({
+    //     where: {
+    //         collection: {
+    //             some: {
+    //                 sets: {
+    //                     some: {
+    //                         set_num: setNum,
+    //                     },
+    //                 },
+    //             },
+    //         },
+    //     },
+    //     include: {
+    //         collection: {
+    //             include: {
+    //                 sets: true,
+    //             },
+    //         },
+    //     },
+    // });
 
-    return usersWithSet;
+    const usersCollectionsSet = await prisma.set.findMany({
+        where: {
+            set_num: setNum,
+        },
+    })
+
+    return usersCollectionsSet;
 
 }
 
 export const getUsersByWishSet = async (setNum: string) => {
-    const usersWishesSet = await prisma.user.findMany({
-        where: {
-            wishes: {
-                some: {
-                    sets: {
-                        some: {
-                            set_num: setNum,
-                        },
-                    },
-                },
-            },
-        },
-        include: {
-            wishes: {
-                include: {
-                    sets: true,
-                },
-            },
-        },
+    const usersWishesSet = await prisma.set.findMany({
+        where:{
+            set_num: setNum
+        }
     });
 
     return usersWishesSet;
 
 }
 
+export const createProduct = async(product: productProps) => {
+    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/createProduct`, {
+        method: "POST",
+        body: JSON.stringify(product)
+    })
+    return newSet.json()
+}
+
+export const getProduct = async(productId: string) =>{
+    return await prisma.product.findFirst({
+        where:{
+            id: productId
+        },
+        include:{
+            user: true
+        }
+    })
+}
 
 export const getDataTest = async (searchQuery: string, page: number) => {
     return { page, testData, searchQuery }

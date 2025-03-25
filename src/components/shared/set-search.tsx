@@ -1,6 +1,5 @@
 "use client"
 import React from 'react'
-
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Typography } from './typography'
 import { cn } from '@/lib/utils'
@@ -8,7 +7,7 @@ import { Button, Input } from '../ui'
 import { Search } from 'lucide-react'
 import { DualRangeYearSlider } from './year-slider'
 import { YearInput } from './year-input'
-// import { SelectThemes } from './select-themes'
+import { SelectThemes } from './select-themes'
 
 
 interface Props {
@@ -59,11 +58,11 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
                     </Button>
                 </div>
                 <div className='w-full max-w-screen-md flex flex-col items-center flex-wrap'>
-                    {/* <div className='w-full'>
+                    <div className='w-full'>
                         <span className='bg-gray-100 p-3 rounded-2xl mx-5 dark:bg-zinc-600'>Серия: </span>
 
                         <SelectThemes className='my-6' selectedThemeId={selectedThemeId} setSelectedThemeId={setSelectedThemeId} />
-                    </div> */}
+                    </div>
 
                     <span className='bg-gray-100 p-3 rounded-2xl mb-4 dark:bg-zinc-600'>Выберите год выпуска: от <b>{yearValues[0]}</b> до <b>{yearValues[1]}</b></span>
                     

@@ -2,6 +2,22 @@ import { auth } from "@/lib/auth";
 import { getSets, getUser, getUserCollection, getUserWishes } from "@/lib/actions";
 import { PaginationDemo, SetSearch, SetsTable } from "@/components/shared";
 
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<{
+    search?: string;
+  }>;
+}): Promise<Metadata> {
+  const search = (await searchParams)?.search
+  const searchTitle = "Поиск по запросу " + search
+  return {
+    title: search ? searchTitle: "MYLEGOLIST"
+  };
+}
+
 export default async function Home({
   searchParams,
 }: {
@@ -20,19 +36,13 @@ export default async function Home({
   const minYear = (await searchParams)?.minYear;
   const maxYear = (await searchParams)?.maxYear;
   
-  // const query = searchParams?.search || '';
-  // const page = searchParams?.page || '';
-  // const themeId = searchParams?.themeId || '';
-  // const minYear = searchParams?.minYear || '';
-  // const maxYear = searchParams?.maxYear || '';
-
   const data = page ? await getSets(Number(page), query, Number(themeId), Number(minYear), Number(maxYear)) : "";
 
   const session = await auth()
 
   const userData = session?.user?.id ? await getUser(session.user.id) : null;
-  const userCollections = userData?.id ? await getUserCollection(userData?.id) : "";
-  const userWishes = userData?.id ? await getUserWishes(userData?.id) : "";
+  const userCollections =  "";
+  const userWishes = "";
 
   const isSameUser = (session?.user?.id == userData?.id) && (session !== null)
 

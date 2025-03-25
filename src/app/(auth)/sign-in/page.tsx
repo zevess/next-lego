@@ -2,15 +2,17 @@ import { ProviderAuth, SignInForm, Typography } from "@/components/shared";
 import { Card, Separator } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader } from "@/components/ui/card";
+import { Metadata } from "next";
 import Link from "next/link";
 
-
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  return {
+    title: "Войти"
+  };
+}
 
 export default async function Page() {
-
-
   return (
-
     <Card className='mx-auto max-w-[560px]'>
       <CardHeader>
         <Typography variant='h2' text={"Войти"} className='mx-auto' />

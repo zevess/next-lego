@@ -47,7 +47,7 @@ export const SetsTable: React.FC<Props> = ({ setsData, isLoading, userCollection
         {!setsData && <p>Ничего не найдено</p>}
 
         {setsData && setsData.map((item) => (
-          <SetCard isSameUser={isSameUser} isUserWishSet={userWishesItemsIds.includes(item.set_num)} isUserOwnSet={userCollectionItemsIds?.includes(item.set_num)} userId={userId} key={item.set_num} data={item} />
+          <SetCard isSameUser={isSameUser} isUserWishSet={userWishesItemsIds.includes(item.set_num)} isUserOwnSet={userCollectionItemsIds?.includes(item.set_num)} userId={String(userId)} key={item.set_num} data={item} />
         ))}
       </div>
     </>

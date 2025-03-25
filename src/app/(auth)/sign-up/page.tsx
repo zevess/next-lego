@@ -3,9 +3,16 @@ import { Card, Separator } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
+import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  return {
+    title: "Зарегистрироваться"
+  };
+}
 
 export default async function Page() {
   const session = await auth();

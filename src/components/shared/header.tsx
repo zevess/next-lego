@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-import { Search, UserIcon } from "lucide-react";
+import { Search, ShoppingBag, UserIcon } from "lucide-react";
 import { StyledLink } from "./styled-link";
 import { ThemeToggle } from "./theme-toggler";
 import { User } from "@prisma/client";
@@ -26,6 +26,10 @@ export const Header: React.FC<Props> = async ({ className, user }) => {
 
       <Link href={'/'}>
         <Search className='text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400' />
+      </Link>
+
+      <Link href={'/marketplace'}>
+        <ShoppingBag className='text-black hover:text-orange-400 transition-colors duration-300 dark:text-white dark:hover:text-orange-400' />
       </Link>
 
       <Link href={!user ? '/sign-in' : `/profile/${user.userNick}`}>

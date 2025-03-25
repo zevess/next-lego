@@ -1,13 +1,13 @@
 'use client'
 
-import { addSetToCollection, addSetToWishes, removeSetFromCollection, removeSetFromWishes } from "@/lib/actions"
+import { addSetToCollection, addSetToWishes } from "@/lib/actions"
 import { SetDataJSON } from "@/lib/types"
 import React, { SetStateAction } from "react"
 import { Card, HoverCard } from "../ui"
 import { cn } from "@/lib/utils"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import Link from "next/link"
-import { setAction } from "@/lib/functions"
+import { handleAddSetToCollection,  handleAddSetToWishes,  setAction } from "@/lib/functions"
 import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { WishButton } from "./wish-button"
 import { OwnButton } from "./own-button"
@@ -15,7 +15,7 @@ import { OwnButton } from "./own-button"
 interface SetCardProps {
     className?: string
     data: SetDataJSON,
-    userId: string | undefined,
+    userId: string,
     isUserOwnSet: boolean,
     isUserWishSet: boolean,
     isSameUser: boolean,
@@ -29,12 +29,6 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
     const isOwnText = isOwn ? "Удалить из коллекции" : "Добавить в коллекцию"
     const isWishText = isWish ? "Удалить из желаний" : "Добавить в желания"
-
-    const handleSetAction = (setDispatch: React.Dispatch<SetStateAction<boolean>>, dispatchValue: boolean, handleAction: (data: SetDataJSON, userId: string) => Promise<void>) => {
-        if (userId) {
-            setAction(userId, data, setDispatch, dispatchValue, handleAction)
-        }
-    }
 
     return (
 
@@ -57,11 +51,11 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
             <CardFooter className="flex flex-col justify-between sm:flex-row ">
                 {(isSameUser) && <HoverCard>
                     <HoverCardTrigger>
-                        <WishButton isOwn={isOwn} isWish={isWish} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} />
+                        <WishButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToWishes(data, userId, setIsWish, isWish, addSetToWishes)} />
                     </HoverCardTrigger>
                     <HoverCardContent className="flex items-center justify-between">
                         {isWishText}
-                        <WishButton isOwn={isOwn} isWish={isWish} onClick={() => isWish ? handleSetAction(setIsWish, false, removeSetFromWishes) : handleSetAction(setIsWish, true, addSetToWishes)} />
+                        <WishButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToWishes(data, userId, setIsWish, isWish, addSetToWishes)} />
                     </HoverCardContent>
                 </HoverCard>}
 
@@ -69,11 +63,11 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
                 {isSameUser && <HoverCard>
                     <HoverCardTrigger>
-                        <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} />
+                        <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToCollection(data, userId, setIsOwn, isOwn, addSetToCollection)} />
                     </HoverCardTrigger>
                     <HoverCardContent className="flex items-center justify-between">
                         {isOwnText}
-                        <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => isOwn ? handleSetAction(setIsOwn, false, removeSetFromCollection) : handleSetAction(setIsOwn, true, addSetToCollection)} />
+                        <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToCollection(data, userId, setIsOwn, isOwn, addSetToCollection)} />
                     </HoverCardContent>
                 </HoverCard>}
 
