@@ -18,7 +18,7 @@ export const ImageCarousel: React.FC<Props> = ({ className, images }) => {
                             <div className="p-1">
                                 <Card>
                                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                                        <img src={_}/>
+                                        <img alt='w' src={_}/>
                                         {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
                                     </CardContent>
                                 </Card>

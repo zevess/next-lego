@@ -40,7 +40,8 @@ export interface TestDataJSON{
 
 export const headers = {
     "Accept": "application/json",
-    "Authorization": `key ${process.env.REBRICKABLE_KEY}`
+    "Authorization": 'key 2fc61877e558538a9a70e9144b98da88',
+    // "Authorization": `key ${process.env.REBRICKABLE_KEY}`
 }
 
 export interface setDataPage {
