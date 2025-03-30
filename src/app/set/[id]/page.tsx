@@ -21,8 +21,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const usersOwn = await getUsersByOwnSet(id)
   const userWish = await getUsersByWishSet(id);
 
+  console.log(usersOwn)
+  console.log(userWish)
 
   return (
-    <SetPage setData={setData} />
+    <SetPage setData={setData} usersOwn={usersOwn} userWish={userWish} />
   )
 }

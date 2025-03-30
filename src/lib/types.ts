@@ -33,31 +33,31 @@ export interface MultipleSetsDataJSON {
     results: SetDataJSON[],
 }
 
-export interface TestDataJSON{
+export interface TestDataJSON {
     loading: boolean,
     setsData: MultipleSetsDataJSON | null
 }
 
 export const headers = {
     "Accept": "application/json",
-    "Authorization": 'key 2fc61877e558538a9a70e9144b98da88',
-    // "Authorization": `key ${process.env.REBRICKABLE_KEY}`
+    // "Authorization": 'key 2fc61877e558538a9a70e9144b98da88',
+    "Authorization": `${process.env.REBRICKABLE_KEY}`
 }
 
 export interface setDataPage {
     set: SetDataJSON;
-    // isOwn: boolean;
-    // isWish: boolean;
+    isOwn: boolean;
+    isWish: boolean;
     userId: string
 }
 
-export interface setThemesProps{
+export interface setThemesProps {
     id: number,
     parent_id: number | null,
-    name: string 
+    name: string
 }
 
-export interface productProps{
+export interface productProps {
     title: string,
     description: string,
     location: string,
@@ -67,8 +67,8 @@ export interface productProps{
     sets: SetDataJSON[],
 }
 
-export interface sessionProps{
-    user:{
+export interface sessionProps {
+    user: {
         name: string,
         email: string,
         image: string,

@@ -41,10 +41,14 @@ export default async function Home({
   const session = await auth()
 
   const userData = session?.user?.id ? await getUser(session.user.id) : null;
-  const userCollections =  "";
-  const userWishes = "";
+  const userCollections =  userData ? await getUserCollection(userData.id) : "";
+  const userWishes = userData ? await getUserWishes(userData.id) : "";
 
   const isSameUser = (session?.user?.id == userData?.id) && (session !== null)
+
+  console.log(userCollections)
+  console.log(userWishes)
+
 
   return (
     <>
