@@ -1,7 +1,6 @@
 'use client'
 
-import { addSetToCollection, addSetToWishes } from "@/lib/actions"
-import { SetDataJSON } from "@/lib/types"
+
 import React, { SetStateAction } from "react"
 import { Card, HoverCard } from "../ui"
 import { cn } from "@/lib/utils"
@@ -11,10 +10,13 @@ import { handleAddSetToCollection,  handleAddSetToWishes,  setAction } from "@/l
 import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { WishButton } from "./wish-button"
 import { OwnButton } from "./own-button"
+import { SetData } from "@/lib/types"
+import { addSetToCollection, addSetToWishes } from "@/lib/actions"
+
 
 interface SetCardProps {
     className?: string
-    data: SetDataJSON,
+    data: SetData,
     userId: string,
     isUserOwnSet: boolean,
     isUserWishSet: boolean,

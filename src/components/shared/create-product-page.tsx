@@ -2,16 +2,13 @@
 import React from 'react'
 import { Typography } from './typography'
 import { Button, Input, Label, Textarea } from '../ui'
-import Image from 'next/image'
 import { StyledButton } from './styled-button'
 import { X } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { SetSearchDropdown } from './set-search-dropdown'
-import { StyledInput } from './styled-input'
-import { useDebounce } from 'react-use'
-import { createProduct, getDataTest, getSets, uploadImageToImgbb } from '@/lib/actions'
-import { productProps, SetDataJSON } from '@/lib/types'
-import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { NewProductData, ProductData, SetData } from '@/lib/types'
+import { createProduct, uploadImageToImgbb } from '@/lib/actions'
+
 
 
 interface Props {
@@ -25,10 +22,13 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
     const [description, setDescription] = React.useState('')
     const [location, setLocation] = React.useState('')
     const [price, setPrice] = React.useState(0)
-    const [selectedItems, setSelectedItems] = React.useState<SetDataJSON[]>([]);
+    const [selectedItems, setSelectedItems] = React.useState<SetData[]>([]);
 
     const [images, setImages] = React.useState<File[]>([]);
     const [imagePreviews, setImagePreviews] = React.useState<string[]>([]);
+
+    const router = useRouter()
+
 
     const handleCreateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -37,8 +37,8 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 return await uploadImageToImgbb(item);
             })
             const uploadedImages = await Promise.all(promises);
-            
-            const obj: productProps = {
+
+            const obj: ProductData = {
                 title: title,
                 description: description,
                 location: location,
@@ -47,10 +47,10 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 images: uploadedImages,
                 sets: selectedItems
             }
-            console.log(obj);
 
-
-            await createProduct(obj)
+            const createdProduct: NewProductData = await createProduct(obj)
+            console.log(createdProduct)
+            router.push(`/marketplace/${createdProduct.newProduct.id}`)
 
         } catch (error) {
             console.log(error)
@@ -61,10 +61,8 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files) {
-            const newImages = Array.from(files); // Преобразуем FileList в массив
-            setImages((prevImages) => [...prevImages, ...newImages]); // Добавляем новые изображения в массив
-
-            // Создаем URL-представления для новых изображений
+            const newImages = Array.from(files);
+            setImages((prevImages) => [...prevImages, ...newImages]);
             const newPreviews = newImages.map((file) => URL.createObjectURL(file));
             setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
         }

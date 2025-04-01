@@ -6,38 +6,41 @@ import { Search } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 import { Input } from '../ui';
-import { MultipleSetsDataJSON, SetDataJSON, testData } from '@/lib/types';
+
 import { Typography } from './typography';
-import { getDataTest, getSets } from '@/lib/actions';
+
 import { useDebounce } from 'react-use'
+import { MultipleSetsData, SetData } from '@/lib/types';
+import { getSets } from '@/lib/actions';
+
 
 interface Props {
     className?: string;
-    setSelectedItems: React.Dispatch<React.SetStateAction<SetDataJSON[]>>;
-    selectedItems: SetDataJSON[]
+    setSelectedItems: React.Dispatch<React.SetStateAction<SetData[]>>;
+    selectedItems: SetData[]
 }
 
 export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems, selectedItems }) => {
     const [query, setQuery] = React.useState('');
 
-    const [foundItems, setFoundItems] = React.useState<MultipleSetsDataJSON | null>();
+    const [foundItems, setFoundItems] = React.useState<MultipleSetsData| null>();
 
     const items = foundItems?.results
 
-    const filteredItems = items?.filter((item: SetDataJSON) =>
+    const filteredItems = items?.filter((item: SetData) =>
         item.name.toLowerCase().includes(query.toLowerCase()) &&
         !selectedItems.some((selected) => selected.set_num === item.set_num)
     );
 
 
-    const handleSelectItem = (item: SetDataJSON) => {
+    const handleSelectItem = (item: SetData) => {
         setSelectedItems((prev) => [...prev, item]);
         setQuery('');
         setFoundItems(null)
     };
 
     const handleRemoveItem = (id: string) => {
-        setSelectedItems((prev) => prev.filter((item:SetDataJSON) => item.set_num !== id));
+        setSelectedItems((prev) => prev.filter((item:SetData) => item.set_num !== id));
     };
 
     useDebounce(async () => {
@@ -66,7 +69,7 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
             <div className="mt-4 space-y-2">
                 {Number(filteredItems?.length) > 0 &&
                     (
-                        filteredItems?.map((item: SetDataJSON) => (
+                        filteredItems?.map((item: SetData) => (
                             <div
                                 key={item.set_num}
                                 className="flex items-center space-x-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md"

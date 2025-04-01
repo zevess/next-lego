@@ -53,7 +53,7 @@ export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
             </div>
 
 
-            <ImageCarousel images={product.images} />
+            {product.images.length > 1 && <ImageCarousel images={product.images} />}
         </div>
     )
 }

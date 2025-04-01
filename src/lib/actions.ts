@@ -1,7 +1,7 @@
 "use server"
 import { schema } from "@/lib/schema";
 import { prisma } from "./prisma/prisma";
-import { headers, productProps, SetDataJSON, testData } from "./types";
+import { headers, ProductData, SetData, testData } from "./types";
 import { signIn, signOut } from "./auth";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcrypt"
@@ -144,7 +144,7 @@ export const updateProfile = async (userId: string, newUserNick: string, newName
     return data;
 };
 
-export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
+export const addSetToCollection = async (set: SetData, userId: string) => {
     const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set/addSetToCollection`, {
         method: "POST",
         body: JSON.stringify({ set: set, userId: userId })
@@ -152,7 +152,7 @@ export const addSetToCollection = async (set: SetDataJSON, userId: string) => {
     return newSet.json()
 }
 
-export const addSetToWishes = async (set: SetDataJSON, userId: string) => {
+export const addSetToWishes = async (set: SetData, userId: string) => {
     const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set/addSetToWishes`, {
         method: "POST",
         body: JSON.stringify({ set: set, userId: userId })
@@ -261,7 +261,7 @@ export const getUsersByWishSet = async (setNum: string): Promise<User[]> => {
 
 }
 
-export const createProduct = async (product: productProps) => {
+export const createProduct = async (product: ProductData) => {
     const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/createProduct`, {
         method: "POST",
         body: JSON.stringify(product)
@@ -278,6 +278,10 @@ export const getProduct = async (productId: string) => {
             user: true
         }
     })
+}
+
+export const getAllProducts = async() =>{
+    return await prisma.product.findMany()
 }
 
 export const getDataTest = async (searchQuery: string, page: number) => {

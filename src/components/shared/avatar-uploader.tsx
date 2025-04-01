@@ -28,7 +28,7 @@ export const AvatarUploader: React.FC<Props> = ({ avatarUrl,  setImage }) => {
 
     return (
         <div className='flex flex-col items-center '>
-            {file && <UserAvatar src={file} className='w-48 max-w-48' />}
+            {file && <UserAvatar variant='big' src={file} />}
             <Input type='file' accept='image/*' className='w-3/4' onChange={handleImageSelect} />
         </div>
     );

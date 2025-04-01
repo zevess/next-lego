@@ -3,19 +3,22 @@
 import React, { SetStateAction } from 'react'
 
 import { Heart, Plus, X } from 'lucide-react'
-import { SetDataJSON, setDataPage } from '@/lib/types'
+
 import { Typography } from './typography'
 import { Avatar, Button } from '../ui'
 import { handleAddSetToCollection, handleAddSetToWishes, setAction } from '@/lib/functions'
-import { addSetToCollection, addSetToWishes } from '@/lib/actions'
+
 import { setThemes } from '@/lib/themes'
 import { Set, User } from '@prisma/client'
-import { AvatarFallback, AvatarImage } from '../ui/avatar'
-import Link from 'next/link'
-import { UsersDialog } from './users-dialog'
+
+import { SetUsersList } from './set-users-list'
+import { SetInfo } from './set-info'
+import { SetPageProps } from '@/lib/types'
+import { addSetToCollection, addSetToWishes } from '@/lib/actions'
+
 
 interface Props {
-  setData: setDataPage,
+  setData: SetPageProps,
   usersOwn: User[],
   userWish: User[]
 }
@@ -36,25 +39,7 @@ export const SetPage: React.FC<Props> = ({ setData, userWish, usersOwn }) => {
 
         <img src={setData.set.set_img_url} className='p-3 w-full object-cover max-w-3xl' alt="" />
         <div className='p-8 flex flex-col  flex-1'>
-          <div className='flex justify-between'>
-            <div>
-              <Typography variant='h1' text={setData.set.name} />
-              <Typography variant='h4' text={setData.set.set_num} />
-
-            </div>
-            <Typography variant='h4' text={setData.set.year} />
-          </div>
-          <div className='bg-gray-100 p-3 rounded-md mt-4 dark:bg-neutral-300'>
-            <div className='flex justify-between'>
-              <p className='text-lg dark:text-black'>Серия:</p>
-              <p className='text-lg dark:text-black'>{themeName?.name}</p>
-            </div>
-            {setData.set.num_parts !== 0 && <div className='flex justify-between'>
-              <p className='text-lg dark:text-black'>Количество деталей:</p>
-              <p className='text-lg dark:text-black'>{setData.set.num_parts}</p>
-            </div>}
-
-          </div>
+          <SetInfo setData={setData.set} theme={themeName} />
           <div className='flex flex-col'>
 
             {setData.userId && <Button disabled={isOwn} onClick={() => handleAddSetToWishes(setData.set, setData.userId, setIsWish, isWish, addSetToWishes)} className="mt-5 transition-transform hover:scale-105">
@@ -62,46 +47,15 @@ export const SetPage: React.FC<Props> = ({ setData, userWish, usersOwn }) => {
               {isWish ? <Heart fill="red" strokeWidth={1} /> : <Heart />}
             </Button>}
             {userWish.length > 0 && (
-              <div className='my-2'>
-                <p>В <b>Желаниях</b> у пользователей:</p>
-                <div className='w-full flex'>
-                  {userWish.slice(0, 5).map((user) => (
-                    <Link key={user.id} href={`/profile/${user.userNick}`}>
-                      <Avatar className='w-6 h-6 mx-1'>
-                        <AvatarImage src={user.image ? user.image : ""} alt="@shadcn" />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                    </Link>
-                  ))}
-                  {userWish.length > 6 && (
-                    <UsersDialog title='В желаниях у пользователей' users={userWish} />
-                  )}
-                </div>
-              </div>
+              <SetUsersList variant='wish' users={userWish} />
             )}
-
 
             {setData.userId && <Button disabled={isWish} onClick={() => handleAddSetToCollection(setData.set, setData.userId, setIsOwn, isOwn, addSetToCollection)} className="mt-5 transition-transform hover:scale-105"> {isOwnText}
               {isOwn ? <X /> : <Plus />}
             </Button>}
 
             {usersOwn.length > 0 && (
-              <div className='my-2'>
-                <p>В <b>Коллекции</b> у пользователей:</p>
-                <div className='w-full flex items-center'>
-                  {usersOwn.slice(0, 5).map((user) => (
-                    <Link key={user.id} href={`/profile/${user.userNick}`}>
-                      <Avatar className='w-6 h-6 mx-1'>
-                        <AvatarImage src={user.image ? user.image : ""} alt="@shadcn" />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                    </Link>
-                  ))}
-                  {usersOwn.length > 6 &&
-                    <UsersDialog title='В коллекции у пользователей: ' users={usersOwn} />
-                  }
-                </div>
-              </div>
+              <SetUsersList variant='own' users={usersOwn} />
             )}
           </div>
         </div>

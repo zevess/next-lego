@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma/prisma";
-import { SetDataJSON } from "@/lib/types";
+import { SetData } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
-    const set: SetDataJSON = body.set;
+    const set: SetData = body.set;
 
     try {
         const existingSet = await prisma.set.findFirst({

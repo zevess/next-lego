@@ -6,9 +6,10 @@ import { Check, Heart } from "lucide-react"
 import { useHover } from "@uidotdev/usehooks";
 import { ProfileEdit } from "./profile-edit"
 import { AlertExit } from "./alert-exit"
-import { SetDataJSON } from "@/lib/types"
+
 import { SetsTable } from "./sets-table"
 import { UserAvatar } from "./user-avatar"
+import { SetData } from "@/lib/types";
 
 
 
@@ -16,8 +17,8 @@ interface Props {
     className?: string,
     data: User
     isSameUser: boolean,
-    userCollection: SetDataJSON[] | "",
-    userWishes: SetDataJSON[] | ""
+    userCollection: SetData[] | "",
+    userWishes: SetData[] | ""
 }
 
 export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection, userWishes }) => {
@@ -28,7 +29,7 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
         <div className={className}>
             <div className='w-full flex flex-col items-center'>
                 {isSameUser && <AlertExit className="ml-auto"/>}
-                <UserAvatar className="w-56 max-w-56" src={data.image}/>
+                <UserAvatar variant="large" src={data.image}/>
                 <div ref={ref} className="flex items-center">
                     <div className="flex flex-col items-center">
                         <Typography className="" variant={'h2'} text={data.name ? data.name : ""} />

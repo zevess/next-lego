@@ -1,6 +1,8 @@
 import { NotFound, ProductPage } from "@/components/shared";
 import { getProduct } from "@/lib/actions";
 
+
+
 export default async function Page({ params }: { params: Promise<{ product: string }>}) {
 
     const productId = (await params).product

@@ -1,20 +1,21 @@
 'use client'
 import React from 'react'
-import { SetDataJSON } from '@/lib/types'
+
 import { SetCardSkeleton } from './set-card-skeleton'
 import { SetCard } from './set-card'
 import { NotFound } from './not-found'
 import { usePathname } from 'next/navigation'
+import { SetData } from '@/lib/types'
 
 
 interface Props {
   className?: string,
   searchQuery?: string,
   userId: string | undefined,
-  setsData: SetDataJSON[],
+  setsData: SetData[],
   isLoading?: boolean,
-  userCollection: SetDataJSON[] | "",
-  userWishes: SetDataJSON[] | "",
+  userCollection: SetData[] | "",
+  userWishes: SetData[] | "",
   isSameUser: boolean
 }
 

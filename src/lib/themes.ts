@@ -1,6 +1,7 @@
-import { setThemesProps } from "./types";
+import { SetThemesData } from "./types";
 
-export const setThemes: setThemesProps[] = [
+
+export const setThemes: SetThemesData[] = [
   {
     "id": 1,
     "parent_id": null,

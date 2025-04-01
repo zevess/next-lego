@@ -1,5 +1,5 @@
 export { PaginationDemo } from "./pagination";
-export {UserAvatar} from "./user-avatar";
+export { UserAvatar } from "./user-avatar";
 export { ProfilePage } from "./profile-page";
 export { ProviderAuth } from "./provider-auth";
 export { SearchInput } from "./search-input";
@@ -16,20 +16,22 @@ export { StyledLink } from "./styled-link";
 export { Header } from "./header";
 export { Container } from "./container";
 export { AlertExit } from "./alert-exit";
-export {WishButton} from './wish-button'
-export {OwnButton} from './own-button'
-export {SelectThemes} from './select-themes'
-export {DualRangeYearSlider} from './year-slider'
-export {ProfileEdit} from './profile-edit'
-export {UsersDialog} from './users-dialog'
-export {YearInput} from './year-input'
-export {SignInForm} from './sign-in-form'
-export {AvatarUploader} from './avatar-uploader'
-export {StyledButton} from './styled-button'
-export {MarketplacePage} from './marketplace-page'
-export {CreateProductPage} from './create-product-page'
-export {MultiSelect} from './multi-select'
-export {SetSearchDropdown} from './set-search-dropdown'
-export {StyledInput} from './styled-input'
-export {ImageCarousel} from './image-carousel'
-export {ProductPage} from './product-page'
+export { WishButton } from './wish-button'
+export { OwnButton } from './own-button'
+export { SelectThemes } from './select-themes'
+export { DualRangeYearSlider } from './year-slider'
+export { ProfileEdit } from './profile-edit'
+export { UsersDialog } from './users-dialog'
+export { YearInput } from './year-input'
+export { SignInForm } from './sign-in-form'
+export { AvatarUploader } from './avatar-uploader'
+export { StyledButton } from './styled-button'
+export { MarketplacePage } from './marketplace-page'
+export { CreateProductPage } from './create-product-page'
+export { MultiSelect } from './multi-select'
+export { SetSearchDropdown } from './set-search-dropdown'
+export { StyledInput } from './styled-input'
+export { ImageCarousel } from './image-carousel'
+export { ProductPage } from './product-page'
+export { SetUsersList } from './set-users-list'
+export { SetInfo } from './set-info'

@@ -4,8 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Container, Header } from "@/components/shared";
 import { auth } from "@/lib/auth";
-import { getUser } from "@/lib/actions";
+
 import { SessionProvider } from "next-auth/react";
+import { getUser } from "@/lib/actions";
 
 const ubuntu = Ubuntu({
   subsets: ['cyrillic'],

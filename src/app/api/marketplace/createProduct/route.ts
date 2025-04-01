@@ -1,10 +1,9 @@
 import { prisma } from "@/lib/prisma/prisma";
-import { productProps, SetDataJSON } from "@/lib/types";
-import { Product } from "@prisma/client";
+import { ProductData } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const body: Product = await request.json();
+    const body: ProductData = await request.json();
     try {
         const newProduct = await prisma.product.create({
             data: {
@@ -14,7 +13,7 @@ export async function POST(request: NextRequest) {
                 price: body.price,
                 images: body.images,
                 userId: body.userId,
-                sets: body.sets ? body.sets : ''
+                sets: JSON.parse(JSON.stringify(body.sets))
             }
         })
         return NextResponse.json({ message: "Товар добавлен!", newProduct });

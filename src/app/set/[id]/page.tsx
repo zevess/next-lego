@@ -1,8 +1,9 @@
-import { getSingleSet, getUsersByOwnSet, getUsersByWishSet } from '@/lib/actions'
 import { auth } from '@/lib/auth'
-import { SetPage } from '@/components/shared'
+import { NotFound, SetPage } from '@/components/shared'
 import React from 'react'
 import { Metadata } from 'next';
+
+import { getSingleSet, getUsersByOwnSet, getUsersByWishSet } from '@/lib/actions';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const id = (await params).id;
@@ -23,6 +24,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   console.log(usersOwn)
   console.log(userWish)
+
+  if (!setData) {
+    return <NotFound type='sets' />
+  }
 
   return (
     <SetPage setData={setData} usersOwn={usersOwn} userWish={userWish} />
