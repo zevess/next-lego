@@ -280,8 +280,13 @@ export const getProduct = async (productId: string) => {
     })
 }
 
-export const getAllProducts = async() =>{
-    return await prisma.product.findMany()
+export const getAllProducts = async()  =>{
+    const products = await prisma.product.findMany()
+    const typedProducts = products.map(product =>({
+        ...product,
+        sets: product.sets as unknown as SetData[]
+    }))
+    return typedProducts
 }
 
 export const getDataTest = async (searchQuery: string, page: number) => {

@@ -6,7 +6,7 @@ import { Card, HoverCard } from "../ui"
 import { cn } from "@/lib/utils"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import Link from "next/link"
-import { handleAddSetToCollection,  handleAddSetToWishes,  setAction } from "@/lib/functions"
+import { handleAddSetToCollection, handleAddSetToWishes, setAction } from "@/lib/functions"
 import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { WishButton } from "./wish-button"
 import { OwnButton } from "./own-button"
@@ -44,34 +44,39 @@ export const SetCard: React.FC<SetCardProps> = ({ className, data, userId, isUse
 
             </CardHeader>
 
-            <CardContent className="grid p-1 sm:p-6">
+            <CardContent className="grid p-1 sm:p-3">
                 <Link href={`/set/${data.set_num}`}>
                     <img src={data.set_img_url} className="max-h-[247.32px] mx-auto" alt="" />
                 </Link>
             </CardContent>
 
-            <CardFooter className="flex flex-col justify-between sm:flex-row ">
-                {(isSameUser) && <HoverCard>
-                    <HoverCardTrigger>
-                        <WishButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToWishes(data, userId, setIsWish, isWish, addSetToWishes)} />
-                    </HoverCardTrigger>
-                    <HoverCardContent className="flex items-center justify-between">
-                        {isWishText}
-                        <WishButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToWishes(data, userId, setIsWish, isWish, addSetToWishes)} />
-                    </HoverCardContent>
-                </HoverCard>}
+            <CardFooter className="flex flex-col justify-between sm:flex-row p-2 md:p-3 lg:pb-6 lg:px-6">
+                <div className="hidden md:block">
+                    {(isSameUser) && <HoverCard>
+                        <HoverCardTrigger>
+                            <WishButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToWishes(data, userId, setIsWish, isWish, addSetToWishes)} />
+                        </HoverCardTrigger>
+                        <HoverCardContent className="flex items-center justify-between">
+                            {isWishText}
+                            <WishButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToWishes(data, userId, setIsWish, isWish, addSetToWishes)} />
+                        </HoverCardContent>
+                    </HoverCard>}
+                </div>
 
-                <Link className="bg-black py-1 mb-2 mx-auto text-white text-center rounded-lg dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-3/5 sm:mb-0" href={`/set/${data.set_num}`}>Перейти к набору</Link>
 
-                {isSameUser && <HoverCard>
-                    <HoverCardTrigger>
-                        <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToCollection(data, userId, setIsOwn, isOwn, addSetToCollection)} />
-                    </HoverCardTrigger>
-                    <HoverCardContent className="flex items-center justify-between">
-                        {isOwnText}
-                        <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToCollection(data, userId, setIsOwn, isOwn, addSetToCollection)} />
-                    </HoverCardContent>
-                </HoverCard>}
+                <Link className="bg-black py-1 mb-2 mx-auto w-11/12 text-white text-center rounded-lg dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-5/6 sm:mb-0 lg:w-3/6" href={`/set/${data.set_num}`}>Перейти к набору</Link>
+
+                <div className="hidden md:block">
+                    {isSameUser && <HoverCard>
+                        <HoverCardTrigger>
+                            <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToCollection(data, userId, setIsOwn, isOwn, addSetToCollection)} />
+                        </HoverCardTrigger>
+                        <HoverCardContent className="flex items-center justify-between">
+                            {isOwnText}
+                            <OwnButton isOwn={isOwn} isWish={isWish} onClick={() => handleAddSetToCollection(data, userId, setIsOwn, isOwn, addSetToCollection)} />
+                        </HoverCardContent>
+                    </HoverCard>}
+                </div>
 
             </CardFooter>
         </Card>

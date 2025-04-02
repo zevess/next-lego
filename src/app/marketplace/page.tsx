@@ -1,6 +1,7 @@
 import { MarketplacePage, StyledButton, StyledLink, Typography } from "@/components/shared";
 import { Button } from "@/components/ui";
 import { getAllProducts } from "@/lib/actions";
+import { ProductData } from "@/lib/types";
 
 
 
@@ -11,7 +12,7 @@ export default async function Page() {
 
     return(
         <div>
-            <MarketplacePage/>
+            <MarketplacePage products={allProducts}/>
         </div>
     )
 }

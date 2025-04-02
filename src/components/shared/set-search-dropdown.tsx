@@ -12,6 +12,7 @@ import { Typography } from './typography';
 import { useDebounce } from 'react-use'
 import { MultipleSetsData, SetData } from '@/lib/types';
 import { getSets } from '@/lib/actions';
+import { SetTag } from './set-tag';
 
 
 interface Props {
@@ -99,18 +100,19 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
                     <Typography variant='h4' className='mb-2' text={'Выбранные наборы:'} />
                     <div className="flex flex-wrap gap-2">
                         {selectedItems.map((item, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer"
-                                onClick={() => handleRemoveItem(item.set_num)}>
-                                <img
-                                    src={item.set_img_url}
-                                    alt={item.name}
-                                    className="w-6 h-6 object-cover rounded-full"
+                            <SetTag isLink={false} onClick={()=> handleRemoveItem(item.set_num)} set={item}/>
+                            // <div
+                            //     key={index}
+                            //     className="flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer"
+                            //     onClick={() => handleRemoveItem(item.set_num)}>
+                            //     <img
+                            //         src={item.set_img_url}
+                            //         alt={item.name}
+                            //         className="w-6 h-6 object-cover rounded-full"
 
-                                />
-                                <span className="text-gray-700">{item.name}</span>
-                            </div>
+                            //     />
+                            //     <span className="text-gray-700">{item.name}</span>
+                            // </div>
                         ))}
                     </div>
                 </div>

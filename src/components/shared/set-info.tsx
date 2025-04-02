@@ -20,14 +20,14 @@ export const SetInfo: React.FC<Props> = ({ className, setData, theme }) => {
                 </div>
                 <Typography variant='h4' text={setData.year} />
             </div>
-            <div className='bg-gray-100 p-3 rounded-md mt-4 dark:bg-neutral-300'>
+            <div className='bg-gray-100 p-3 rounded-md mt-4 dark:bg-transparent'>
                 <div className='flex justify-between'>
-                    <p className='text-lg dark:text-black'>Серия:</p>
-                    <p className='text-lg dark:text-black'>{theme?.name}</p>
+                    <p className='text-lg dark:text-[rgba(242,242,242,0.9)]'>Серия:</p>
+                    <p className='text-lg dark:text-[rgba(242,242,242,0.9)]'>{theme?.name}</p>
                 </div>
                 {setData.num_parts !== 0 && <div className='flex justify-between'>
-                    <p className='text-lg dark:text-black'>Количество деталей:</p>
-                    <p className='text-lg dark:text-black'>{setData.num_parts}</p>
+                    <p className='text-lg dark:text-[rgba(242,242,242,0.9)]'>Количество деталей:</p>
+                    <p className='text-lg dark:text-[rgba(242,242,242,0.9)]'>{setData.num_parts}</p>
                 </div>}
 
             </div>

@@ -9,21 +9,23 @@
 //     // userId: string;
 // }
 
+import { JsonValue } from "@prisma/client/runtime/library";
+
 export interface SetData {
     name: string,
-    id: number,
-    createdAt: Date,
-    updatedAt: Date,
+    id?: number,
+    createdAt?: Date,
+    updatedAt?: Date,
     set_num: string,
     year: number,
     theme_id: number,
     num_parts: number,
     set_img_url: string,
     set_url: string,
-    collectionId?: number | null,
-    wishesId?: number | null,
+    collectionId?: string | null,
+    wishesId?: string | null,
     productId?: string | null
-    // user_id: string;
+    user_id?: string;
 }
 
 export interface MultipleSetsData {
@@ -50,37 +52,46 @@ export interface SetPageProps {
     userId: string
 }
 
+export const TestSetPageProps = {
+    set: {
+        set_num: '10075-1',
+        name: 'Spider-Man Action Pack',
+        year: 2002,
+        theme_id: 706,
+        num_parts: 25,
+        set_img_url: 'https://cdn.rebrickable.com/media/sets/10075-1/110451.jpg',
+        set_url: 'https://rebrickable.com/sets/10075-1/spider-man-action-pack/',
+        last_modified_dt: '2022-10-02T23:48:03.782040Z'
+    },
+    isWish: false,
+    isOwn: true,
+    userId: ""
+}
+
 export interface SetThemesData {
     id: number,
     parent_id: number | null,
     name: string
 }
 
+
 export interface ProductData {
+    id?: string,
     title: string,
     description: string,
     location: string,
     price: number,
-    userId: string,
+    userId?: string | null,
     images: string[]
-    sets: SetData[]
+    sets: SetData[],
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 export interface NewProductData {
     message: string,
-    newProduct: {
-        id: string,
-        title: string,
-        description: string,
-        location: string,
-        price: number,
-        userId: string,
-        images: string[]
-        sets: SetData[],
-        createdAt: Date,
-        updatedAt: Date
-    },
-    
+    newProduct: ProductData
+
 }
 
 export interface SessionData {
