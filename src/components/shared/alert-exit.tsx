@@ -4,7 +4,8 @@ import { LogOut } from "lucide-react"
 import { AlertDialog, Button } from "../ui"
 import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
 import { FC } from "react"
-import { logout } from "@/lib/actions"
+import { logout } from "@/lib/actions/auth"
+
 
 
 

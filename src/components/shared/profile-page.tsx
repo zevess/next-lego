@@ -2,14 +2,18 @@
 
 import { User } from "@prisma/client"
 import { Typography } from "./typography"
-import { Check, Heart } from "lucide-react"
+import { Check, Heart, ShoppingBasketIcon } from "lucide-react"
 import { useHover } from "@uidotdev/usehooks";
 import { ProfileEdit } from "./profile-edit"
 import { AlertExit } from "./alert-exit"
 
 import { SetsTable } from "./sets-table"
 import { UserAvatar } from "./user-avatar"
-import { SetData } from "@/lib/types";
+import { ProductData, SetData, TabType } from "@/lib/types";
+
+import { UserSets } from "./user-sets";
+import { ProductsTable } from "./products-table";
+import { ContentTabs } from "./content-tabs";
 
 
 
@@ -18,18 +22,36 @@ interface Props {
     data: User
     isSameUser: boolean,
     userCollection: SetData[] | "",
-    userWishes: SetData[] | ""
+    userWishes: SetData[] | "",
+    products: ProductData[] | ""
+
 }
 
-export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection, userWishes }) => {
+export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection, userWishes, products }) => {
 
     const [ref, hovering] = useHover();
+
+    const tabs: TabType[] = [
+        {
+            "Списки": <UserSets key={1} data={data} isSameUser={isSameUser} userCollection={userCollection} userWishes={userWishes} />
+        },
+        {
+            "Товары":
+                <div key={2} className='flex flex-col items-center mt-5'>
+                    <div className='flex items-center mr-auto ml-2'>
+                        <ShoppingBasketIcon />
+                        <Typography variant='h4' text='Товары на маркетплейсе:' className='mr-auto ml-2' />
+                    </div>
+                    <ProductsTable products={products} />
+                </div>
+        },
+    ]
 
     return (
         <div className={className}>
             <div className='w-full flex flex-col items-center'>
-                {isSameUser && <AlertExit className="ml-auto"/>}
-                <UserAvatar variant="large" src={data.image}/>
+                {isSameUser && <AlertExit className="ml-auto" />}
+                <UserAvatar variant="large" src={data.image} />
                 <div ref={ref} className="flex items-center">
                     <div className="flex flex-col items-center">
                         <Typography className="" variant={'h2'} text={data.name ? data.name : ""} />
@@ -42,21 +64,7 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
                 {isSameUser && <p>{"Это вы!"}</p>}
             </div>
 
-            <div className='flex flex-col items-center mt-5'>
-                <div className='flex items-center mr-auto ml-2'>
-                    <Check />
-                    <Typography variant='h4' text='В коллекции:' className='mr-auto ml-2' />
-                </div>
-                {userCollection && <SetsTable isSameUser={isSameUser} userWishes={userWishes} userCollection={userCollection} setsData={userCollection} userId={data.id} />}
-            </div>
-
-            <div className='flex flex-col items-center mt-5'>
-                <div className='flex items-center mr-auto ml-2'>
-                    <Heart />
-                    <Typography variant='h4' text='В желаемом:' className='mr-auto ml-2' />
-                </div>
-                {userWishes && <SetsTable isSameUser={isSameUser} userWishes={userWishes} userCollection={userCollection} setsData={userWishes} userId={data.id}/>}
-            </div>
+            <ContentTabs tabs={tabs} />
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import { MarketplacePage, StyledButton, StyledLink, Typography } from "@/components/shared";
 import { Button } from "@/components/ui";
-import { getAllProducts } from "@/lib/actions";
+import { getAllProducts } from "@/lib/actions/product";
+
 import { ProductData } from "@/lib/types";
 
 

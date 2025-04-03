@@ -1,6 +1,5 @@
 import { NotFound, ProductPage } from "@/components/shared";
-import { getProduct } from "@/lib/actions";
-
+import { getProduct } from "@/lib/actions/product";
 
 
 export default async function Page({ params }: { params: Promise<{ product: string }>}) {
@@ -8,7 +7,6 @@ export default async function Page({ params }: { params: Promise<{ product: stri
     const productId = (await params).product
 
     const product = await getProduct(productId);
-    const user = product?.user ? product.user : null 
 
     console.log(product);
 
@@ -19,6 +17,6 @@ export default async function Page({ params }: { params: Promise<{ product: stri
     }
 
     return(
-        <ProductPage product={product} user={user}/>
+        <ProductPage product={product} user={product.user}/>
     )
 }

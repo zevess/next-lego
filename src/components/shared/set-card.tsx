@@ -11,7 +11,8 @@ import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { WishButton } from "./wish-button"
 import { OwnButton } from "./own-button"
 import { SetData } from "@/lib/types"
-import { addSetToCollection, addSetToWishes } from "@/lib/actions"
+import { addSetToCollection, addSetToWishes } from "@/lib/actions/set"
+
 
 
 interface SetCardProps {

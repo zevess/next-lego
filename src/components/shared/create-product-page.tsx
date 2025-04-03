@@ -7,7 +7,9 @@ import { X } from 'lucide-react'
 import { SetSearchDropdown } from './set-search-dropdown'
 import { useRouter } from 'next/navigation'
 import { NewProductData, ProductData, SetData } from '@/lib/types'
-import { createProduct, uploadImageToImgbb } from '@/lib/actions'
+import { createProduct } from '@/lib/actions/product'
+import { uploadImageToImgbb } from '@/lib/actions/user'
+import axios from 'axios'
 
 
 
@@ -29,6 +31,9 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
 
     const router = useRouter()
 
+    console.log(images)
+
+    const isAllFormFilled = Boolean(title && description && location && price && images.length)
 
     const handleCreateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,9 +41,20 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
             const promises = images.map(async (item) => {
                 return await uploadImageToImgbb(item);
             })
+
+            // const body = new FormData();
+            // body.set('key', '6e7d68e54df670421554600a988d4701');
+            // body.append('image', images[0]);
+            // return axios({
+            //     method: 'post',
+            //     url: 'https://api.imgbb.com/1/upload',
+            //     data: body
+            // })
+            
+
             const uploadedImages = await Promise.all(promises);
 
-            const obj: ProductData = {
+            const product: ProductData = {
                 title: title,
                 description: description,
                 location: location,
@@ -48,7 +64,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 sets: selectedItems
             }
 
-            const createdProduct: NewProductData = await createProduct(obj)
+            const createdProduct: NewProductData = await createProduct(product)
             console.log(createdProduct)
             router.push(`/marketplace/${createdProduct.newProduct.id}`)
 
@@ -124,7 +140,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 <Label htmlFor='sets'>Связанные наборы</Label>
                 <SetSearchDropdown selectedItems={selectedItems} setSelectedItems={setSelectedItems} />
 
-                <Button type='submit'>Создать товар</Button>
+                <Button type='submit' disabled={!isAllFormFilled}>Создать товар</Button>
             </form>
         </div>
     )

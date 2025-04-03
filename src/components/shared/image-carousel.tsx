@@ -9,16 +9,17 @@ interface Props {
 }
 
 export const ImageCarousel: React.FC<Props> = ({ className, images }) => {
+    console.log(images)
     return (
         <div className={'w-8/12 mt-4 lg:w-1/2'}>
             <Carousel className="">
                 <CarouselContent>
-                    {images.map((_, index) => (
+                    {images.map((image, index) => (
                         <CarouselItem key={index}>
                             <div className="p-1">
                                 <Card>
                                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                                        <img alt='w' src={_}/>
+                                        <img src={String(image)} alt='w' />
                                         {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
                                     </CardContent>
                                 </Card>
@@ -26,8 +27,11 @@ export const ImageCarousel: React.FC<Props> = ({ className, images }) => {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                {images.length > 1 && <>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                </>}
+
             </Carousel>
         </div>
     )

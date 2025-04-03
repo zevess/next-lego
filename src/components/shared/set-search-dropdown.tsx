@@ -11,8 +11,9 @@ import { Typography } from './typography';
 
 import { useDebounce } from 'react-use'
 import { MultipleSetsData, SetData } from '@/lib/types';
-import { getSets } from '@/lib/actions';
+
 import { SetTag } from './set-tag';
+import { getDataTest, getSets } from '@/lib/actions/set';
 
 
 interface Props {
@@ -28,11 +29,14 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
 
     const items = foundItems?.results
 
+    // console.log(items)
+
     const filteredItems = items?.filter((item: SetData) =>
-        item.name.toLowerCase().includes(query.toLowerCase()) &&
+        item.name.toLowerCase().includes(query.toLowerCase()) ||
         !selectedItems.some((selected) => selected.set_num === item.set_num)
     );
 
+    // console.log("filteredItems: ", filteredItems)
 
     const handleSelectItem = (item: SetData) => {
         setSelectedItems((prev) => [...prev, item]);
@@ -44,6 +48,8 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
         setSelectedItems((prev) => prev.filter((item:SetData) => item.set_num !== id));
     };
 
+
+   
     useDebounce(async () => {
         try {
             const response = query.length !== 0 ? await getSets(1, query) : '';
@@ -96,23 +102,11 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
 
 
             {(selectedItems.length > 0 && selectedItems.length < 6) && (
-                <div className="mt-6">
-                    <Typography variant='h4' className='mb-2' text={'Выбранные наборы:'} />
+                <div className="my-6">
+                    <Typography variant='h4' className='' text={'Выбранные наборы:'} />
                     <div className="flex flex-wrap gap-2">
                         {selectedItems.map((item, index) => (
-                            <SetTag isLink={false} onClick={()=> handleRemoveItem(item.set_num)} set={item}/>
-                            // <div
-                            //     key={index}
-                            //     className="flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer"
-                            //     onClick={() => handleRemoveItem(item.set_num)}>
-                            //     <img
-                            //         src={item.set_img_url}
-                            //         alt={item.name}
-                            //         className="w-6 h-6 object-cover rounded-full"
-
-                            //     />
-                            //     <span className="text-gray-700">{item.name}</span>
-                            // </div>
+                            <SetTag className='m-2' isLink={false} onClick={()=> handleRemoveItem(item.set_num)} set={item}/>
                         ))}
                     </div>
                 </div>

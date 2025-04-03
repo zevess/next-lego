@@ -9,7 +9,9 @@
 //     // userId: string;
 // }
 
+import { User } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
+import { JSX } from "react";
 
 export interface SetData {
     name: string,
@@ -52,6 +54,10 @@ export interface SetPageProps {
     userId: string
 }
 
+export type TabType = {
+    [key: string]: JSX.Element;
+}
+
 export const TestSetPageProps = {
     set: {
         set_num: '10075-1',
@@ -85,8 +91,11 @@ export interface ProductData {
     images: string[]
     sets: SetData[],
     createdAt?: Date,
-    updatedAt?: Date
+    updatedAt?: Date,
+    user?: User
 }
+
+
 
 export interface NewProductData {
     message: string,

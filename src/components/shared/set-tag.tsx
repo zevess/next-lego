@@ -1,4 +1,5 @@
 import { SetData } from '@/lib/types'
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 interface Props {
@@ -13,7 +14,7 @@ export const SetTag: React.FC<Props> = ({ className, set, onClick, isLink }) => 
         <a href={`/set/${set.set_num}`}>
             <div
                 key={set.set_num}
-                className="flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer"
+                className={cn("flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer", className)}
                 onClick={onClick}>
 
                 <img
@@ -28,7 +29,7 @@ export const SetTag: React.FC<Props> = ({ className, set, onClick, isLink }) => 
     return (
         <div
             key={set.set_num}
-            className="flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer"
+            className={cn("flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer", className)}
             onClick={onClick}>
 
             <img

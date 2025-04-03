@@ -1,9 +1,9 @@
 import { auth } from "@/lib/auth";
 
 import { PaginationDemo, SetSearch, SetsTable } from "@/components/shared";
-
 import { Metadata } from 'next';
-import { getSets, getUser, getUserCollection, getUserWishes } from "@/lib/actions";
+import { getUser, getUserCollection, getUserWishes } from "@/lib/actions/user";
+import { getSets } from "@/lib/actions/set";
 
 
 export async function generateMetadata({

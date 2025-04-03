@@ -6,7 +6,8 @@ import { Container, Header } from "@/components/shared";
 import { auth } from "@/lib/auth";
 
 import { SessionProvider } from "next-auth/react";
-import { getUser } from "@/lib/actions";
+import { getUser } from "@/lib/actions/user";
+
 
 const ubuntu = Ubuntu({
   subsets: ['cyrillic'],

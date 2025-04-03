@@ -10,11 +10,12 @@ import { UserAvatar } from './user-avatar'
 import { ProductData, SetData } from '@/lib/types'
 import { SetTag } from './set-tag'
 import { useRouter } from 'next/navigation'
+import { JsonValue } from '@prisma/client/runtime/library'
 
 interface Props {
     className?: string,
     product: ProductData,
-    user: User | null
+    user: User | undefined
 }
 
 export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
@@ -70,7 +71,7 @@ export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
             </div>
 
 
-            {product.images.length > 1 && <ImageCarousel images={product.images} />}
+            {product.images.length > 0 && <ImageCarousel images={product.images} />}
         </div>
     )
 }

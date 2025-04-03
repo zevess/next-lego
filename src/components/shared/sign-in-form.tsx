@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import { Button, Input } from '../ui'
 import { usePathname, useRouter } from 'next/navigation'
-import { credentialsSignIn, credentialsSignUp } from '@/lib/actions'
+import { credentialsSignIn, credentialsSignUp } from '@/lib/actions/auth'
+
 
 
 

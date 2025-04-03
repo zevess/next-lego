@@ -14,7 +14,8 @@ import { Set, User } from '@prisma/client'
 import { SetUsersList } from './set-users-list'
 import { SetInfo } from './set-info'
 import { SetPageProps } from '@/lib/types'
-import { addSetToCollection, addSetToWishes } from '@/lib/actions'
+import { addSetToCollection, addSetToWishes } from '@/lib/actions/set'
+
 
 
 interface Props {

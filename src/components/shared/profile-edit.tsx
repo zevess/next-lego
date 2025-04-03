@@ -8,7 +8,8 @@ import { User } from "@prisma/client"
 
 import { useRouter } from "next/navigation"
 import { AvatarUploader } from "./avatar-uploader"
-import { updateProfile, uploadImageToImgbb } from "@/lib/actions"
+import { updateProfile, uploadImageToImgbb } from "@/lib/actions/user"
+
 
 
 
@@ -27,7 +28,7 @@ export const ProfileEdit: React.FC<Props> = ({ userData, hovering }) => {
     const [isUpload, setIsUpload] = React.useState(false)
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-    console.log(image)
+    // console.log(image)
 
     const router = useRouter()
 
