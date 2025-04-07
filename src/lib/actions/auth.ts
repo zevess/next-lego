@@ -2,9 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "../auth";
-import { schema } from "../schema";
+
 import { prisma } from "../prisma/prisma";
 import bcrypt from "bcrypt"
+import { FormSchema, formSchema } from "../schema";
 
 
 export const providerLogin = async (provider: string) => {
@@ -21,18 +22,35 @@ export const logout = async () => {
     revalidatePath("/")
 }
 
-export const credentialsSignIn = async (formData: FormData) => {
-
+export const credentialsSignIn = async (data: FormSchema) => {
     try {
+        const validatedCredentials = formSchema.parse(data);
+
+        const user = await prisma.user.findFirst({
+            where: {
+                email: validatedCredentials.email.toLocaleLowerCase(),
+            },
+        });
+
+        const match = user?.password && await bcrypt.compare(validatedCredentials.password, user?.password)
+
+        if (user && !match) {
+            return { error: 401, type: 'password', message: "Неверный пароль" }
+        }
+
+        if (!user) {
+            return { error: 401, type: 'email', message: "Неверный email или пароль" }
+        }
+
         const res = await signIn("credentials", {
-            email: formData.get("email"),
-            password: formData.get("password"),
+            email: data.email,
+            password: data.password,
             redirect: false
         })
 
-        if (res.error) {
-            return { error: true, message: res.error };
-        }
+        // if (res.error) {
+        //     return { error: true, message: res.error };
+        // }
 
         return res;
     } catch (error) {
@@ -42,16 +60,16 @@ export const credentialsSignIn = async (formData: FormData) => {
 
 }
 
-export const credentialsSignUp = async (formData: FormData) => {
+export const credentialsSignUp = async (data: FormSchema) => {
     try {
-        const email = formData.get("email");
-        const password = formData.get("password");
+        const email = data.email;
+        const password = data.password;
 
         if (password && String(password).length < 6) {
             return { error: true, message: "Пароль слишком короткий, минимум 6 символов" };
         }
 
-        const validatedData = schema.parse({ email, password });
+        const validatedData = formSchema.parse({ email, password });
 
         const user = await prisma.user.findFirst({
             where: {
@@ -60,7 +78,7 @@ export const credentialsSignUp = async (formData: FormData) => {
         });
 
         if (user) {
-            return { error: true, message: "Пользователь уже существует" };
+            return { error: true, type: 'email', message: "Пользователь уже существует" };
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -74,8 +92,8 @@ export const credentialsSignUp = async (formData: FormData) => {
         });
 
         const res = await signIn("credentials", {
-            email: formData.get("email"),
-            password: formData.get("password"),
+            email: data.email,
+            password: data.password,
             redirect: false
         });
 

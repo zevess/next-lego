@@ -44,7 +44,7 @@ export interface TestDataJSON {
 
 export const headers = {
     "Accept": "application/json",
-    "Authorization": `${process.env.REBRICKABLE_KEY}`
+    "Authorization": `${process.env.NEXT_PUBLIC_REBRICKABLE_KEY}`
 }
 
 export interface SetPageProps {

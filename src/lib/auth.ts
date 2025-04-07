@@ -5,9 +5,10 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google"
-import { schema } from "./schema";
+
 import { prisma } from "./prisma/prisma";
 import bcrypt from "bcrypt"
+import { formSchema } from "./schema";
 
 const adapter = PrismaAdapter(prisma);
 
@@ -22,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
-        const validatedCredentials = schema.parse(credentials);
+        const validatedCredentials = formSchema.parse(credentials);
 
         const user = await prisma.user.findFirst({
           where: {
@@ -30,13 +31,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           },
         });
 
-        const match = user?.password && await bcrypt.compare(validatedCredentials.password, user?.password)
+        // const match = user?.password && await bcrypt.compare(validatedCredentials.password, user?.password)
 
-        if (!user || !match) {
-          const error = new Error();
-          error.message = "Неверный email или пароль";
-          throw error
-        }
+        // if (!user || !match) {
+        //   const error = new Error();
+        //   error.message = "Неверный email или пароль!!!!!!";
+        //   return error
+        // }
 
         return user;
       },

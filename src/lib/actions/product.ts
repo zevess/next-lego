@@ -11,6 +11,14 @@ export const createProduct = async (product: ProductData) => {
     return newSet.json()
 }
 
+export const updateProduct = async (product: ProductData) => {
+    const updatedSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/updateProduct`, {
+        method: "PATCH",
+        body: JSON.stringify(product)
+    })
+    return updatedSet.json()
+}
+
 export const getProduct = async (productId: string) => {
 
     const product = await prisma.product.findFirst({

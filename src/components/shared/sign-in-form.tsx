@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import { Button, Input } from '../ui'
 import { usePathname, useRouter } from 'next/navigation'
 import { credentialsSignIn, credentialsSignUp } from '@/lib/actions/auth'
-
-
+import { FormState, SubmitHandler, useForm } from 'react-hook-form'
+import { formSchema, FormSchema } from '@/lib/schema'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 
 interface Props {
@@ -13,49 +14,59 @@ interface Props {
 
 export const SignInForm: React.FC<Props> = ({ className }) => {
 
-    const [error, setError] = useState<string>()
-
     const pathname = usePathname()
     const router = useRouter()
 
-    const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const { register, handleSubmit, setError, formState: { errors, isDirty, isSubmitting } } = useForm<FormSchema>({ resolver: zodResolver(formSchema) })
+
+    const onSubmit: SubmitHandler<FormSchema> = async (data) => {
+        console.log(data)
         try {
-            const formData = new FormData(event.currentTarget);
-            const response = pathname == '/sign-in' ? await credentialsSignIn(formData) : await credentialsSignUp(formData);
+            const response = pathname == '/sign-in' ? await credentialsSignIn(data) : await credentialsSignUp(data);
             if (response.error) {
-                setError(response.message)
+                setError(response.type, { message: response.message })
             } else {
                 router.push('/')
             }
+
         } catch (error) {
             console.log(error)
-            setError("Ошибка при авторизации")
         }
     }
 
     return (
         <div className={className}>
-            {error && <p className='text-red-500'>{error}</p>}
             <form
                 className="space-y-4"
-                onSubmit={handleFormSubmit}
+                onSubmit={handleSubmit(onSubmit)}
             >
-                <Input
-                    name="email"
-                    placeholder="Email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                />
-                <Input
-                    name="password"
-                    placeholder="Пароль"
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                />
-                <Button className="w-full" type="submit">
+                <div>
+                    <Input {...register('email', { required: true })}
+                        name="email"
+                        placeholder="Email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                    />
+                    {errors.email && (
+                        <span className='text-red-500'>{errors.email.message}</span>
+                    )}
+                </div>
+
+                <div>
+                    <Input {...register('password', { required: true })}
+                        name="password"
+                        placeholder="Пароль"
+                        type="password"
+                        required
+                        autoComplete="current-password"
+                    />
+                    {errors.password && (
+                        <span className='text-red-500'>{errors.password.message}</span>
+                    )}
+                </div>
+
+                <Button className="w-full" type="submit" disabled={!isDirty || isSubmitting}>
                     {pathname == '/sign-in' ? 'Войти' : 'Зарегистрироваться'}
                 </Button>
             </form>

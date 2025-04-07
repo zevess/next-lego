@@ -21,7 +21,7 @@ export const getUserByNick = async (userNick: string) => {
 
 export const uploadImageToImgbb = async (file: File) => {
     const body = new FormData();
-    body.set('key', '6e7d68e54df670421554600a988d4701');
+    body.set('key', `${process.env.NEXT_PUBLIC_IMGBB_KEY}`);
     body.append('image', file);
 
     const response = await axios.post('https://api.imgbb.com/1/upload', body);

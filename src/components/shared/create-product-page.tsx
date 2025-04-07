@@ -9,9 +9,6 @@ import { useRouter } from 'next/navigation'
 import { NewProductData, ProductData, SetData } from '@/lib/types'
 import { createProduct } from '@/lib/actions/product'
 import { uploadImageToImgbb } from '@/lib/actions/user'
-import axios from 'axios'
-
-
 
 interface Props {
     className?: string,
@@ -29,28 +26,19 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
     const [images, setImages] = React.useState<File[]>([]);
     const [imagePreviews, setImagePreviews] = React.useState<string[]>([]);
 
-    const router = useRouter()
+    const [isLoading, setIsLoading] = React.useState(false);
 
-    console.log(images)
+    const router = useRouter()
 
     const isAllFormFilled = Boolean(title && description && location && price && images.length)
 
     const handleCreateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
+            setIsLoading(true);
             const promises = images.map(async (item) => {
                 return await uploadImageToImgbb(item);
             })
-
-            // const body = new FormData();
-            // body.set('key', '6e7d68e54df670421554600a988d4701');
-            // body.append('image', images[0]);
-            // return axios({
-            //     method: 'post',
-            //     url: 'https://api.imgbb.com/1/upload',
-            //     data: body
-            // })
-            
 
             const uploadedImages = await Promise.all(promises);
 
@@ -67,11 +55,12 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
             const createdProduct: NewProductData = await createProduct(product)
             console.log(createdProduct)
             router.push(`/marketplace/${createdProduct.newProduct.id}`)
+            setIsLoading(false)
 
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
-
     }
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,7 +129,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 <Label htmlFor='sets'>Связанные наборы</Label>
                 <SetSearchDropdown selectedItems={selectedItems} setSelectedItems={setSelectedItems} />
 
-                <Button type='submit' disabled={!isAllFormFilled}>Создать товар</Button>
+                <Button type='submit' disabled={!isAllFormFilled || !userId || isLoading}>{isLoading ? "Загрузка..." : "Создать товар"}</Button>
             </form>
         </div>
     )
