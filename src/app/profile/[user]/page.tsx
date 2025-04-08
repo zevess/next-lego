@@ -1,9 +1,7 @@
-
 import { auth } from '@/lib/auth';
 import { ProfilePage, NotFound } from '@/components/shared';
 import React from 'react'
 import { Metadata } from 'next';
-
 import { getAllProductsByUser } from '@/lib/actions/product';
 import { getUserByNick, getUserCollection, getUserWishes } from '@/lib/actions/user';
 

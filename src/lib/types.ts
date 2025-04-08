@@ -87,7 +87,7 @@ export interface ProductData {
     description: string,
     location: string,
     price: number,
-    userId?: string | null,
+    userId?: string,
     images: string[]
     sets: SetData[],
     createdAt?: Date,

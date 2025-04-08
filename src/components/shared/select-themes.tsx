@@ -2,7 +2,6 @@
 import React from 'react'
 import { Button, Command, Popover } from '../ui'
 import { PopoverContent, PopoverTrigger } from '../ui/popover'
-
 import { setThemes } from "@/lib/themes"
 import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'

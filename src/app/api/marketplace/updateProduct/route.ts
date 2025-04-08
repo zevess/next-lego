@@ -15,7 +15,7 @@ export async function PATCH(request: NextRequest) {
                 location: body.location,
                 price: body.price,
                 images: body.images,
-                userId: body.userId,
+                userId: String(body.userId),
                 sets: JSON.parse(JSON.stringify(body.sets))
             }
         })

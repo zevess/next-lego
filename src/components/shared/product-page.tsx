@@ -1,16 +1,15 @@
 "use client"
 import React from 'react'
 import { ImageCarousel } from './image-carousel'
-import { Product, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import { Typography } from './typography'
 import Link from 'next/link'
-import { Avatar, Separator } from '../ui'
-import { AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Separator } from '../ui'
 import { UserAvatar } from './user-avatar'
 import { ProductData, SetData } from '@/lib/types'
 import { SetTag } from './set-tag'
 import { useRouter } from 'next/navigation'
-import { JsonValue } from '@prisma/client/runtime/library'
+
 
 interface Props {
     className?: string,
@@ -19,13 +18,6 @@ interface Props {
 }
 
 export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
-    const images = [
-        "https://i.ibb.co/KjcZsQW3/3836.jpg",
-        "https://i.ibb.co/jvQ5rXsd/47727.jpg"
-    ]
-
-    const router = useRouter()
-
 
     return (
         <div className={'w-full flex flex-col items-center lg:flex-row lg:justify-around lg:items-start p-2 py-4 rounded-xl border bg-card text-card-foreground shadow'}>
@@ -52,7 +44,7 @@ export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
                 </div>
 
                 <div className='bg-gray-100 p-3 rounded-md mt-2 dark:bg-transparent border-2'>
-                    <p className='dark:text-[rgba(242,242,242,0.9)]'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto ea corporis autem tenetur in. Ab repudiandae blanditiis sit incidunt quos odio, quod laborum dolorum fugiat sapiente delectus vitae iure dolor! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab eveniet at saepe dolores deserunt dolorum voluptatem laboriosam voluptates porro ea, sunt fugiat asperiores consectetur maiores aliquid voluptatibus! Sunt, iusto provident? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis commodi adipisci id expedita laborum a eligendi molestiae tenetur doloribus magnam iusto neque sapiente voluptates necessitatibus, nulla ratione. Mollitia, animi voluptas! </p>
+                    <p className='dark:text-[rgba(242,242,242,0.9)]'>{product.description}</p>
                 </div>
 
                 <div className="flex items-center gap-4 my-4">

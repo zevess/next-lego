@@ -1,4 +1,4 @@
-import { CreateProductPage, Typography } from "@/components/shared";
+import { CreateProductPage } from "@/components/shared";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 

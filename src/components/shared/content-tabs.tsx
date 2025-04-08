@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Card, Input, Label, Tabs } from '../ui'
+import { Tabs } from '../ui'
 import { TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
+
 import { TabType } from '@/lib/types'
 
 interface Props {

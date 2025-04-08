@@ -1,12 +1,10 @@
 'use client'
-
-
-import React, { SetStateAction } from "react"
+import React from "react"
 import { Card, HoverCard } from "../ui"
 import { cn } from "@/lib/utils"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import Link from "next/link"
-import { handleAddSetToCollection, handleAddSetToWishes, setAction } from "@/lib/functions"
+import { handleAddSetToCollection, handleAddSetToWishes } from "@/lib/functions"
 import { HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { WishButton } from "./wish-button"
 import { OwnButton } from "./own-button"

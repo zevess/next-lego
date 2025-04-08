@@ -1,11 +1,9 @@
 "use client"
-
 import { PencilLine } from "lucide-react"
 import { AlertDialog, Button, Input, Label } from "@/components/ui"
 import { AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog"
 import React from "react"
 import { User } from "@prisma/client"
-
 import { useRouter } from "next/navigation"
 import { AvatarUploader } from "./avatar-uploader"
 import { updateProfile, uploadImageToImgbb } from "@/lib/actions/user"

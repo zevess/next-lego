@@ -1,5 +1,4 @@
 import { auth } from "@/lib/auth";
-
 import { PaginationDemo, SetSearch, SetsTable } from "@/components/shared";
 import { Metadata } from 'next';
 import { getUser, getUserCollection, getUserWishes } from "@/lib/actions/user";

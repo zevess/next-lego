@@ -102,7 +102,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 <Input {...register('title', { required: true })} placeholder='введите название товара' required name='title' id='title' />
 
                 <Label htmlFor='description'>Описание товара</Label>
-                <Input {...register('description', { required: true })} placeholder='введите описание товара' name='description' id='description' />
+                <Textarea {...register('description', { required: true })} placeholder='введите описание товара' name='description' id='description' />
 
                 <Label htmlFor='location'>Местоположение</Label>
                 <Input {...register('location', { required: true })} placeholder='введите местоположение' name='location' id='location' type='text' />

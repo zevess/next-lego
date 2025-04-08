@@ -1,16 +1,10 @@
 "use client"
-
-import React, { SetStateAction } from 'react'
-
+import React from 'react'
 import { Heart, Plus, X } from 'lucide-react'
-
-import { Typography } from './typography'
-import { Avatar, Button } from '../ui'
+import { Button } from '../ui'
 import { handleAddSetToCollection, handleAddSetToWishes, setAction } from '@/lib/functions'
-
 import { setThemes } from '@/lib/themes'
-import { Set, User } from '@prisma/client'
-
+import { User } from '@prisma/client'
 import { SetUsersList } from './set-users-list'
 import { SetInfo } from './set-info'
 import { SetPageProps } from '@/lib/types'

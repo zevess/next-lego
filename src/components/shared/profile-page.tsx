@@ -1,16 +1,12 @@
 "use client"
-
 import { User } from "@prisma/client"
 import { Typography } from "./typography"
-import { Check, Heart, ShoppingBasketIcon } from "lucide-react"
+import { ShoppingBasketIcon } from "lucide-react"
 import { useHover } from "@uidotdev/usehooks";
 import { ProfileEdit } from "./profile-edit"
 import { AlertExit } from "./alert-exit"
-
-import { SetsTable } from "./sets-table"
 import { UserAvatar } from "./user-avatar"
 import { ProductData, SetData, TabType } from "@/lib/types";
-
 import { UserSets } from "./user-sets";
 import { ProductsTable } from "./products-table";
 import { ContentTabs } from "./content-tabs";

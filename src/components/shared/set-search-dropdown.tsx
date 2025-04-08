@@ -1,19 +1,11 @@
 'use client'
-
-import { cn } from '@/lib/utils';
-
-import { Search } from 'lucide-react';
-import Link from 'next/link';
 import React from 'react'
 import { Input } from '../ui';
-
 import { Typography } from './typography';
-
 import { useDebounce } from 'react-use'
 import { MultipleSetsData, SetData } from '@/lib/types';
-
 import { SetTag } from './set-tag';
-import { getDataTest, getSets } from '@/lib/actions/set';
+import { getSets } from '@/lib/actions/set';
 
 
 interface Props {
@@ -106,7 +98,7 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
                     <Typography variant='h4' className='' text={'Выбранные наборы:'} />
                     <div className="flex flex-wrap gap-2">
                         {selectedItems.map((item, index) => (
-                            <SetTag className='m-2' isLink={false} onClick={()=> handleRemoveItem(item.set_num)} set={item}/>
+                            <SetTag key={index} className='m-2' isLink={false} onClick={()=> handleRemoveItem(item.set_num)} set={item}/>
                         ))}
                     </div>
                 </div>
