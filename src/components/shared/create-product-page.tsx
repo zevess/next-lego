@@ -9,6 +9,9 @@ import { useRouter } from 'next/navigation'
 import { NewProductData, ProductData, SetData } from '@/lib/types'
 import { createProduct } from '@/lib/actions/product'
 import { uploadImageToImgbb } from '@/lib/actions/user'
+import { productSchema, ProductSchema } from '@/lib/schemas/productSchema'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 interface Props {
     className?: string,
@@ -17,10 +20,7 @@ interface Props {
 
 export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
 
-    const [title, setTitle] = React.useState('')
-    const [description, setDescription] = React.useState('')
-    const [location, setLocation] = React.useState('')
-    const [price, setPrice] = React.useState(0)
+
     const [selectedItems, setSelectedItems] = React.useState<SetData[]>([]);
 
     const [images, setImages] = React.useState<File[]>([]);
@@ -30,39 +30,48 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
 
     const router = useRouter()
 
+    const { register, handleSubmit, setError, watch, formState: { errors, isDirty, isValid, isSubmitting } } = useForm<ProductSchema>({
+        resolver: zodResolver(productSchema),
+        mode: "onChange"
+    })
+
+    const title = watch("title")
+    const description = watch("description")
+    const location = watch("location")
+    const price = watch("price")
+
     const isAllFormFilled = Boolean(title && description && location && price && images.length)
 
-    const handleCreateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const onSubmit: SubmitHandler<ProductSchema> = async (data) => {
         try {
             setIsLoading(true);
+
             const promises = images.map(async (item) => {
                 return await uploadImageToImgbb(item);
             })
 
             const uploadedImages = await Promise.all(promises);
-
+            console.log(data)
             const product: ProductData = {
-                title: title,
-                description: description,
-                location: location,
-                price: price,
+                title: data.title,
+                description: data.description,
+                location: data.location,
+                price: data.price,
                 userId: userId,
                 images: uploadedImages,
                 sets: selectedItems
             }
 
-            const createdProduct: NewProductData = await createProduct(product)
+            const createdProduct: NewProductData = await createProduct(product).catch(() => setIsLoading(false))
             console.log(createdProduct)
             router.push(`/marketplace/${createdProduct.newProduct.id}`)
-            setIsLoading(false)
 
         } catch (error) {
             console.log(error)
             setIsLoading(false)
         }
-    }
 
+    }
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files) {
@@ -88,18 +97,21 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
     return (
         <div className={className}>
             <Typography variant='h2' text={'Добавить товар'} />
-            <form onSubmit={handleCreateProduct}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Label htmlFor='title'>Название товара</Label>
-                <Input placeholder='введите название товара' required name='title' type='text' value={title} onChange={(e) => setTitle(e.target.value)} id='title' />
+                <Input {...register('title', { required: true })} placeholder='введите название товара' required name='title' id='title' />
 
                 <Label htmlFor='description'>Описание товара</Label>
-                <Textarea placeholder='введите описание товара' value={description} onChange={(e) => setDescription(e.target.value)} name='description' id='description' />
+                <Input {...register('description', { required: true })} placeholder='введите описание товара' name='description' id='description' />
 
                 <Label htmlFor='location'>Местоположение</Label>
-                <Input placeholder='введите местоположение' value={location} onChange={(e) => setLocation(e.target.value)} name='location' id='location' type='text' />
+                <Input {...register('location', { required: true })} placeholder='введите местоположение' name='location' id='location' type='text' />
 
                 <Label htmlFor='price'>Цена</Label>
-                <Input placeholder='введите цену' id='price' name='price' type='number' value={price} onChange={(e) => setPrice(Number(e.target.value))} />
+                <Input {...register('price', {
+                    required: true,
+                    setValueAs: (value) => (Number(value))
+                })} placeholder='введите цену' id='price' name='price' type='number' />
 
                 <Label htmlFor='images'>Изображения</Label>
                 <Input placeholder='загрузите фото' id='images' name='images' type='file' accept='image/*' onChange={handleImageUpload} />

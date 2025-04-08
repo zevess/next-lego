@@ -4,7 +4,7 @@ import { Button, Input } from '../ui'
 import { usePathname, useRouter } from 'next/navigation'
 import { credentialsSignIn, credentialsSignUp } from '@/lib/actions/auth'
 import { FormState, SubmitHandler, useForm } from 'react-hook-form'
-import { formSchema, FormSchema } from '@/lib/schema'
+import { formSchema, FormSchema } from '@/lib/schemas/formSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 

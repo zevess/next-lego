@@ -5,7 +5,7 @@ import { signIn, signOut } from "../auth";
 
 import { prisma } from "../prisma/prisma";
 import bcrypt from "bcrypt"
-import { FormSchema, formSchema } from "../schema";
+import { FormSchema, formSchema } from "../schemas/formSchema";
 
 
 export const providerLogin = async (provider: string) => {

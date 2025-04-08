@@ -8,7 +8,7 @@ import Google from "next-auth/providers/google"
 
 import { prisma } from "./prisma/prisma";
 import bcrypt from "bcrypt"
-import { formSchema } from "./schema";
+import { formSchema } from "./schemas/formSchema";
 
 const adapter = PrismaAdapter(prisma);
 
