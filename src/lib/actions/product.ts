@@ -4,17 +4,17 @@ import { prisma } from "../prisma/prisma"
 import { ProductData, SetData } from "../types"
 
 export const createProduct = async (product: ProductData) => {
-    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/createProduct`, {
+    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/product`, {
         method: "POST",
         body: JSON.stringify(product)
     })
     return newSet.json()
 }
 
-export const updateProduct = async (product: ProductData) => {
-    const updatedSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/updateProduct`, {
+export const updateProduct = async (product: ProductData, productId: string) => {
+    const updatedSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/product`, {
         method: "PATCH",
-        body: JSON.stringify(product)
+        body: JSON.stringify({product, productId})
     })
     return updatedSet.json()
 }

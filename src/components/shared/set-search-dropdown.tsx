@@ -41,7 +41,6 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
     };
 
 
-   
     useDebounce(async () => {
         try {
             const response = query.length !== 0 ? await getSets(1, query) : '';

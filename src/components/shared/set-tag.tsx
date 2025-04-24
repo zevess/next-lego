@@ -14,7 +14,7 @@ export const SetTag: React.FC<Props> = ({ className, set, onClick, isLink }) => 
         <a href={`/set/${set.set_num}`}>
             <div
                 key={set.set_num}
-                className={cn("flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer", className)}
+                className={cn("flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full text-sm hover:bg-blue-200 hover:cursor-pointer m-1", className)}
                 onClick={onClick}>
 
                 <img

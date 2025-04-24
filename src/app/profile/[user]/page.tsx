@@ -6,6 +6,7 @@ import { getAllProductsByUser } from '@/lib/actions/product';
 import { getUserByNick, getUserCollection, getUserWishes } from '@/lib/actions/user';
 
 
+
 export async function generateMetadata({ params }: { params: Promise<{ user: string }> }): Promise<Metadata> {
   const user = (await params).user;
   return {
@@ -25,14 +26,20 @@ export default async function Page({ params }: { params: Promise<{ user: string 
   const userWishes = userData?.id ? await getUserWishes(userData?.id) : "";
   const userProducts = userData?.id ? await getAllProductsByUser(userData.id) : ""
 
-  console.log(userProducts)
-
   const isSameUser = session?.user?.id == userData?.id
 
+ 
   if (!userData) {
     return <NotFound type='user' />
   } else {
-    return <ProfilePage userWishes={userWishes} userCollection={userCollections} products={userProducts} data={userData} isSameUser={isSameUser} />
+    return (
+      <>
+        
+        <ProfilePage userWishes={userWishes} userCollection={userCollections} products={userProducts} data={userData} isSameUser={isSameUser} />
+
+      </>
+
+    )
 
   }
 

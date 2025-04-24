@@ -7,7 +7,7 @@ import { X } from 'lucide-react'
 import { SetSearchDropdown } from './set-search-dropdown'
 import { useRouter } from 'next/navigation'
 import { NewProductData, ProductData, SetData } from '@/lib/types'
-import { createProduct } from '@/lib/actions/product'
+import { createProduct, updateProduct } from '@/lib/actions/product'
 import { uploadImageToImgbb } from '@/lib/actions/user'
 import { productSchema, ProductSchema } from '@/lib/schemas/productSchema'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -16,21 +16,30 @@ import { zodResolver } from '@hookform/resolvers/zod'
 interface Props {
     className?: string,
     userId: string,
+    product?: ProductData,
+    isEditing: boolean
 }
 
-export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
+export const CreateProductPage: React.FC<Props> = ({ className, userId, product, isEditing }) => {
 
+    console.log(product?.sets)
 
-    const [selectedItems, setSelectedItems] = React.useState<SetData[]>([]);
+    const [selectedItems, setSelectedItems] = React.useState<SetData[]>(!isEditing ? [] : product?.sets as SetData[]);
 
     const [images, setImages] = React.useState<File[]>([]);
-    const [imagePreviews, setImagePreviews] = React.useState<string[]>([]);
+    const [imagePreviews, setImagePreviews] = React.useState<string[]>(!isEditing ? [] : product?.images as string[]);
 
     const [isLoading, setIsLoading] = React.useState(false);
 
     const router = useRouter()
 
     const { register, handleSubmit, setError, watch, formState: { errors, isDirty, isValid, isSubmitting } } = useForm<ProductSchema>({
+        defaultValues:{
+            title: product?.title,
+            description: product?.description,
+            location: product?.location,
+            price: product?.price
+        },
         resolver: zodResolver(productSchema),
         mode: "onChange"
     })
@@ -40,7 +49,9 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
     const location = watch("location")
     const price = watch("price")
 
-    const isAllFormFilled = Boolean(title && description && location && price && images.length)
+    const productId = product?.id as string
+
+    const isAllFormFilled = Boolean(title && description && location && price && (images.length || imagePreviews.length))
 
     const onSubmit: SubmitHandler<ProductSchema> = async (data) => {
         try {
@@ -62,9 +73,9 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 sets: selectedItems
             }
 
-            const createdProduct: NewProductData = await createProduct(product).catch(() => setIsLoading(false))
+            const createdProduct: NewProductData = !isEditing ? await createProduct(product).catch(() => setIsLoading(false)) : await updateProduct(product, productId).catch(()=> setIsLoading(false))
             console.log(createdProduct)
-            router.push(`/marketplace/${createdProduct.newProduct.id}`)
+            router.push(!isEditing ? `/marketplace/${createdProduct.newProduct.id}` : `/marketplace/${productId}`)
 
         } catch (error) {
             console.log(error)
@@ -96,7 +107,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
 
     return (
         <div className={className}>
-            <Typography variant='h2' text={'Добавить товар'} />
+            <Typography variant='h2' text={!isEditing ? 'Добавить товар' : "Изменить товар"} />
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Label htmlFor='title'>Название товара</Label>
                 <Input {...register('title', { required: true })} placeholder='введите название товара' required name='title' id='title' />
@@ -141,7 +152,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId }) => {
                 <Label htmlFor='sets'>Связанные наборы</Label>
                 <SetSearchDropdown selectedItems={selectedItems} setSelectedItems={setSelectedItems} />
 
-                <Button type='submit' disabled={!isAllFormFilled || !userId || isLoading}>{isLoading ? "Загрузка..." : "Создать товар"}</Button>
+                <Button type='submit' disabled={!isAllFormFilled || !userId || isLoading}>{isLoading ? "Загрузка..." : (!isEditing ? "Создать товар" : "Изменить товар")}</Button>
             </form>
         </div>
     )

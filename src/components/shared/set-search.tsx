@@ -10,6 +10,7 @@ import { YearInput } from './year-input'
 import { SelectThemes } from './select-themes'
 
 
+
 interface Props {
     className?: string,
 
@@ -47,8 +48,12 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
         }
     };
 
+ 
+
+
     return (
         <div className={className}>
+            
             <div className="flex flex-col items-center mt-10">
                 <Typography variant="h1" text="Найдите набор" />
                 <div className={cn("flex w-full max-w-screen-md items-center space-x-2 p-4 dark:bg-black", className)}>
@@ -65,9 +70,9 @@ export const SetSearch: React.FC<Props> = ({ className }) => {
                     </div>
 
                     <span className='bg-gray-100 p-3 rounded-2xl mb-4 dark:bg-zinc-600'>Выберите год выпуска: от <b>{yearValues[0]}</b> до <b>{yearValues[1]}</b></span>
-                    
+
                     <DualRangeYearSlider className='hidden sm:block my-4' valueFrom={1949} valueTo={2025} step={1} values={yearValues} setValues={setYearValues} />
-                    
+
                     <YearInput className='block sm:hidden' valueFrom={1949} valueTo={2025} step={1} values={yearValues} setValues={setYearValues} />
                 </div>
 

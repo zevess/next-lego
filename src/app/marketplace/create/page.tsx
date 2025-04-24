@@ -9,7 +9,7 @@ export default async function Page() {
 
     return (
         <div>
-            <CreateProductPage userId={String(session?.user?.id)} />
+            <CreateProductPage isEditing={false} userId={String(session?.user?.id)} />
         </div>
     )
 }

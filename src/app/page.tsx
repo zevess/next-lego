@@ -5,6 +5,7 @@ import { getUser, getUserCollection, getUserWishes } from "@/lib/actions/user";
 import { getSets } from "@/lib/actions/set";
 
 
+
 export async function generateMetadata({
   searchParams,
 }: {
@@ -47,8 +48,11 @@ export default async function Home({
 
   const isSameUser = (session?.user?.id == userData?.id) && (session !== null)
 
+
+
   return (
     <>
+      
       <SetSearch />
       {data &&
         <div className="mb-4">

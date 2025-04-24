@@ -9,6 +9,10 @@ import { UserAvatar } from './user-avatar'
 import { ProductData, SetData } from '@/lib/types'
 import { SetTag } from './set-tag'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { Pencil } from 'lucide-react'
+import { StyledLink } from './styled-link'
+import { useAppStore } from '@/store/providers/store-provider'
 
 
 interface Props {
@@ -19,11 +23,27 @@ interface Props {
 
 export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
 
+    const { userId } = useAppStore((state) => state)
+
     return (
         <div className={'w-full flex flex-col items-center lg:flex-row lg:justify-around lg:items-start p-2 py-4 rounded-xl border bg-card text-card-foreground shadow'}>
             <div className='w-5/6 md:w-2/3 lg:w-1/3'>
-                <Typography variant='h1' className='mb-4' text={product.title} />
-                <Typography variant='h2' className='mb-4' text={product.price + ' ₽'} />
+                <div className='flex items-center'>
+                    {userId === product.userId && (
+                        <StyledLink className='mr-3' href={`/marketplace/${product.id}/edit`}>
+                            <Pencil />
+                        </StyledLink>
+                    )}
+
+                    <Typography variant='h1' className='mt-4 mb-4' text={product.title} />
+                </div>
+
+                <Typography variant='h3' className='mb-4' text={product.price + ' ₽'} />
+
+                <p className='text-gray-500'>Добавлено: {product.createdAt?.toLocaleString()}</p>
+                <p className='text-gray-500'>Изменено: {product.updatedAt?.toLocaleString()}</p>
+
+                
                 <div className="flex items-center gap-4 mt-4">
                     <Separator className="flex-1" />
                     <span className="text-muted-foreground">Добавил</span>

@@ -2,7 +2,6 @@ import { ProductData } from '@/lib/types'
 import React from 'react'
 import { ProductCard } from './product-card'
 
-
 interface Props {
   className?: string,
   products: ProductData[] | ""

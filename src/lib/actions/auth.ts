@@ -48,10 +48,6 @@ export const credentialsSignIn = async (data: FormSchema) => {
             redirect: false
         })
 
-        // if (res.error) {
-        //     return { error: true, message: res.error };
-        // }
-
         return res;
     } catch (error) {
         console.log(error)

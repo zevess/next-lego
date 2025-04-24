@@ -12,7 +12,6 @@ import { ProductsTable } from "./products-table";
 import { ContentTabs } from "./content-tabs";
 
 
-
 interface Props {
     className?: string,
     data: User
@@ -20,7 +19,6 @@ interface Props {
     userCollection: SetData[] | "",
     userWishes: SetData[] | "",
     products: ProductData[] | ""
-
 }
 
 export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, userCollection, userWishes, products }) => {

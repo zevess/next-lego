@@ -4,9 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Container, Header } from "@/components/shared";
 import { auth } from "@/lib/auth";
-
 import { SessionProvider } from "next-auth/react";
 import { getUser } from "@/lib/actions/user";
+import { StoreProvider } from "@/store/providers/store-provider";
 
 
 const ubuntu = Ubuntu({
@@ -33,15 +33,18 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body
           className={`${ubuntu.className} antialiased`}>
-          <ThemeProvider attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
-            <Container>
-              <Header user={user} />
-              {children}
-            </Container>
-          </ThemeProvider>
+          <StoreProvider userId={session?.user?.id}>
+            <ThemeProvider attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange>
+              <Container>
+                <Header user={user} />
+                {children}
+              </Container>
+            </ThemeProvider>
+          </StoreProvider>
+
 
         </body>
       </html>
