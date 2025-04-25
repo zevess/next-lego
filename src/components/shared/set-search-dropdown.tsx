@@ -21,14 +21,10 @@ export const SetSearchDropdown: React.FC<Props> = ({ className, setSelectedItems
 
     const items = foundItems?.results
 
-    // console.log(items)
-
     const filteredItems = items?.filter((item: SetData) =>
         item.name.toLowerCase().includes(query.toLowerCase()) ||
         !selectedItems.some((selected) => selected.set_num === item.set_num)
     );
-
-    // console.log("filteredItems: ", filteredItems)
 
     const handleSelectItem = (item: SetData) => {
         setSelectedItems((prev) => [...prev, item]);

@@ -10,7 +10,6 @@ import { YearInput } from './year-input'
 import { SelectThemes } from './select-themes'
 
 
-
 interface Props {
     className?: string,
 

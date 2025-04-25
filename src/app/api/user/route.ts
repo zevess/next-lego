@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
     try {
 
-        const userId = req.nextUrl.searchParams.get("userId")?.toString()
+        const userId = request.nextUrl.searchParams.get("userId")?.toString()
 
         const user = await prisma.user.findFirst({
             where: {
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
         })
 
         if (user) {
-            return NextResponse.json(user)
+            return NextResponse.json({message: "Пользователь найден" , user })
         }
         else {
             return NextResponse.json({ error: "Пользователь не найден" }, { status: 500 })
@@ -25,8 +25,8 @@ export async function GET(req: NextRequest) {
 }
 
 
-export async function PATCH(req: NextRequest) {
-    const body = await req.json();
+export async function PATCH(request: NextRequest) {
+    const body = await request.json();
     const newUserNick = body.newUserNick;
     const newName = body.newName
     const userId = body.userId

@@ -48,8 +48,6 @@ export default async function Home({
 
   const isSameUser = (session?.user?.id == userData?.id) && (session !== null)
 
-
-
   return (
     <>
       

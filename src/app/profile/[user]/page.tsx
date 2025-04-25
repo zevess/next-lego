@@ -6,7 +6,6 @@ import { getAllProductsByUser } from '@/lib/actions/product';
 import { getUserByNick, getUserCollection, getUserWishes } from '@/lib/actions/user';
 
 
-
 export async function generateMetadata({ params }: { params: Promise<{ user: string }> }): Promise<Metadata> {
   const user = (await params).user;
   return {

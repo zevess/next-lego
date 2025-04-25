@@ -1,22 +1,25 @@
 "use server"
 
+import { api } from "../axios.config"
 import { prisma } from "../prisma/prisma"
 import { ProductData, SetData } from "../types"
 
 export const createProduct = async (product: ProductData) => {
-    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/product`, {
-        method: "POST",
-        body: JSON.stringify(product)
-    })
-    return newSet.json()
+    const newProduct = await api.post("/marketplace/product", product)
+    return newProduct.data
 }
 
 export const updateProduct = async (product: ProductData, productId: string) => {
-    const updatedSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/marketplace/product`, {
-        method: "PATCH",
-        body: JSON.stringify({product, productId})
+    const updatedProduct = await api.patch("/marketplace/product", { product, productId })
+    return updatedProduct.data
+}
+
+export const deleteProduct = async (productId: string) => {
+    return await prisma.product.delete({
+        where: {
+            id: productId
+        }
     })
-    return updatedSet.json()
 }
 
 export const getProduct = async (productId: string) => {
@@ -39,8 +42,14 @@ export const getProduct = async (productId: string) => {
 
 }
 
-export const getAllProducts = async () => {
-    const products = await prisma.product.findMany()
+export const getAllProducts = async (searchQuery?: string) => {
+    const products = await prisma.product.findMany({
+        where: {
+            title: {
+                contains: searchQuery
+            }
+        }
+    })
     const typedProducts = products.map(product => ({
         ...product,
         sets: product.sets as unknown as SetData[]

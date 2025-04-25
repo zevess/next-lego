@@ -1,4 +1,3 @@
-import { Session } from 'next-auth'
 import { createStore } from 'zustand/vanilla'
 
 export type StoreState = {

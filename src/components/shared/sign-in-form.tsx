@@ -6,7 +6,6 @@ import { credentialsSignIn, credentialsSignUp } from '@/lib/actions/auth'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { formSchema, FormSchema } from '@/lib/schemas/formSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAppStore } from '@/store/providers/store-provider'
 
 
 interface Props {
@@ -19,8 +18,6 @@ export const SignInForm: React.FC<Props> = ({ className }) => {
     const router = useRouter()
 
     const { register, handleSubmit, setError, formState: { errors, isDirty, isSubmitting } } = useForm<FormSchema>({ resolver: zodResolver(formSchema) })
-
-    const { setUserId } = useAppStore((state) => state)
 
     const onSubmit: SubmitHandler<FormSchema> = async (data) => {
         console.log(data)

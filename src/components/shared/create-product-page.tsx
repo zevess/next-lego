@@ -7,11 +7,13 @@ import { X } from 'lucide-react'
 import { SetSearchDropdown } from './set-search-dropdown'
 import { useRouter } from 'next/navigation'
 import { NewProductData, ProductData, SetData } from '@/lib/types'
-import { createProduct, updateProduct } from '@/lib/actions/product'
+import { createProduct, deleteProduct, updateProduct } from '@/lib/actions/product'
 import { uploadImageToImgbb } from '@/lib/actions/user'
 import { productSchema, ProductSchema } from '@/lib/schemas/productSchema'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Alert } from './alert'
+import { handleRemoveProductImage, handleUploadProductImage } from '@/lib/functions'
 
 interface Props {
     className?: string,
@@ -22,19 +24,14 @@ interface Props {
 
 export const CreateProductPage: React.FC<Props> = ({ className, userId, product, isEditing }) => {
 
-    console.log(product?.sets)
-
+    const [productImages, setProductImages] = React.useState<File[]>([]);
+    const [productImagePreviews, setProductImagePreviews] = React.useState<string[]>(!isEditing ? [] : product?.images as string[]);
     const [selectedItems, setSelectedItems] = React.useState<SetData[]>(!isEditing ? [] : product?.sets as SetData[]);
-
-    const [images, setImages] = React.useState<File[]>([]);
-    const [imagePreviews, setImagePreviews] = React.useState<string[]>(!isEditing ? [] : product?.images as string[]);
-
     const [isLoading, setIsLoading] = React.useState(false);
-
     const router = useRouter()
 
     const { register, handleSubmit, setError, watch, formState: { errors, isDirty, isValid, isSubmitting } } = useForm<ProductSchema>({
-        defaultValues:{
+        defaultValues: {
             title: product?.title,
             description: product?.description,
             location: product?.location,
@@ -50,18 +47,21 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
     const price = watch("price")
 
     const productId = product?.id as string
+    let allImages = product?.images ? Array.from(product?.images) : []
 
-    const isAllFormFilled = Boolean(title && description && location && price && (images.length || imagePreviews.length))
+
+    const isAllFormFilled = Boolean(title && description && location && price && (productImages.length || productImagePreviews.length))
 
     const onSubmit: SubmitHandler<ProductSchema> = async (data) => {
         try {
             setIsLoading(true);
 
-            const promises = images.map(async (item) => {
+            const promises = productImages.map(async (item) => {
                 return await uploadImageToImgbb(item);
             })
 
-            const uploadedImages = await Promise.all(promises);
+            const uploadedImages: string[] = await Promise.all(promises);
+            allImages.push(...uploadedImages)
             console.log(data)
             const product: ProductData = {
                 title: data.title,
@@ -69,12 +69,12 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
                 location: data.location,
                 price: data.price,
                 userId: userId,
-                images: uploadedImages,
+                images: allImages,
                 sets: selectedItems
             }
 
-            const createdProduct: NewProductData = !isEditing ? await createProduct(product).catch(() => setIsLoading(false)) : await updateProduct(product, productId).catch(()=> setIsLoading(false))
-            console.log(createdProduct)
+            const createdProduct: NewProductData = !isEditing ? await createProduct(product).catch(() => setIsLoading(false)) : await updateProduct(product, productId).catch(() => setIsLoading(false))
+
             router.push(!isEditing ? `/marketplace/${createdProduct.newProduct.id}` : `/marketplace/${productId}`)
 
         } catch (error) {
@@ -83,27 +83,6 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
         }
 
     }
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files) {
-            const newImages = Array.from(files);
-            setImages((prevImages) => [...prevImages, ...newImages]);
-            const newPreviews = newImages.map((file) => URL.createObjectURL(file));
-            setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
-        }
-    };
-
-    const handleRemoveImage = (index: number) => {
-        setImages((prevImages) => {
-            const updatedImages = prevImages.filter((_, i) => i !== index);
-            return updatedImages;
-        });
-
-        setImagePreviews((prevPreviews) => {
-            const updatedPreviews = prevPreviews.filter((_, i) => i !== index);
-            return updatedPreviews;
-        });
-    };
 
     return (
         <div className={className}>
@@ -125,10 +104,10 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
                 })} placeholder='введите цену' id='price' name='price' type='number' />
 
                 <Label htmlFor='images'>Изображения</Label>
-                <Input placeholder='загрузите фото' id='images' name='images' type='file' accept='image/*' onChange={handleImageUpload} />
+                <Input placeholder='загрузите фото' id='images' name='images' type='file' accept='image/*' onChange={(event) => handleUploadProductImage(event, setProductImages, setProductImagePreviews)} />
 
                 <div className='flex flex-wrap'>
-                    {imagePreviews.map((preview, index) => (
+                    {productImagePreviews.map((preview, index) => (
                         <div
                             key={index}
                             className='relative w-5/6 md:w-3/4 lg:w-2/5 m-1 mx-auto'
@@ -140,7 +119,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
                             />
 
                             <StyledButton
-                                onClick={() => handleRemoveImage(index)}
+                                onClick={() => handleRemoveProductImage(index, setProductImages, setProductImagePreviews)}
                                 className='absolute top-0 right-0 dark:shadow-gray-500 dark:bg-zinc-300'
                             >
                                 <X />
@@ -152,7 +131,13 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
                 <Label htmlFor='sets'>Связанные наборы</Label>
                 <SetSearchDropdown selectedItems={selectedItems} setSelectedItems={setSelectedItems} />
 
-                <Button type='submit' disabled={!isAllFormFilled || !userId || isLoading}>{isLoading ? "Загрузка..." : (!isEditing ? "Создать товар" : "Изменить товар")}</Button>
+                <div className='flex justify-between'>
+                    <Button type='submit' disabled={!isAllFormFilled || !userId || isLoading}>{isLoading ? "Загрузка..." : (!isEditing ? "Создать товар" : "Изменить товар")}</Button>
+                    {isEditing && <Alert alertActionText='Удалить' alertCancelText='Отмена' alertTitle='Вы уверены что хотите удалить товар?' onClick={() => deleteProduct(productId).then(() => router.push('/marketplace'))}>
+                        <Button className='bg-red-500 hover:bg-red-700'>Удалить товар</Button>
+                    </Alert>}
+                </div>
+
             </form>
         </div>
     )

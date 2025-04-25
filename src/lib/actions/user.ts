@@ -18,7 +18,6 @@ export const getUserByNick = async (userNick: string) => {
     })
 }
 
-
 export const uploadImageToImgbb = async (file: File) => {
     const body = new FormData();
     body.set('key', `${process.env.NEXT_PUBLIC_IMGBB_KEY}`);

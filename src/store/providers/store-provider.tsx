@@ -1,10 +1,8 @@
 'use client'
 
 import { type ReactNode, createContext, useRef, useContext } from 'react'
-
 import { createAppStore, initStore, Store } from '../stores/store'
 import {useStore} from 'zustand'
-import { Session } from 'next-auth'
 
 export type StoreApi = ReturnType<typeof createAppStore>
 

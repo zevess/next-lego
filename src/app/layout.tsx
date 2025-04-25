@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { Container, Header } from "@/components/shared";
+import { Container, Footer, Header } from "@/components/shared";
 import { auth } from "@/lib/auth";
 import { SessionProvider } from "next-auth/react";
 import { getUser } from "@/lib/actions/user";
@@ -42,6 +42,7 @@ export default async function RootLayout({
                 <Header user={user} />
                 {children}
               </Container>
+              <Footer />
             </ThemeProvider>
           </StoreProvider>
 

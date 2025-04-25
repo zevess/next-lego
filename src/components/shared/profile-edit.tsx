@@ -9,9 +9,6 @@ import { AvatarUploader } from "./avatar-uploader"
 import { updateProfile, uploadImageToImgbb } from "@/lib/actions/user"
 
 
-
-
-
 interface Props {
     userData: User,
     hovering: boolean

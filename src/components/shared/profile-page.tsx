@@ -1,15 +1,17 @@
 "use client"
 import { User } from "@prisma/client"
 import { Typography } from "./typography"
-import { ShoppingBasketIcon } from "lucide-react"
+import { LogOut, ShoppingBasketIcon } from "lucide-react"
 import { useHover } from "@uidotdev/usehooks";
 import { ProfileEdit } from "./profile-edit"
-import { AlertExit } from "./alert-exit"
+import { Alert } from "./alert"
 import { UserAvatar } from "./user-avatar"
 import { ProductData, SetData, TabType } from "@/lib/types";
 import { UserSets } from "./user-sets";
 import { ProductsTable } from "./products-table";
 import { ContentTabs } from "./content-tabs";
+import { logout } from "@/lib/actions/auth";
+import { Button } from "../ui";
 
 
 interface Props {
@@ -43,8 +45,13 @@ export const ProfilePage: React.FC<Props> = ({ className, data, isSameUser, user
 
     return (
         <div className={className}>
+
             <div className='w-full flex flex-col items-center'>
-                {isSameUser && <AlertExit className="ml-auto" />}
+                {isSameUser && <Alert className="ml-auto" alertTitle={"Вы уверены что хотите выйти?"} alertCancelText={"Отмена"} alertActionText={"Выйти"} onClick={() => logout()}>
+                    <Button variant={'ghost'}>
+                        <LogOut />
+                    </Button>
+                </Alert>}
                 <UserAvatar variant="large" src={data.image} />
                 <div ref={ref} className="flex items-center">
                     <div className="flex flex-col items-center">

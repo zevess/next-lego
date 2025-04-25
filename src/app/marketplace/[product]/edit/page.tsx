@@ -1,7 +1,6 @@
 import { CreateProductPage } from '@/components/shared'
 import { getProduct } from '@/lib/actions/product'
 import { auth } from '@/lib/auth'
-import { useSession } from 'next-auth/react'
 import React from 'react'
 
 interface Props {

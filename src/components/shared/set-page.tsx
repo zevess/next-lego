@@ -2,7 +2,7 @@
 import React from 'react'
 import { Heart, Plus, X } from 'lucide-react'
 import { Button } from '../ui'
-import { handleAddSetToCollection, handleAddSetToWishes, setAction } from '@/lib/functions'
+import { handleAddSetToCollection, handleAddSetToWishes } from '@/lib/functions'
 import { setThemes } from '@/lib/themes'
 import { User } from '@prisma/client'
 import { SetUsersList } from './set-users-list'

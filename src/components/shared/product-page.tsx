@@ -6,10 +6,8 @@ import { Typography } from './typography'
 import Link from 'next/link'
 import { Separator } from '../ui'
 import { UserAvatar } from './user-avatar'
-import { ProductData, SetData } from '@/lib/types'
+import { ProductData } from '@/lib/types'
 import { SetTag } from './set-tag'
-import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { Pencil } from 'lucide-react'
 import { StyledLink } from './styled-link'
 import { useAppStore } from '@/store/providers/store-provider'
@@ -74,6 +72,7 @@ export const ProductPage: React.FC<Props> = ({ className, product, user }) => {
                 </div>
 
                 <div className='flex'>
+                    {!product.sets && <p>Связанные наборы не указаны</p>}
                     {product.sets.map((set) => (
                         <SetTag isLink key={set.set_num} set={set} />
                     ))}

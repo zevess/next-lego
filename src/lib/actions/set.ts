@@ -1,24 +1,24 @@
 "use server"
 
 import { User } from "@prisma/client"
-import { headers, SetData, testData } from "../types"
+import { SetData, testData } from "../types"
 import { getUserCollection, getUserWishes } from "./user"
 import { prisma } from "../prisma/prisma"
+import { api, rebrickableApi } from "../axios.config"
 
 export const addSetToCollection = async (set: SetData, userId: string) => {
-    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set/addSetToCollection`, {
-        method: "POST",
-        body: JSON.stringify({ set: set, userId: userId })
-    })
-    return newSet.json()
+    return (await api.post('/set/addSetToCollection', {
+        set: set, userId: userId
+    })).data
+
 }
 
 export const addSetToWishes = async (set: SetData, userId: string) => {
-    const newSet = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/set/addSetToWishes`, {
-        method: "POST",
-        body: JSON.stringify({ set: set, userId: userId })
-    })
-    return newSet.json()
+
+    return (await api.post('/set/addSetToWishes', {
+        set: set, userId: userId
+    })).data
+
 }
 
 
@@ -34,15 +34,12 @@ export const getSingleSet = async (setNum: string, userId: string) => {
     const isWish = userWishesIds.includes(setNum);
     const isOwn = userCollectionIds.includes(setNum);
 
-    const set = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {
-        method: "GET",
-        headers: headers
-    })
+    const set = (await rebrickableApi.get(`/${setNum}`)).data
 
-    const setResult = await set.json()
+    console.log(set)
 
     const setData = {
-        set: setResult,
+        set: set,
         isOwn: isOwn,
         isWish: isWish,
         userId: userId
@@ -53,12 +50,11 @@ export const getSingleSet = async (setNum: string, userId: string) => {
 }
 
 export const getSets = async (page: number, searchQuery?: string, themeId?: number, minYear?: number, maxYear?: number) => {
-    const sets = await fetch(`https://rebrickable.com/api/v3/lego/sets/?page=${page}&page_size=50${themeId ? `&theme_id=${themeId}` : ""}&min_year=${minYear ? minYear : 1949}&max_year=${maxYear ? maxYear : 2025}&search=${searchQuery}`, {
-        method: "GET",
-        headers: headers
-    })
 
-    return sets.json();
+    const sets = (await rebrickableApi.get(`/?page=${page}&page_size=50${themeId ? `&theme_id=${themeId}` : ""}&min_year=${minYear ? minYear : 1949}&max_year=${maxYear ? maxYear : 2025}&search=${searchQuery}`)).data
+
+    return sets
+
 }
 
 export const getUsersByOwnSet = async (setNum: string): Promise<User[]> => {
@@ -102,7 +98,7 @@ export const getUsersByWishSet = async (setNum: string): Promise<User[]> => {
 
 
 
-export const getDataTest = async (page: number, searchQuery: string, ) => {
+export const getDataTest = async (page: number, searchQuery: string,) => {
     return { page, testData, searchQuery }
 }
 

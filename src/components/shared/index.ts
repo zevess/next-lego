@@ -15,7 +15,7 @@ export { Logo } from "./logo";
 export { StyledLink } from "./styled-link";
 export { Header } from "./header";
 export { Container } from "./container";
-export { AlertExit } from "./alert-exit";
+export { Alert } from "./alert";
 export { WishButton } from './wish-button'
 export { OwnButton } from './own-button'
 export { SelectThemes } from './select-themes'
@@ -38,3 +38,4 @@ export { ProductCard } from './product-card'
 export { SetTag } from './set-tag'
 export { ContentTabs } from './content-tabs'
 export { UserSets } from './user-sets'
+export {Footer} from './footer'

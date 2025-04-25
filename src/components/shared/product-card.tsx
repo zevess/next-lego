@@ -1,7 +1,7 @@
 import React from 'react'
-import { Card, HoverCard } from '../ui'
+import { Card } from '../ui'
 import { cn } from '@/lib/utils'
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
+import { CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card'
 
 import { ProductData } from '@/lib/types'
 import Link from 'next/link'
@@ -18,9 +18,7 @@ export const ProductCard: React.FC<Props> = ({ className, product }) => {
 
                 <div>
                     <CardTitle>{product.title}</CardTitle>
-                    {/* <CardDescription>{data.set_num}</CardDescription> */}
                 </div>
-                {/* <span>{data.year}</span> */}
 
             </CardHeader>
 
@@ -32,15 +30,7 @@ export const ProductCard: React.FC<Props> = ({ className, product }) => {
 
             <CardFooter className="flex flex-col justify-between sm:flex-row ">
                 <span>{product.price} ₽</span>
-                
-                {/* <Link href={`/marketplace/${product.id}`} className='text-base font-extrabold'>
-                    {product.title}
-                </Link> */}
-
                 <Link className="bg-black py-1 my-2 mx-auto text-white text-center rounded-lg w-5/6 dark:bg-white dark:text-black hover:text-orange-400 dark:hover:text-orange-400 transition-colors duration-300 sm:w-3/5 sm:mb-0" href={`/marketplace/${product.id}`}>Перейти</Link>
-
-
-
             </CardFooter>
         </Card>
     )

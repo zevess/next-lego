@@ -5,9 +5,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google"
-
 import { prisma } from "./prisma/prisma";
-import bcrypt from "bcrypt"
 import { formSchema } from "./schemas/formSchema";
 
 const adapter = PrismaAdapter(prisma);
@@ -30,15 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: validatedCredentials.email.toLocaleLowerCase(),
           },
         });
-
-        // const match = user?.password && await bcrypt.compare(validatedCredentials.password, user?.password)
-
-        // if (!user || !match) {
-        //   const error = new Error();
-        //   error.message = "Неверный email или пароль!!!!!!";
-        //   return error
-        // }
-
+        
         return user;
       },
     }),
