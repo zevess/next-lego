@@ -47,7 +47,7 @@ export const CreateProductPage: React.FC<Props> = ({ className, userId, product,
     const price = watch("price")
 
     const productId = product?.id as string
-    let allImages = product?.images ? Array.from(product?.images) : []
+    let allImages = productImagePreviews ? Array.from(productImagePreviews) : []
 
 
     const isAllFormFilled = Boolean(title && description && location && price && (productImages.length || productImagePreviews.length))

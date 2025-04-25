@@ -14,9 +14,8 @@ export default async function Page({ params }: { params: Promise<{ product: stri
     const product = await getProduct(productId)
 
     return (
-        <>
-            <p>{productId}</p>
-            <CreateProductPage isEditing product={product} userId={session?.user?.id as string}  />
-        </>
+
+        <CreateProductPage isEditing product={product} userId={session?.user?.id as string} />
+
     )
 }
